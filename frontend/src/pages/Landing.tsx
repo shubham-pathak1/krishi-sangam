@@ -1,463 +1,505 @@
 import { Link } from 'react-router-dom';
-import { Sprout, Users, FileText, Shield, TrendingUp, CheckCircle, ArrowRight, Leaf, DollarSign, Award, BarChart3 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { 
+  Menu, X, CheckCircle, TrendingUp, Users, Shield, 
+  Handshake, Truck, IndianRupee, FileText, Headset, 
+  ArrowRight, Quote 
+} from 'lucide-react';
 
 const Landing = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [language, setLanguage] = useState<'en' | 'gu'>('en');
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    document.title = 'Krishi Sangam - Home';
+    
+    const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'icon';
+    link.href = '/src/assets/images/l.png';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    setIsVisible(true);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    <div className="min-h-screen bg-white overflow-hidden">
-      {/* Premium Navbar */}
-      <nav className={`fixed w-full z-50 transition-all duration-500 ${
-        scrollY > 50 ? 'bg-white/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3 group cursor-pointer">
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary-400 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <Sprout className="h-10 w-10 text-primary-600 relative transform group-hover:scale-110 transition-transform duration-300" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-                Krishi Sangam
-              </span>
-            </div>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-700 hover:text-primary-600 font-medium transition-all duration-300 hover:scale-105">
-                Features
-              </a>
-              <a href="#how-it-works" className="text-gray-700 hover:text-primary-600 font-medium transition-all duration-300 hover:scale-105">
-                How it Works
-              </a>
-              <a href="#testimonials" className="text-gray-700 hover:text-primary-600 font-medium transition-all duration-300 hover:scale-105">
-                Testimonials
-              </a>
-            </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-            <div className="flex items-center space-x-4">
+    document.querySelectorAll('.reveal-on-scroll').forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const t = {
+    en: {
+      contactUs: 'Contact Us',
+      aboutUs: 'About Us',
+      help: 'Help',
+      login: 'Login',
+      signUp: 'Get Started',
+      heroTitle: 'Empowering Farmers, Connecting Markets',
+      aboutTag: 'Who We Are',
+      aboutTitle: 'Empowering Growth Through Contract Farming',
+      aboutDesc1: 'At Krishi Sangam, we connect farmers with businesses to create mutually beneficial partnerships. Farmers gain a reliable market for their produce, while businesses access consistent, high-quality crops.',
+      aboutDesc2: 'Join us in building sustainable food systems and contributing to rural development. Whether you\'re a farmer seeking stability or a business looking for trusted suppliers, we are here to help you succeed.',
+      offerTitle: 'Tailored Solutions for Growth',
+      forFarmers: 'For Farmers',
+      farmerBenefit1: 'Market Access',
+      farmerBenefit1Desc: 'Fair prices and security for your harvests',
+      farmerBenefit2: 'Financial Support',
+      farmerBenefit2Desc: 'Assistance with financing, seeds, and equipment',
+      farmerBenefit3: 'Training Programs',
+      farmerBenefit3Desc: 'Sustainable and modern farming practices',
+      forCompanies: 'For Companies',
+      companyBenefit1: 'Consistent Supply',
+      companyBenefit1Desc: 'Verified farmers delivering quality produce',
+      companyBenefit2: 'Risk Mitigation',
+      companyBenefit2Desc: 'Handle market fluctuations with ease',
+      companyBenefit3: 'Scalable Partnerships',
+      companyBenefit3Desc: 'Flexible contracts tailored to your needs',
+      howItWorksTitle: 'How It Works',
+      step1: 'Register',
+      step1Desc: 'Create your profile in minutes',
+      step2: 'Contract',
+      step2Desc: 'Customized contracts ensure fair terms',
+      step3: 'Support',
+      step3Desc: 'We provide advice and monitor progress',
+      step4: 'Payment',
+      step4Desc: 'Secure payments, on time',
+      partnersTitle: 'Our Partners',
+      testimonialsTitle: 'What Our Users Say',
+      footer: '© 2024 Krishi Sangam. All rights reserved.',
+    },
+    gu: {
+      contactUs: 'અમારો સંપર્ક કરો',
+      aboutUs: 'અમારા વિશે',
+      help: 'મદદ',
+      login: 'લૉગિન',
+      signUp: 'જોડાવો',
+      heroTitle: 'ખેડૂતોને સશક્ત કરવું, બજારોને જોડવું',
+      aboutTag: 'અમે કોણ છીએ',
+      aboutTitle: 'કોન્ટ્રાક્ટ ફાર્મિંગ દ્વારા વિકાસને સશક્ત કરવો',
+      aboutDesc1: 'કૃષિ સંગમ પર, અમે ખેડૂતોને વ્યવસાયો સાથે જોડીએ છીએ જેથી પરસ્પર લાભદાયી ભાગીદારી બને.',
+      aboutDesc2: 'ટકાઉ ખાદ્ય પ્રણાલીઓ બનાવવામાં અમારી સાથે જોડાઓ.',
+      offerTitle: 'વિકાસ માટે અનુકૂળ ઉકેલો',
+      forFarmers: 'ખેડૂતો માટે',
+      farmerBenefit1: 'બજાર પહોંચ',
+      farmerBenefit1Desc: 'યોગ્ય ભાવ અને સુરક્ષા',
+      farmerBenefit2: 'નાણાકીય સહાય',
+      farmerBenefit2Desc: 'બીજ, સાધનો અને ધિરાણમાં મદદ',
+      farmerBenefit3: 'તાલીમ કાર્યક્રમો',
+      farmerBenefit3Desc: 'ટકાઉ અને આધુનિક ખેતી પદ્ધતિઓ',
+      forCompanies: 'કંપનીઓ માટે',
+      companyBenefit1: 'સતત પુરવઠો',
+      companyBenefit1Desc: 'ચકાસાયેલ ખેડૂતો દ્વારા ઉચ્ચ-ગુણવત્તા',
+      companyBenefit2: 'જોખમ ઘટાડો',
+      companyBenefit2Desc: 'બજાર ઉતાર-ચઢાવને હેન્ડલ કરો',
+      companyBenefit3: 'માપનીય ભાગીદારી',
+      companyBenefit3Desc: 'લવચીક કરાર તમારી જરૂરિયાત મુજબ',
+      howItWorksTitle: 'તે કેવી રીતે કામ કરે છે',
+      step1: 'નોંધણી',
+      step1Desc: 'તમારી પ્રોફાઇલ બનાવો',
+      step2: 'કરાર',
+      step2Desc: 'પારદર્શક શરતો',
+      step3: 'સપોર્ટ',
+      step3Desc: 'સલાહ અને નિરીક્ષણ',
+      step4: 'ચુકવણી',
+      step4Desc: 'સુરક્ષિત ચુકવણી',
+      partnersTitle: 'અમારા ભાગીદારો',
+      testimonialsTitle: 'વપરાશકર્તાઓના અભિપ્રાય',
+      footer: '© 2024 કૃષિ સંગમ. સર્વ હક સંચિત.',
+    }
+  };
+
+  const text = t[language];
+
+  // List of partner logos (duplicate them for the scrolling effect)
+  const partners = ['high-altitude-organics', 'agrifresh-relief', 'terrasavant', 'agri-corp', 'farm-solutions', 'green-harvest'];
+  const doubledPartners = [...partners, ...partners];
+
+  // Testimonial Data
+  const testimonials = [
+    { img: 'ramesh.jpg', name: 'Ramesh Patel', role: 'Farmer', quote: 'Krishi Sangam has transformed my farming business. I now have a guaranteed buyer and better prices for my crops!' },
+    { img: 'agrib.png', name: 'Priya Sharma', role: 'Agri-Business Owner', quote: 'The platform made it easy to source high-quality produce directly from farmers. It\'s a game-changer for our supply chain.' },
+    { img: 'vikram.jpg', name: 'Vikram Singh', role: 'Farmer', quote: 'With Krishi Sangam, I\'ve been able to scale my farming operations and connect with reliable buyers.' }
+  ];
+
+
+  return (
+    <div className="font-['Inter'] bg-white w-full overflow-x-hidden selection:bg-emerald-100 selection:text-emerald-900">
+      
+      {/* --- Modern Floating Navbar --- */}
+      <header
+        className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${
+          scrolled 
+            ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm' 
+            : 'bg-transparent border-transparent py-6'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+          <Link to="/" className="flex items-center gap-3 group relative z-50">
+            <div className="relative">
+              <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
+              <img
+                src="/src/assets/images/l.png"
+                alt="Krishi Sangam"
+                className="h-10 w-auto relative z-10"
+              />
+            </div>
+            <span className={`text-xl font-bold tracking-tight transition-colors ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+              Krishi Sangam
+            </span>
+          </Link>
+
+          {/* Pill-Shaped Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-8 bg-white/10 backdrop-blur-md px-8 py-2.5 rounded-full border border-white/20 shadow-sm transition-all duration-300 hover:bg-white/20">
+            {[
+              { to: '/about', label: text.aboutUs },
+              { to: '/contact', label: text.contactUs },
+              { to: '/help', label: text.help },
+            ].map((link) => (
               <Link 
-                to="/login" 
-                className="text-gray-700 hover:text-primary-600 font-semibold transition-all duration-300 hover:scale-105"
+                key={link.to} 
+                to={link.to} 
+                className={`text-sm font-medium transition-colors hover:text-emerald-400 ${scrolled ? 'text-gray-700 hover:text-emerald-600' : 'text-gray-100'}`}
               >
-                Login
+                {link.label}
               </Link>
+            ))}
+            
+            <div className="w-px h-4 bg-white/20"></div>
+
+            <button 
+              onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
+              className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${scrolled ? 'text-gray-500 hover:text-emerald-600' : 'text-gray-300 hover:text-white'}`}
+            >
+              {language === 'en' ? 'GU' : 'EN'}
+            </button>
+
+            <Link
+              to="/login"
+              className={`text-sm font-semibold px-5 py-2 rounded-full transition-all duration-300 ${
+                scrolled 
+                  ? 'bg-gray-900 text-white hover:bg-emerald-600' 
+                  : 'bg-white text-gray-900 hover:bg-emerald-50'
+              }`}
+            >
+              {text.login}
+            </Link>
+          </nav>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className={`lg:hidden relative z-50 p-2 rounded-full transition-colors ${scrolled ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-[990] transition-all duration-500 lg:hidden flex items-center justify-center ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
+        <div className="flex flex-col items-center gap-8 text-center">
+          <Link to="/about" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.aboutUs}</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.contactUs}</Link>
+          <Link to="/help" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.help}</Link>
+          <Link to="/login" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.login}</Link>
+          <button onClick={() => {setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false);}} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-8">
+            Switch to {language === 'en' ? 'Gujarati' : 'English'}
+          </button>
+        </div>
+      </div>
+
+      <main>
+        {/* Hero Section */}
+        <section className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center">
+          <div className="absolute inset-0 z-0">
+            <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+              <source src="/src/assets/cropsv.mov" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/50"></div>
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center pt-20">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.9] mb-8 drop-shadow-2xl">
+              Empowering Growth
+              <br />
+              Connecting Roots
+            </h1>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
               <Link 
                 to="/register" 
-                className="group relative bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-2.5 rounded-full font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
+                className="group px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white font-bold text-lg rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
               >
-                <span className="relative z-10">Get Started</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                {text.signUp}
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
-        </div>
-      </nav>
+        </section>
 
-      {/* Hero Section - Premium */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-green-50">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)',
-          }}></div>
-        </div>
-
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-
-        <div className={`relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <div className="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6 hover:bg-primary-200 transition-colors duration-300">
-            <Leaf className="w-4 h-4 text-primary-600 mr-2" />
-            <span className="text-sm font-semibold text-primary-800">Revolutionizing Contract Farming</span>
-          </div>
-
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 mb-6 leading-tight">
-            Empowering Farmers,
-            <br />
-            <span className="bg-gradient-to-r from-primary-600 via-green-600 to-primary-700 bg-clip-text text-transparent">
-              Connecting Markets
-            </span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-            A modern platform bridging farmers and companies through transparent, 
-            secure, and sustainable contract farming agreements.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
-            <Link 
-              to="/register?type=farmer" 
-              className="group relative bg-gradient-to-r from-primary-600 to-primary-700 text-white px-10 py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                Join as Farmer
-                <ArrowRight className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-            </Link>
-            
-            <Link 
-              to="/register?type=company" 
-              className="group relative bg-white border-2 border-gray-200 text-gray-900 px-10 py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:border-primary-300"
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                Join as Company
-                <ArrowRight className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Link>
-          </div>
-
-          {/* Stats - Premium Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {[
-              { number: '10,000+', label: 'Active Farmers', icon: Users },
-              { number: '500+', label: 'Partner Companies', icon: Award },
-              { number: '₹50Cr+', label: 'Contracts Value', icon: DollarSign }
-            ].map((stat, index) => (
-              <div 
-                key={index}
-                className="group relative bg-white/60 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:scale-105"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <stat.icon className="w-8 h-8 text-primary-600 mb-4 mx-auto transform group-hover:scale-110 transition-transform duration-300" />
-                <div className="relative text-5xl font-extrabold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent mb-2">
-                  {stat.number}
+        {/* About Section - Who We Are (Image reverted to contract farming.jpg) */}
+        <section className="py-32 px-6 max-w-7xl mx-auto reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div>
+              <h4 className="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-4">{text.aboutTag}</h4>
+              <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-[1.1]">{text.aboutTitle}</h2>
+              <p className="text-xl text-gray-600 leading-relaxed mb-6">
+                {text.aboutDesc1}
+              </p>
+              <p className="text-xl text-gray-600 leading-relaxed">
+                {text.aboutDesc2}
+              </p>
+              
+              <div className="mt-12 flex gap-8">
+                <div className="flex flex-col">
+                  <span className="text-4xl font-bold text-black">10K+</span>
+                  <span className="text-gray-500 text-sm mt-1">Active Farmers</span>
                 </div>
-                <div className="relative text-gray-600 font-medium">{stat.label}</div>
+                <div className="w-px bg-gray-200"></div>
+                <div className="flex flex-col">
+                  <span className="text-4xl font-bold text-black">500+</span>
+                  <span className="text-gray-500 text-sm mt-1">Partner Companies</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-emerald-100 rounded-[2.5rem] rotate-2 transition-transform group-hover:rotate-1"></div>
+              <img
+                // --- REVERTED IMAGE SOURCE ---
+                src="/src/assets/images/contract farming.jpg" 
+                alt="Farming"
+                className="relative w-full h-[600px] object-cover rounded-[2rem] shadow-2xl transition-all duration-700"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* What We Offer - Improved Bento */}
+        <section className="py-32 bg-gray-50 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="mb-20 text-center max-w-3xl mx-auto">
+              <h2 className="text-5xl md:text-6xl font-bold text-black mb-6">{text.offerTitle}</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Farmer Card */}
+              <div className="group bg-white border border-black rounded-3xl p-10 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="p-4 bg-white border border-black rounded-2xl">
+                    <Users size={32} className="text-black" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-black">{text.forFarmers}</h3>
+                </div>
+
+                <div className="space-y-6">
+                  {[
+                    { title: text.farmerBenefit1, desc: text.farmerBenefit1Desc, icon: CheckCircle },
+                    { title: text.farmerBenefit2, desc: text.farmerBenefit2Desc, icon: IndianRupee },
+                    { title: text.farmerBenefit3, desc: text.farmerBenefit3Desc, icon: TrendingUp },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-6">
+                      <item.icon className="w-6 h-6 text-black shrink-0 mt-1" />
+                      <div>
+                        <h4 className="text-lg font-semibold text-black mb-1">{item.title}</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Company Card */}
+              <div className="group bg-white border border-black rounded-3xl p-10 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="p-4 bg-white border border-black rounded-2xl">
+                    <Handshake size={32} className="text-black" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-black">{text.forCompanies}</h3>
+                </div>
+
+                <div className="space-y-6">
+                  {[
+                    { title: text.companyBenefit1, desc: text.companyBenefit1Desc, icon: Truck },
+                    { title: text.companyBenefit2, desc: text.companyBenefit2Desc, icon: Shield },
+                    { title: text.companyBenefit3, desc: text.companyBenefit3Desc, icon: Handshake },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-6">
+                      <item.icon className="w-6 h-6 text-black shrink-0 mt-1" />
+                      <div>
+                        <h4 className="text-lg font-semibold text-black mb-1">{item.title}</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-32 max-w-7xl mx-auto px-6 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold text-black mb-4">
+              {text.howItWorksTitle}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: Users, title: text.step1, desc: text.step1Desc },
+              { icon: FileText, title: text.step2, desc: text.step2Desc },
+              { icon: Headset, title: text.step3, desc: text.step3Desc },
+              { icon: IndianRupee, title: text.step4, desc: text.step4Desc }
+            ].map((step, index) => (
+              <div key={index} className="relative group">
+                <div className="bg-white p-8 rounded-2xl border border-black hover:shadow-2xl transition-all duration-300">
+                  <div className="w-14 h-14 bg-white border border-black rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <step.icon className="w-7 h-7 text-black" />
+                  </div>
+                  <div className="text-5xl font-black text-gray-100 mb-4">0{index + 1}</div>
+                  <h3 className="text-xl font-bold text-black mb-2">{step.title}</h3>
+                  <p className="text-gray-600">{step.desc}</p>
+                </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center p-2">
-            <div className="w-1 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+        {/* Partners Section - Continuous Auto-Scrolling Marquee */}
+        <section className="py-20 border-y border-gray-100 bg-white reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="max-w-7xl mx-auto px-6 text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-black">{text.partnersTitle}</h2>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section - Bento Grid */}
-      <section id="features" className="py-32 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-              <span className="text-sm font-semibold text-primary-800">FEATURES</span>
+          
+          <div className="relative w-full overflow-hidden whitespace-nowrap [mask-image:_linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
+            <div className="inline-block animate-marquee group-hover:[animation-play-state:paused]">
+              {doubledPartners.map((partner, index) => (
+                <img
+                  key={index}
+                  src={`/src/assets/images/${partner}.webp`}
+                  alt="Partner"
+                  className="h-14 mx-12 inline-block object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
+              ))}
             </div>
-            <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-              Why Choose 
-              <span className="bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent"> Krishi Sangam?</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Empowering agriculture through cutting-edge technology and unwavering trust
-            </p>
           </div>
+        </section>
 
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Large Feature Card */}
-            <div className="md:col-span-2 md:row-span-2 group relative bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-10 overflow-hidden hover:shadow-2xl transition-all duration-500">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-32 -translate-y-32"></div>
-              <div className="relative z-10">
-                <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-4xl font-bold text-white mb-4">Smart Digital Contracts</h3>
-                <p className="text-primary-100 text-lg leading-relaxed mb-6">
-                  Revolutionary contract management with transparent terms, automated milestone tracking, 
-                  and secure digital signatures. Say goodbye to paperwork and hello to efficiency.
+        {/* Testimonials Section - Aesthetic Card Grid */}
+        <section className="py-32 max-w-7xl mx-auto px-6 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <h2 className="text-5xl md:text-6xl font-bold text-center text-black mb-20">{text.testimonialsTitle}</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <div 
+                key={i} 
+                className="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 hover:border-black transition-all duration-500 flex flex-col h-full relative group"
+              >
+                {/* Visual Quote Accent */}
+                <Quote size={40} className="text-emerald-100 absolute top-6 right-8 rotate-12 opacity-80 group-hover:text-emerald-200 transition-colors" />
+
+                {/* Quote Text */}
+                <p className="text-xl text-gray-700 leading-relaxed italic mb-8 relative z-10">
+                  "{t.quote}"
                 </p>
-                <ul className="space-y-3">
-                  {['Automated Payments', 'Real-time Tracking', 'Legal Compliance', 'Zero Paperwork'].map((item, i) => (
-                    <li key={i} className="flex items-center text-white">
-                      <CheckCircle className="w-5 h-5 mr-3 text-primary-200" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+
+                {/* User Info */}
+                <div className="mt-auto flex gap-4 items-center pt-4 border-t border-gray-100">
+                  <img src={`/src/assets/images/${t.img}`} alt={t.name} className="w-14 h-14 rounded-full object-cover ring-2 ring-emerald-300/50" />
+                  <div>
+                    <h5 className="font-bold text-black">{t.name}</h5>
+                    <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">{t.role}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      {/* --- Footer (Black & White) --- */}
+      <footer className="bg-zinc-950 text-white pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+            <div>
+              <Link to="/" className="flex items-center gap-3 mb-6">
+                 <img src="/src/assets/images/l.png" alt="Logo" className="h-8 opacity-90" />
+                 <span className="text-xl font-bold">Krishi Sangam</span>
+              </Link>
+              <p className="text-zinc-400 max-w-xs leading-relaxed">
+                Building the digital infrastructure for the future of Indian agriculture.
+              </p>
+            </div>
+            
+            <div className="flex gap-16 flex-wrap">
+              <div>
+                <h4 className="font-bold mb-6 text-white">Platform</h4>
+                <ul className="space-y-4 text-zinc-400 text-sm">
+                  <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
+                  <li><Link to="/register" className="hover:text-white transition-colors">For Farmers</Link></li>
+                  <li><Link to="/register" className="hover:text-white transition-colors">For Companies</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold mb-6 text-white">Support</h4>
+                <ul className="space-y-4 text-zinc-400 text-sm">
+                  <li><Link to="/help" className="hover:text-white transition-colors">Help Center</Link></li>
+                  <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+                  <li><Link to="/legal" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                 </ul>
               </div>
             </div>
-
-            {/* Medium Feature Cards */}
-            <div className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-2xl hover:border-primary-300 transition-all duration-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="bg-primary-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <Shield className="h-7 w-7 text-primary-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">Secure Payments</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Guaranteed payments with escrow protection. Complete transparency, zero delays.
-                </p>
-              </div>
-            </div>
-
-            <div className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-2xl hover:border-primary-300 transition-all duration-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="bg-green-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <Users className="h-7 w-7 text-green-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">Direct Connect</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Connect directly with verified partners. No middlemen, better margins.
-                </p>
-              </div>
-            </div>
-
-            <div className="md:col-span-2 group relative bg-gradient-to-br from-green-600 to-green-800 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 overflow-hidden">
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform -translate-x-32 translate-y-32"></div>
-              <div className="relative flex items-center justify-between">
-                <div>
-                  <div className="bg-white/20 backdrop-blur-sm w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="h-7 w-7 text-white" />
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-3">Market Intelligence</h3>
-                  <p className="text-green-100 text-lg max-w-lg">
-                    Real-time market prices, demand forecasts, and AI-powered crop recommendations.
-                  </p>
-                </div>
-                <BarChart3 className="h-32 w-32 text-white/20 hidden lg:block" />
-              </div>
-            </div>
-
-            <div className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:shadow-2xl hover:border-primary-300 transition-all duration-500 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <div className="bg-primary-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <CheckCircle className="h-7 w-7 text-primary-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">Quality Assured</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Built-in quality tracking and compliance management systems.
-                </p>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-
-      {/* How It Works - Modern Timeline */}
-      <section id="how-it-works" className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-              <span className="text-sm font-semibold text-primary-800">PROCESS</span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-              Simple. <span className="bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent">Transparent.</span> Efficient.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {/* Connection Line */}
-            <div className="hidden md:block absolute top-1/4 left-0 right-0 h-1 bg-gradient-to-r from-primary-200 via-primary-400 to-primary-200"></div>
-
-            {[
-              { step: '01', title: 'Register', desc: 'Create your verified account in minutes', icon: Users },
-              { step: '02', title: 'Connect', desc: 'Browse and match with ideal partners', icon: Sprout },
-              { step: '03', title: 'Contract', desc: 'Sign secure digital agreements', icon: FileText },
-              { step: '04', title: 'Grow', desc: 'Track progress and earn transparently', icon: TrendingUp }
-            ].map((item, index) => (
-              <div key={index} className="relative group">
-                <div className="text-center">
-                  <div className="relative mx-auto w-24 h-24 mb-6">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
-                    <div className="relative bg-white rounded-3xl w-full h-full flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300">
-                      <item.icon className="w-10 h-10 text-primary-600" />
-                    </div>
-                  </div>
-                  <div className="text-6xl font-black text-primary-100 mb-3">{item.step}</div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                  <p className="text-gray-600">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials - Premium Cards */}
-      <section id="testimonials" className="py-32 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center px-4 py-2 bg-primary-100 rounded-full mb-6">
-              <span className="text-sm font-semibold text-primary-800">TESTIMONIALS</span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-              What Our <span className="bg-gradient-to-r from-primary-600 to-green-600 bg-clip-text text-transparent">Users Say</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Ramesh Patel',
-                role: 'Farmer, Gujarat',
-                text: 'Krishi Sangam transformed my farming. Direct access to companies means better prices and no middlemen taking cuts.',
-                avatar: '👨‍🌾'
-              },
-              {
-                name: 'Priya Sharma',
-                role: 'Agri Business Owner',
-                text: 'The platform makes sourcing reliable. We can directly connect with farmers and ensure quality at every step.',
-                avatar: '👩‍💼'
-              },
-              {
-                name: 'Vikram Singh',
-                role: 'Contract Farmer',
-                text: 'Secure payments and transparent contracts give me peace of mind. I can focus on farming, not worrying about payments.',
-                avatar: '🧑‍🌾'
-              }
-            ].map((testimonial, index) => (
-              <div 
-                key={index}
-                className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative">
-                  <div className="text-5xl mb-6">{testimonial.avatar}</div>
-                  <p className="text-gray-700 text-lg mb-6 leading-relaxed italic">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="border-t border-gray-200 pt-4">
-                    <div className="font-bold text-gray-900">{testimonial.name}</div>
-                    <div className="text-primary-600 text-sm">{testimonial.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section - Premium */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-green-600 to-primary-800">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-          }}></div>
-        </div>
-        
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-5xl md:text-6xl font-extrabold text-white mb-6">
-            Ready to Transform Your
-            <br />
-            Agriculture Business?
-          </h2>
-          <p className="text-2xl text-primary-100 mb-12 max-w-3xl mx-auto">
-            Join thousands of farmers and companies already benefiting from transparent contract farming
-          </p>
-          <Link 
-            to="/register" 
-            className="group inline-flex items-center bg-white text-primary-600 px-12 py-6 rounded-full font-bold text-xl hover:bg-primary-50 transition-all duration-300 hover:shadow-2xl hover:scale-105"
-          >
-            Get Started Today
-            <ArrowRight className="ml-3 w-6 h-6 transform group-hover:translate-x-2 transition-transform" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Footer - Modern */}
-      <footer className="bg-gray-900 text-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div>
-              <div className="flex items-center space-x-3 mb-6">
-                <Sprout className="h-8 w-8 text-primary-400" />
-                <span className="text-2xl font-bold text-white">Krishi Sangam</span>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                Empowering farmers and companies through transparent, secure contract farming.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-white font-bold mb-4 text-lg">For Farmers</h3>
-              <ul className="space-y-3">
-                {['Find Contracts', 'Track Payments', 'Market Prices', 'Quality Standards'].map((item, i) => (
-                  <li key={i}>
-                    <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300 flex items-center">
-                      <ArrowRight className="w-4 h-4 mr-2" />
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-bold mb-4 text-lg">For Companies</h3>
-              <ul className="space-y-3">
-                {['Find Farmers', 'Create Contracts', 'Quality Tracking', 'Analytics'].map((item, i) => (
-                  <li key={i}>
-                    <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300 flex items-center">
-                      <ArrowRight className="w-4 h-4 mr-2" />
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-bold mb-4 text-lg">Company</h3>
-              <ul className="space-y-3">
-                {['About Us', 'Contact', 'Privacy Policy', 'Terms of Service'].map((item, i) => (
-                  <li key={i}>
-                    <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300 flex items-center">
-                      <ArrowRight className="w-4 h-4 mr-2" />
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">
-                © 2024 Krishi Sangam. All rights reserved.
-              </p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300">Twitter</a>
-                <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300">LinkedIn</a>
-                <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors duration-300">Facebook</a>
-              </div>
+          
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 text-sm">
+            <p>{text.footer}</p>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-white transition-colors">Twitter</a>
+              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
             </div>
           </div>
         </div>
       </footer>
 
+      {/* Tailwind CSS keyframes for Marquee */}
       <style>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
+        .animate-in {
+          opacity: 1 !important;
+          transform: translateY(0) !important;
         }
-        .animate-blob {
-          animation: blob 7s infinite;
+        html {
+          scroll-behavior: smooth;
         }
-        .animation-delay-2000 {
-          animation-delay: 2s;
+
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
-        .animation-delay-4000 {
-          animation-delay: 4s;
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
         }
       `}</style>
     </div>
