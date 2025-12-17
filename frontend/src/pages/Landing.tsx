@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { 
-  Menu, X, CheckCircle, TrendingUp, Users, Shield, 
-  Handshake, Truck, IndianRupee, FileText, Headset, 
-  ArrowRight, Quote 
+import {
+  Menu, X, CheckCircle, TrendingUp, Users, Shield,
+  Handshake, Truck, IndianRupee, FileText, Headset,
+  ArrowRight
 } from 'lucide-react';
 
 const Landing = () => {
@@ -13,7 +13,7 @@ const Landing = () => {
 
   useEffect(() => {
     document.title = 'Krishi Sangam - Home';
-    
+
     const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
     link.type = 'image/png';
     link.rel = 'icon';
@@ -126,11 +126,9 @@ const Landing = () => {
 
   const text = t[language];
 
-  // List of partner logos (duplicate them for the scrolling effect)
   const partners = ['high-altitude-organics', 'agrifresh-relief', 'terrasavant', 'agri-corp', 'farm-solutions', 'green-harvest'];
   const doubledPartners = [...partners, ...partners];
 
-  // Testimonial Data
   const testimonials = [
     { img: 'ramesh.jpg', name: 'Ramesh Patel', role: 'Farmer', quote: 'Krishi Sangam has transformed my farming business. I now have a guaranteed buyer and better prices for my crops!' },
     { img: 'agrib.png', name: 'Priya Sharma', role: 'Agri-Business Owner', quote: 'The platform made it easy to source high-quality produce directly from farmers. It\'s a game-changer for our supply chain.' },
@@ -140,14 +138,13 @@ const Landing = () => {
 
   return (
     <div className="font-['Inter'] bg-white w-full overflow-x-hidden selection:bg-emerald-100 selection:text-emerald-900">
-      
+
       {/* --- Modern Floating Navbar --- */}
       <header
-        className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${
-          scrolled 
-            ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm' 
-            : 'bg-transparent border-transparent py-6'
-        }`}
+        className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${scrolled
+          ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
+          : 'bg-transparent border-transparent py-6'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3 group relative z-50">
@@ -171,18 +168,18 @@ const Landing = () => {
               { to: '/contact', label: text.contactUs },
               { to: '/help', label: text.help },
             ].map((link) => (
-              <Link 
-                key={link.to} 
-                to={link.to} 
+              <Link
+                key={link.to}
+                to={link.to}
                 className={`text-sm font-medium transition-colors hover:text-emerald-400 ${scrolled ? 'text-gray-700 hover:text-emerald-600' : 'text-gray-100'}`}
               >
                 {link.label}
               </Link>
             ))}
-            
+
             <div className="w-px h-4 bg-white/20"></div>
 
-            <button 
+            <button
               onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
               className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${scrolled ? 'text-gray-500 hover:text-emerald-600' : 'text-gray-300 hover:text-white'}`}
             >
@@ -191,11 +188,10 @@ const Landing = () => {
 
             <Link
               to="/login"
-              className={`text-sm font-semibold px-5 py-2 rounded-full transition-all duration-300 ${
-                scrolled 
-                  ? 'bg-gray-900 text-white hover:bg-emerald-600' 
-                  : 'bg-white text-gray-900 hover:bg-emerald-50'
-              }`}
+              className={`text-sm font-semibold px-5 py-2 rounded-full transition-all duration-300 ${scrolled
+                ? 'bg-gray-900 text-white hover:bg-emerald-600'
+                : 'bg-white text-gray-900 hover:bg-emerald-50'
+                }`}
             >
               {text.login}
             </Link>
@@ -218,7 +214,7 @@ const Landing = () => {
           <Link to="/contact" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.contactUs}</Link>
           <Link to="/help" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.help}</Link>
           <Link to="/login" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.login}</Link>
-          <button onClick={() => {setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false);}} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-8">
+          <button onClick={() => { setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false); }} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-8">
             Switch to {language === 'en' ? 'Gujarati' : 'English'}
           </button>
         </div>
@@ -242,8 +238,8 @@ const Landing = () => {
             </h1>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
-              <Link 
-                to="/register" 
+              <Link
+                to="/register"
                 className="group px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white font-bold text-lg rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
               >
                 {text.signUp}
@@ -253,99 +249,129 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* About Section - Who We Are (Image reverted to contract farming.jpg) */}
-        <section className="py-32 px-6 max-w-7xl mx-auto reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div>
-              <h4 className="text-emerald-600 font-bold uppercase tracking-widest text-sm mb-4">{text.aboutTag}</h4>
-              <h2 className="text-5xl md:text-6xl font-bold text-black mb-8 leading-[1.1]">{text.aboutTitle}</h2>
-              <p className="text-xl text-gray-600 leading-relaxed mb-6">
-                {text.aboutDesc1}
-              </p>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                {text.aboutDesc2}
-              </p>
-              
-              <div className="mt-12 flex gap-8">
-                <div className="flex flex-col">
-                  <span className="text-4xl font-bold text-black">10K+</span>
-                  <span className="text-gray-500 text-sm mt-1">Active Farmers</span>
+        {/* About Section */}
+        <section className="py-32 px-6 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full mb-6">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <span className="text-emerald-700 font-semibold text-sm uppercase tracking-wider">{text.aboutTag}</span>
                 </div>
-                <div className="w-px bg-gray-200"></div>
-                <div className="flex flex-col">
-                  <span className="text-4xl font-bold text-black">500+</span>
-                  <span className="text-gray-500 text-sm mt-1">Partner Companies</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-8 leading-[1.1]">{text.aboutTitle}</h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                  {text.aboutDesc1}
+                </p>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {text.aboutDesc2}
+                </p>
+
+                {/* Stats - Plain white bg, black font */}
+                <div className="mt-12 flex gap-12">
+                  <div>
+                    <span className="text-5xl font-black text-black">10K+</span>
+                    <p className="text-gray-500 text-sm mt-1">Active Farmers</p>
+                  </div>
+                  <div className="w-px bg-gray-200"></div>
+                  <div>
+                    <span className="text-5xl font-black text-black">500+</span>
+                    <p className="text-gray-500 text-sm mt-1">Partner Companies</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-emerald-100 rounded-[2.5rem] rotate-2 transition-transform group-hover:rotate-1"></div>
-              <img
-                // --- REVERTED IMAGE SOURCE ---
-                src="/src/assets/images/contract farming.jpg" 
-                alt="Farming"
-                className="relative w-full h-[600px] object-cover rounded-[2rem] shadow-2xl transition-all duration-700"
-              />
+
+              <div className="relative">
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-emerald-100 rounded-[2.5rem] rotate-2 transition-transform group-hover:rotate-1"></div>
+                  <img
+                    src="/src/assets/images/contract farming.jpg"
+                    alt="Farming"
+                    className="relative w-full h-[550px] object-cover rounded-[2rem] shadow-2xl"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* What We Offer - Improved Bento */}
-        <section className="py-32 bg-gray-50 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+        {/* What We Offer - Bento Grid with Clean B&W Theme */}
+        <section className="py-32 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-20 text-center max-w-3xl mx-auto">
-              <h2 className="text-5xl md:text-6xl font-bold text-black mb-6">{text.offerTitle}</h2>
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{text.offerTitle}</h2>
+              <p className="text-lg text-gray-500 max-w-2xl mx-auto">Two sides of the same coin, working together for a better future.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Farmer Card */}
-              <div className="group bg-white border border-black rounded-3xl p-10 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="p-4 bg-white border border-black rounded-2xl">
-                    <Users size={32} className="text-black" />
+            {/* Bento Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+              {/* Farmer Main Card - Spans 2 columns */}
+              <div className="lg:col-span-2 group bg-white rounded-3xl p-10 border border-gray-200 hover:border-black transition-all duration-300">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center">
+                    <Users size={24} className="text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-black">{text.forFarmers}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black">{text.forFarmers}</h3>
                 </div>
 
-                <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {[
                     { title: text.farmerBenefit1, desc: text.farmerBenefit1Desc, icon: CheckCircle },
                     { title: text.farmerBenefit2, desc: text.farmerBenefit2Desc, icon: IndianRupee },
                     { title: text.farmerBenefit3, desc: text.farmerBenefit3Desc, icon: TrendingUp },
                   ].map((item, i) => (
-                    <div key={i} className="flex gap-6">
-                      <item.icon className="w-6 h-6 text-black shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-lg font-semibold text-black mb-1">{item.title}</h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                      </div>
+                    <div key={i} className="bg-gray-50 rounded-2xl p-5 group-hover:bg-gray-100/50 transition-colors">
+                      <item.icon className="w-6 h-6 text-black mb-3" />
+                      <h4 className="text-black font-semibold mb-1">{item.title}</h4>
+                      <p className="text-gray-500 text-sm">{item.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Company Card */}
-              <div className="group bg-white border border-black rounded-3xl p-10 hover:shadow-2xl transition-all duration-500 relative overflow-hidden">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="p-4 bg-white border border-black rounded-2xl">
-                    <Handshake size={32} className="text-black" />
+              {/* Farmer CTA Card */}
+              <div className="bg-gray-50 rounded-3xl p-8 flex flex-col justify-between border border-gray-100 hover:border-black transition-all duration-300">
+                <div>
+                  <p className="text-gray-400 font-semibold text-sm uppercase tracking-wider mb-3">For Farmers</p>
+                  <h4 className="text-2xl font-bold text-black mb-4">Start selling your crops directly</h4>
+                  <p className="text-gray-500">Get fair prices and guaranteed buyers for your produce.</p>
+                </div>
+                <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-black font-semibold hover:gap-3 transition-all group/link">
+                  Register Now <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Company CTA Card */}
+              <div className="bg-black rounded-3xl p-8 flex flex-col justify-between">
+                <div>
+                  <p className="text-gray-500 font-semibold text-sm uppercase tracking-wider mb-3">For Companies</p>
+                  <h4 className="text-2xl font-bold text-white mb-4">Source quality produce</h4>
+                  <p className="text-gray-400">Connect with verified farmers for consistent supply.</p>
+                </div>
+                <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all group/link">
+                  Get Started <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Company Main Card - Spans 2 columns */}
+              <div className="lg:col-span-2 group bg-black rounded-3xl p-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center">
+                    <Handshake size={24} className="text-black" />
                   </div>
-                  <h3 className="text-3xl font-bold text-black">{text.forCompanies}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">{text.forCompanies}</h3>
                 </div>
 
-                <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {[
                     { title: text.companyBenefit1, desc: text.companyBenefit1Desc, icon: Truck },
                     { title: text.companyBenefit2, desc: text.companyBenefit2Desc, icon: Shield },
                     { title: text.companyBenefit3, desc: text.companyBenefit3Desc, icon: Handshake },
                   ].map((item, i) => (
-                    <div key={i} className="flex gap-6">
-                      <item.icon className="w-6 h-6 text-black shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-lg font-semibold text-black mb-1">{item.title}</h4>
-                        <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                      </div>
+                    <div key={i} className="bg-white/5 rounded-2xl p-5 border border-white/10 hover:bg-white/10 transition-colors">
+                      <item.icon className="w-6 h-6 text-white mb-3" />
+                      <h4 className="text-white font-semibold mb-1">{item.title}</h4>
+                      <p className="text-gray-400 text-sm">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -354,43 +380,49 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="py-32 max-w-7xl mx-auto px-6 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-black mb-4">
-              {text.howItWorksTitle}
-            </h2>
-          </div>
+        {/* How It Works - Stripe-Inspired Bento */}
+        <section className="py-32 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">
+                {text.howItWorksTitle}
+              </h2>
+              <p className="text-lg text-gray-500">Four simple steps to transform your farming business</p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: Users, title: text.step1, desc: text.step1Desc },
-              { icon: FileText, title: text.step2, desc: text.step2Desc },
-              { icon: Headset, title: text.step3, desc: text.step3Desc },
-              { icon: IndianRupee, title: text.step4, desc: text.step4Desc }
-            ].map((step, index) => (
-              <div key={index} className="relative group">
-                <div className="bg-white p-8 rounded-2xl border border-black hover:shadow-2xl transition-all duration-300">
-                  <div className="w-14 h-14 bg-white border border-black rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <step.icon className="w-7 h-7 text-black" />
+            {/* Bento Grid for How It Works */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { icon: Users, title: text.step1, desc: text.step1Desc, num: '01' },
+                { icon: FileText, title: text.step2, desc: text.step2Desc, num: '02' },
+                { icon: Headset, title: text.step3, desc: text.step3Desc, num: '03' },
+                { icon: IndianRupee, title: text.step4, desc: text.step4Desc, num: '04' }
+              ].map((step, index) => (
+                <div key={index} className="group relative bg-white rounded-3xl p-8 border border-gray-200 hover:border-black hover:shadow-xl transition-all duration-300">
+                  <div className="absolute top-6 right-6 text-7xl font-black text-gray-100 group-hover:text-gray-200 transition-colors">
+                    {step.num}
                   </div>
-                  <div className="text-5xl font-black text-gray-100 mb-4">0{index + 1}</div>
-                  <h3 className="text-xl font-bold text-black mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.desc}</p>
+                  <div className="relative">
+                    <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                      <step.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-black mb-2">{step.title}</h3>
+                    <p className="text-gray-500">{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Partners Section - Continuous Auto-Scrolling Marquee */}
-        <section className="py-20 border-y border-gray-100 bg-white reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+        {/* Partners Section - Original Simple Marquee */}
+        <section className="py-20 border-y border-gray-100 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
           <div className="max-w-7xl mx-auto px-6 text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black">{text.partnersTitle}</h2>
           </div>
-          
+
           <div className="relative w-full overflow-hidden whitespace-nowrap [mask-image:_linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-            <div className="inline-block animate-marquee group-hover:[animation-play-state:paused]">
+            <div className="inline-block animate-marquee">
               {doubledPartners.map((partner, index) => (
                 <img
                   key={index}
@@ -403,34 +435,56 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* Testimonials Section - Aesthetic Card Grid */}
-        <section className="py-32 max-w-7xl mx-auto px-6 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
-          <h2 className="text-5xl md:text-6xl font-bold text-center text-black mb-20">{text.testimonialsTitle}</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
-              <div 
-                key={i} 
-                className="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 hover:border-black transition-all duration-500 flex flex-col h-full relative group"
-              >
-                {/* Visual Quote Accent */}
-                <Quote size={40} className="text-emerald-100 absolute top-6 right-8 rotate-12 opacity-80 group-hover:text-emerald-200 transition-colors" />
+        {/* Testimonials Section - Better Design */}
+        <section className="py-32 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{text.testimonialsTitle}</h2>
+              <p className="text-lg text-gray-500">Real stories from real farmers and businesses</p>
+            </div>
 
-                {/* Quote Text */}
-                <p className="text-xl text-gray-700 leading-relaxed italic mb-8 relative z-10">
-                  "{t.quote}"
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((t, i) => (
+                <div
+                  key={i}
+                  className="group relative bg-white p-8 rounded-3xl border border-gray-200 hover:border-black transition-all duration-300 flex flex-col h-full"
+                >
+                  {/* Large Quote */}
+                  <div className="text-8xl font-serif text-gray-100 leading-none mb-4 group-hover:text-emerald-100 transition-colors">"</div>
 
-                {/* User Info */}
-                <div className="mt-auto flex gap-4 items-center pt-4 border-t border-gray-100">
-                  <img src={`/src/assets/images/${t.img}`} alt={t.name} className="w-14 h-14 rounded-full object-cover ring-2 ring-emerald-300/50" />
-                  <div>
-                    <h5 className="font-bold text-black">{t.name}</h5>
-                    <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">{t.role}</span>
+                  {/* Quote */}
+                  <p className="text-lg text-gray-700 leading-relaxed mb-8 flex-1 -mt-8">
+                    {t.quote}
+                  </p>
+
+                  {/* Author */}
+                  <div className="flex gap-4 items-center pt-6 border-t border-gray-100">
+                    <img src={`/src/assets/images/${t.img}`} alt={t.name} className="w-14 h-14 rounded-full object-cover" />
+                    <div>
+                      <h5 className="font-bold text-black">{t.name}</h5>
+                      <span className="text-sm text-gray-500">{t.role}</span>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* CTA - Black background */}
+            <div className="mt-20 text-center">
+              <div className="inline-flex flex-col sm:flex-row items-center gap-6 px-10 py-8 bg-black rounded-3xl">
+                <div className="text-white text-center sm:text-left">
+                  <h3 className="text-2xl font-bold mb-1">Ready to get started?</h3>
+                  <p className="text-gray-400">Join thousands of farmers and companies today</p>
+                </div>
+                <Link
+                  to="/register"
+                  className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-100 transition-colors flex items-center gap-2 group shrink-0"
+                >
+                  Get Started
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-            ))}
+            </div>
           </div>
         </section>
       </main>
@@ -441,14 +495,14 @@ const Landing = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
             <div>
               <Link to="/" className="flex items-center gap-3 mb-6">
-                 <img src="/src/assets/images/l.png" alt="Logo" className="h-8 opacity-90" />
-                 <span className="text-xl font-bold">Krishi Sangam</span>
+                <img src="/src/assets/images/l.png" alt="Logo" className="h-8 opacity-90" />
+                <span className="text-xl font-bold">Krishi Sangam</span>
               </Link>
               <p className="text-zinc-400 max-w-xs leading-relaxed">
                 Building the digital infrastructure for the future of Indian agriculture.
               </p>
             </div>
-            
+
             <div className="flex gap-16 flex-wrap">
               <div>
                 <h4 className="font-bold mb-6 text-white">Platform</h4>
@@ -468,7 +522,7 @@ const Landing = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 text-sm">
             <p>{text.footer}</p>
             <div className="flex gap-6">
