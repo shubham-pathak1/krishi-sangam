@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Contact from './pages/Contact';
 import FarmerRegistrationDetails from './pages/farmer/FarmerRegistrationDetails';
 import CompanyRegistrationDetails from './pages/company/CompanyRegistrationDetails';
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
 
           {/* Farmer Routes */}
           <Route path="/farmer/registration-details" element={<FarmerRegistrationDetails />} />
