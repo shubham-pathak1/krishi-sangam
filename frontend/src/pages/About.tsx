@@ -63,22 +63,22 @@ const About = () => {
             icon: Target,
             title: text.visionTitle,
             description: text.visionDesc,
-            image: '/src/assets/images/ov.jpg',
-            imageAlt: 'Our Vision',
+            image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80',
+            imageAlt: 'Our Vision - Farmer in golden wheat field',
         },
         {
             icon: Sparkles,
             title: text.offerTitle,
             description: text.offerDesc,
-            image: '/src/assets/images/offer.jpg',
-            imageAlt: 'What We Offer',
+            image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&q=80',
+            imageAlt: 'What We Offer - Fresh produce',
         },
         {
             icon: TrendingUp,
             title: text.impactTitle,
             description: text.impactDesc,
-            image: '/src/assets/images/impact.jpg',
-            imageAlt: 'Our Impact',
+            image: 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&q=80',
+            imageAlt: 'Our Impact - Happy farming community',
         },
     ];
 
@@ -88,8 +88,8 @@ const About = () => {
             {/* Floating Navbar */}
             <header
                 className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${scrolled
-                        ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
-                        : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
+                    ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
+                    : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">

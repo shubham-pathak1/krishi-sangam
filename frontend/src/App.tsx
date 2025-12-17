@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import Help from './pages/Help';
 import FarmerRegistrationDetails from './pages/farmer/FarmerRegistrationDetails';
 import CompanyRegistrationDetails from './pages/company/CompanyRegistrationDetails';
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/help" element={<Help />} />
 
           {/* Farmer Routes */}
           <Route path="/farmer/registration-details" element={<FarmerRegistrationDetails />} />
