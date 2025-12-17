@@ -14,19 +14,19 @@ Krishi Sangam is a comprehensive agricultural platform designed to bridge the ga
 ## Tech Stack
 
 ### Frontend
-- **Framework**: React 19 (Vite)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **State & Routing**: React Router DOM, React Hook Form
-- **HTTP Client**: Axios
-- **Icons**: Lucide React
+- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) **React 19 (Vite)**
+- ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) **TypeScript**
+- ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) **Tailwind CSS**
+- ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white) **React Router DOM**
+- ![Axios](https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white) **Axios**
+- ![Lucide](https://img.shields.io/badge/Lucide-F7931A?style=for-the-badge&logo=lucide&logoColor=white) **Lucide React**
 
 ### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB (Mongoose)
-- **Authentication**: JWT, Bcrypt
-- **Security**: CORS, Rate Limiting, Cookie Parser
+- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) **Node.js**
+- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) **Express.js**
+- ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) **MongoDB (Mongoose)**
+- ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) **JWT**
+- ![Security](https://img.shields.io/badge/Security-CORS%20%7C%20Rate%20Limiting-blue?style=for-the-badge) **CORS, Rate Limiting**
 
 ## Getting Started
 
