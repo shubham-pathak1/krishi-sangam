@@ -11,6 +11,7 @@ import CompanyRegistrationDetails from './pages/company/CompanyRegistrationDetai
 import AdminDashboard from './pages/admin/AdminDashboard';
 import FarmerManagement from './pages/admin/FarmerManagement';
 import CompanyManagement from './pages/admin/CompanyManagement';
+import ContractManagement from './pages/admin/ContractManagement';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/farmers" element={<FarmerManagement />} />
           <Route path="/admin/companies" element={<CompanyManagement />} />
+          <Route path="/admin/contracts" element={<ContractManagement />} />
 
           {/* Placeholder routes - to be implemented */}
           {/* <Route path="/farmer/dashboard" element={<FarmerDashboard />} /> */}
