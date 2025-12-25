@@ -12,6 +12,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import FarmerManagement from './pages/admin/FarmerManagement';
 import CompanyManagement from './pages/admin/CompanyManagement';
 import ContractManagement from './pages/admin/ContractManagement';
+import Transactions from './pages/admin/Transactions';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/admin/farmers" element={<FarmerManagement />} />
           <Route path="/admin/companies" element={<CompanyManagement />} />
           <Route path="/admin/contracts" element={<ContractManagement />} />
+          <Route path="/admin/transactions" element={<Transactions />} />
 
           {/* Placeholder routes - to be implemented */}
           {/* <Route path="/farmer/dashboard" element={<FarmerDashboard />} /> */}

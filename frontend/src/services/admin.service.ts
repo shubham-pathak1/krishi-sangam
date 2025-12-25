@@ -12,17 +12,24 @@ interface ApiResponse<T> {
 const adminService = {
     // Get dashboard counts (farmers, companies, contracts)
     getCounts: async (): Promise<AdminCounts> => {
-        const response = await fetch(`${API_BASE_URL}/admins/count/`, {
-            method: 'GET',
-            credentials: 'include',
-        });
+        try {
+            const response = await fetch(`${API_BASE_URL}/admins/count/`, {
+                method: 'GET',
+                credentials: 'include',
+            });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch counts');
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('getCounts error:', response.status, errorText);
+                throw new Error(`Failed to fetch counts (${response.status})`);
+            }
+
+            const result: ApiResponse<AdminCounts> = await response.json();
+            return result.data;
+        } catch (error) {
+            console.error('getCounts exception:', error);
+            throw error;
         }
-
-        const result: ApiResponse<AdminCounts> = await response.json();
-        return result.data;
     },
 
     // Get admin profile by phone
