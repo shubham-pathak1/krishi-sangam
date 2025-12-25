@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../context/AuthContext';
 import { Menu, X, Search, Bell, User, LogOut, ChevronDown, Leaf, FileText, CreditCard, LayoutDashboard } from 'lucide-react';
 import { Line } from 'react-chartjs-2';
@@ -14,7 +15,6 @@ import {
     Legend,
     Filler
 } from 'chart.js';
-import './FarmerDashboard.css';
 
 ChartJS.register(
     CategoryScale,
@@ -230,6 +230,13 @@ const FarmerDashboard = () => {
 
     const text = t[language];
 
+    const getStatusClass = (status: string) => {
+        const s = status.toLowerCase();
+        if (s === 'active' || s === 'completed') return 'text-emerald-600 font-bold';
+        if (s === 'pending') return 'text-red-500 font-bold';
+        return 'text-gray-600 font-bold';
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -239,7 +246,7 @@ const FarmerDashboard = () => {
     }
 
     return (
-        <div className="farmer-dashboard-container min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-gray-50 flex font-sans">
             {/* Sidebar */}
             <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:block`}>
                 <div className="flex items-center justify-between p-6 h-20 border-b">
@@ -315,7 +322,7 @@ const FarmerDashboard = () => {
                                     <ChevronDown className="w-4 h-4 text-gray-500" />
                                 </button>
                                 {profileOpen && (
-                                    <div className="absolute right-0 top-12 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 anime-fade-in-up">
+                                    <div className="absolute right-0 top-12 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 animate-fade-in-up z-50">
                                         <div className="px-4 py-2 border-b border-gray-50">
                                             <p className="text-sm font-semibold text-gray-900 truncate">{user?.Name}</p>
                                             <p className="text-xs text-gray-500 truncate">{user?.Email}</p>
@@ -335,7 +342,7 @@ const FarmerDashboard = () => {
 
                 {/* Dashboard Content */}
                 <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-                    <div className="max-w-6xl mx-auto space-y-8 fade-in">
+                    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
                         {/* Welcome */}
                         <div>
                             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{text.welcome}</h1>
@@ -344,19 +351,19 @@ const FarmerDashboard = () => {
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow summary-box cursor-pointer">
+                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer">
                                 <h3 className="text-sm font-medium text-gray-500">{text.activeContracts}</h3>
                                 <p className="text-3xl font-bold text-emerald-600 mt-2">{stats.activeContracts}</p>
                             </div>
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow summary-box cursor-pointer">
+                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer">
                                 <h3 className="text-sm font-medium text-gray-500">{text.totalEarnings}</h3>
                                 <p className="text-3xl font-bold text-emerald-600 mt-2">₹{stats.totalEarnings.toLocaleString('en-IN')}</p>
                             </div>
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow summary-box cursor-pointer">
+                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer">
                                 <h3 className="text-sm font-medium text-gray-500">{text.cropsListed}</h3>
                                 <p className="text-3xl font-bold text-emerald-600 mt-2">{stats.cropsListed}</p>
                             </div>
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow summary-box cursor-pointer">
+                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer">
                                 <h3 className="text-sm font-medium text-gray-500">{text.pendingPayments}</h3>
                                 <p className="text-3xl font-bold text-red-500 mt-2">₹{stats.pendingPayments.toLocaleString('en-IN')}</p>
                             </div>
@@ -370,41 +377,39 @@ const FarmerDashboard = () => {
                             </div>
                         </div>
 
-                        {/* Recent Activity & Top Companies */}
-                    </div>
-
-                    {/* Recent Activity */}
-                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-bold text-gray-900">{text.recentActivity}</h3>
-                        </div>
-                        <div className="overflow-x-auto table-wrapper">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-gray-100">
-                                        <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.type}</th>
-                                        <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.company}</th>
-                                        <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.amount}</th>
-                                        <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.status}</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-50">
-                                    {activities.length > 0 ? activities.map((activity, index) => (
-                                        <tr key={index} className="hover:bg-gray-50 transition-colors">
-                                            <td className="py-3 px-4 text-sm font-medium text-gray-900">{activity.type}</td>
-                                            <td className="py-3 px-4 text-sm text-gray-600">{activity.company}</td>
-                                            <td className="py-3 px-4 text-sm font-medium text-gray-900">₹{activity.amount.toLocaleString('en-IN')}</td>
-                                            <td className={`py-3 px-4 text-sm font-medium status-${activity.status.toLowerCase()}`}>{activity.status}</td>
+                        {/* Recent Activity */}
+                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-lg font-bold text-gray-900">{text.recentActivity}</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-gray-100">
+                                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.type}</th>
+                                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.company}</th>
+                                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.amount}</th>
+                                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.status}</th>
                                         </tr>
-                                    )) : (
-                                        <tr>
-                                            <td colSpan={4} className="py-8 text-center text-gray-400 text-sm">
-                                                No recent activity found.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-50">
+                                        {activities.length > 0 ? activities.map((activity, index) => (
+                                            <tr key={index} className="hover:bg-gray-50 transition-colors">
+                                                <td className="py-3 px-4 text-sm font-medium text-gray-900">{activity.type}</td>
+                                                <td className="py-3 px-4 text-sm text-gray-600">{activity.company}</td>
+                                                <td className="py-3 px-4 text-sm font-medium text-gray-900">₹{activity.amount.toLocaleString('en-IN')}</td>
+                                                <td className={`py-3 px-4 text-sm ${getStatusClass(activity.status)}`}>{activity.status}</td>
+                                            </tr>
+                                        )) : (
+                                            <tr>
+                                                <td colSpan={4} className="py-8 text-center text-gray-400 text-sm">
+                                                    No recent activity found.
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </main>

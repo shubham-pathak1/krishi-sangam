@@ -14,8 +14,10 @@ import CompanyManagement from './pages/admin/CompanyManagement';
 import ContractManagement from './pages/admin/ContractManagement';
 import Transactions from './pages/admin/Transactions';
 import FarmerDashboard from './pages/farmer/FarmerDashboard';
+import ExploreContracts from './pages/farmer/ExploreContracts';
 
 function App() {
+
   return (
     <AuthProvider>
       <Router>
@@ -41,8 +43,9 @@ function App() {
           <Route path="/admin/contracts" element={<ContractManagement />} />
           <Route path="/admin/transactions" element={<Transactions />} />
 
-          {/* Placeholder routes - to be implemented */}
+          {/* Farmer Routes */}
           <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
+          <Route path="/farmer/explore-contracts" element={<ExploreContracts />} />
           {/* <Route path="/company/dashboard" element={<CompanyDashboard />} /> */}
         </Routes>
       </Router>
