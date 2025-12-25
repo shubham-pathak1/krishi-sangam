@@ -48,7 +48,7 @@ const Login = () => {
     useEffect(() => {
         if (!authLoading && user) {
             if (user.Category === 'Farmer') {
-                navigate('/farmer/registration-details');
+                navigate('/farmer/dashboard');
             } else if (user.Category === 'Company') {
                 navigate('/company/registration-details');
             } else if (user.Category === 'Admin') {
@@ -164,8 +164,8 @@ const Login = () => {
             {/* Floating Navbar - Same as Landing */}
             <header
                 className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${scrolled
-                        ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
-                        : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
+                    ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
+                    : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
@@ -262,8 +262,8 @@ const Login = () => {
                             type="button"
                             onClick={() => setLoginMethod('phone')}
                             className={`flex-1 py-3.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${loginMethod === 'phone'
-                                    ? 'bg-white shadow-md text-gray-900'
-                                    : 'text-gray-500 hover:text-gray-700'
+                                ? 'bg-white shadow-md text-gray-900'
+                                : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             <Phone size={18} />
@@ -273,8 +273,8 @@ const Login = () => {
                             type="button"
                             onClick={() => setLoginMethod('email')}
                             className={`flex-1 py-3.5 px-4 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${loginMethod === 'email'
-                                    ? 'bg-white shadow-md text-gray-900'
-                                    : 'text-gray-500 hover:text-gray-700'
+                                ? 'bg-white shadow-md text-gray-900'
+                                : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             <Mail size={18} />

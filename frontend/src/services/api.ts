@@ -11,6 +11,7 @@ const api: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 15000, // Set timeout to 15s to prevent infinite loading
 });
 
 // Request Interceptor - Add access token to headers
@@ -49,6 +50,12 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         // If refresh fails, redirect to login
+        // Attempt to hit logout to clear cookies (using bare axios to avoid interceptor loop)
+        try {
+          await axios.post(`${BASE_URL}/users/logout`);
+        } catch (e) {
+          // ignore
+        }
         localStorage.removeItem('accessToken');
         window.location.href = '/login';
         return Promise.reject(refreshError);

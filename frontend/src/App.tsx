@@ -13,6 +13,7 @@ import FarmerManagement from './pages/admin/FarmerManagement';
 import CompanyManagement from './pages/admin/CompanyManagement';
 import ContractManagement from './pages/admin/ContractManagement';
 import Transactions from './pages/admin/Transactions';
+import FarmerDashboard from './pages/farmer/FarmerDashboard';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
           <Route path="/admin/transactions" element={<Transactions />} />
 
           {/* Placeholder routes - to be implemented */}
-          {/* <Route path="/farmer/dashboard" element={<FarmerDashboard />} /> */}
+          <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
           {/* <Route path="/company/dashboard" element={<CompanyDashboard />} /> */}
         </Routes>
       </Router>

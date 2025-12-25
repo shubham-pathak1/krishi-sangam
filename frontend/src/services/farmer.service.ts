@@ -65,3 +65,18 @@ export const deleteFarmer = async (id: string): Promise<void> => {
         throw new Error(handleApiError(error));
     }
 };
+
+// Get Farmer by Phone
+export const getFarmerByPhone = async (phone: string | number): Promise<FarmerDetails[]> => {
+    try {
+        const response = await api.get<ApiResponse<FarmerDetails[]>>(`/farmers/?phone=${phone}`);
+        if (response.data.success) {
+            return response.data.data;
+        }
+        return [];
+    } catch (error) {
+        // Return empty array if not found or error, to allow registration flow
+        console.error('Error fetching farmer profile:', error);
+        return [];
+    }
+};
