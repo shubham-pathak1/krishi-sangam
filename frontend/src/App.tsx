@@ -10,6 +10,7 @@ import FarmerRegistrationDetails from './pages/farmer/FarmerRegistrationDetails'
 import CompanyRegistrationDetails from './pages/company/CompanyRegistrationDetails';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import FarmerManagement from './pages/admin/FarmerManagement';
+import CompanyManagement from './pages/admin/CompanyManagement';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/farmers" element={<FarmerManagement />} />
+          <Route path="/admin/companies" element={<CompanyManagement />} />
 
           {/* Placeholder routes - to be implemented */}
           {/* <Route path="/farmer/dashboard" element={<FarmerDashboard />} /> */}

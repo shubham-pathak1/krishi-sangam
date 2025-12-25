@@ -53,3 +53,15 @@ export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
         throw new Error(handleApiError(error));
     }
 };
+
+// Delete Company (Admin only)
+export const deleteCompany = async (id: string): Promise<void> => {
+    try {
+        const response = await api.delete<ApiResponse<null>>(`/companies/${id}`);
+        if (!response.data.success) {
+            throw new Error(response.data.message || 'Failed to delete company');
+        }
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
