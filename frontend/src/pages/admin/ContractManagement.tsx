@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, LayoutDashboard, Users, Building2, FileText, CreditCard, LogOut, User, ChevronDown, Pencil, Trash2, FileCheck } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import contractService from '../../services/contract.service';
 import type { Contract } from '../../types/contract.types';
 
 const ContractManagement = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -48,10 +50,7 @@ const ContractManagement = () => {
     useEffect(() => { fetchContracts(); }, []);
 
     const handleLogout = async () => {
-        try {
-            await fetch('http://localhost:8000/api/v1/users/logout', { method: 'POST', credentials: 'include' });
-        } catch { }
-        navigate('/login');
+        try { await logout(); navigate('/login'); } catch { navigate('/login'); }
     };
 
     const filteredContracts = contracts.filter((c) => {

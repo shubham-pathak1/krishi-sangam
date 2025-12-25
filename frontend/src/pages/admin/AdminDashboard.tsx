@@ -4,6 +4,7 @@ import {
     Menu, X, Search, LayoutDashboard, Users, Building2,
     FileText, CreditCard, LogOut, User, ChevronDown
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import adminService from '../../services/admin.service';
 import contractService from '../../services/contract.service';
 import type { AdminCounts } from '../../types/admin.types';
@@ -58,12 +59,11 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
+    const { logout } = useAuth();
+
     const handleLogout = async () => {
         try {
-            await fetch('http://localhost:8000/api/v1/users/logout', {
-                method: 'POST',
-                credentials: 'include',
-            });
+            await logout();
             navigate('/login');
         } catch (err) {
             console.error('Logout error:', err);

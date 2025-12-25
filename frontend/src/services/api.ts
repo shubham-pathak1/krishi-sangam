@@ -1,7 +1,8 @@
 import axios, { type AxiosInstance, AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 // Base API URL
-const BASE_URL = 'http://localhost:8000/api/v1';
+// Base API URL
+const BASE_URL = '/api/v1';
 
 // Create axios instance
 const api: AxiosInstance = axios.create({
@@ -36,13 +37,14 @@ api.interceptors.response.use(
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
     // If 401 error and not already retried, try to refresh token
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // IMPORTANT: Do not try to refresh if the failed request was already for refresh-token
+    if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes('/refresh-token')) {
       originalRequest._retry = true;
 
       try {
         // Call refresh token endpoint
         await api.post('/users/refresh-token');
-        
+
         // Retry the original request
         return api(originalRequest);
       } catch (refreshError) {

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, LayoutDashboard, Users, Building2, FileText, CreditCard, LogOut, User, ChevronDown, Plus, Pencil, Trash2 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import { getAllFarmers, createFarmer, updateFarmer, deleteFarmer } from '../../services/farmer.service';
 import type { FarmerDetails, CreateFarmerRequest } from '../../types/farmer.types';
 
 const FarmerManagement = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -38,8 +40,7 @@ const FarmerManagement = () => {
     useEffect(() => { fetchFarmers(); }, []);
 
     const handleLogout = async () => {
-        try { await fetch('http://localhost:8000/api/v1/users/logout', { method: 'POST', credentials: 'include' }); } catch { }
-        navigate('/login');
+        try { await logout(); navigate('/login'); } catch { navigate('/login'); }
     };
 
     const filteredFarmers = farmers.filter((f) => {

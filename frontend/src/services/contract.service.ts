@@ -1,116 +1,77 @@
-// Contract service for API calls
-import type { Contract } from '../types/contract.types';
+import api, { handleApiError } from './api';
+import type { Contract, CreateContractTransactionRequest } from '../types/contract.types';
+import type { ApiResponse } from '../types/auth.types';
+import type { FarmerDetails } from '../types/farmer.types';
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+// Get All Contracts
+export const getAllContracts = async (): Promise<Contract[]> => {
+    try {
+        const response = await api.get<ApiResponse<Contract[]>>('/contracts/');
+        if (response.data.success) {
+            return response.data.data;
+        }
+        throw new Error(response.data.message || 'Failed to fetch contracts');
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
 
-interface ApiResponse<T> {
-    statusCode: number;
-    data: T;
-    message: string;
-    success?: boolean;
-}
+// Update Contract Status
+export const updateContract = async (id: string, data: { status: boolean }): Promise<Contract> => {
+    try {
+        const response = await api.put<ApiResponse<Contract>>(`/contracts/${id}`, data);
+        if (response.data.success) {
+            return response.data.data;
+        }
+        throw new Error(response.data.message || 'Failed to update contract');
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
 
-interface UpdateContractRequest {
-    status?: boolean;
-}
+// Delete Contract
+export const deleteContract = async (id: string): Promise<void> => {
+    try {
+        const response = await api.delete<ApiResponse<null>>(`/contracts/${id}`);
+        if (!response.data.success) {
+            throw new Error(response.data.message || 'Failed to delete contract');
+        }
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
 
-interface ContractTransactionRequest {
-    contract_id: string;
-    farmer_id: string;
-    company_id: string;
-    status: string;
-    payment_type: string;
-}
+// Get Farmer by Phone
+export const getFarmerByPhone = async (phone: string): Promise<FarmerDetails[]> => {
+    try {
+        const response = await api.get<ApiResponse<FarmerDetails[]>>(`/farmers/?phone=${phone}`);
+        if (response.data.success) {
+            return response.data.data;
+        }
+        throw new Error(response.data.message || 'Failed to fetch farmer');
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
+
+// Create Contract Transaction
+export const createContractTransaction = async (data: CreateContractTransactionRequest): Promise<void> => {
+    try {
+        await api.post<ApiResponse<null>>('/contract-transactions', data);
+        // Note: The API might just return 201 Created without body or success flag in some cases, 
+        // but assuming consistent successful response wrapper.
+        // If response.data is empty/null, axios still returns response object.
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};
 
 const contractService = {
-    // Get all contracts
-    getAllContracts: async (): Promise<Contract[]> => {
-        const response = await fetch(`${API_BASE_URL}/contracts/`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch contracts');
-        }
-
-        const result: ApiResponse<Contract[]> = await response.json();
-        return result.data;
-    },
-
-    // Get contract by ID
-    getContractById: async (id: string): Promise<Contract> => {
-        const response = await fetch(`${API_BASE_URL}/contracts/${id}`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch contract');
-        }
-
-        const result: ApiResponse<Contract> = await response.json();
-        return result.data;
-    },
-
-    // Update contract
-    updateContract: async (id: string, data: UpdateContractRequest): Promise<Contract> => {
-        const response = await fetch(`${API_BASE_URL}/contracts/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to update contract');
-        }
-
-        const result: ApiResponse<Contract> = await response.json();
-        return result.data;
-    },
-
-    // Delete contract
-    deleteContract: async (id: string): Promise<void> => {
-        const response = await fetch(`${API_BASE_URL}/contracts/${id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to delete contract');
-        }
-    },
-
-    // Get farmer by phone
-    getFarmerByPhone: async (phone: string): Promise<{ _id: string }[]> => {
-        const response = await fetch(`${API_BASE_URL}/farmers/?phone=${encodeURIComponent(phone)}`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch farmer');
-        }
-
-        const result: ApiResponse<{ _id: string }[]> = await response.json();
-        return result.data;
-    },
-
-    // Create contract transaction
-    createContractTransaction: async (data: ContractTransactionRequest): Promise<void> => {
-        const response = await fetch(`${API_BASE_URL}/contract-transactions/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to create contract transaction');
-        }
-    },
+    getAllContracts,
+    updateContract,
+    deleteContract,
+    getFarmerByPhone,
+    createContractTransaction,
 };
 
 export default contractService;
-

@@ -12,3 +12,12 @@ export interface Contract {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface CreateContractTransactionRequest {
+    contract_id: string;
+    farmer_id: string;
+    company_id: string;
+    status: string; // 'true' | 'false' or '0' | '1' based on backend
+    payment_type: string;
+    payment_id?: string;
+}
