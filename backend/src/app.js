@@ -7,13 +7,13 @@ const app = express();
 
 // Apply Rate Limiting (Global)
 const globalLimiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 200, // Limit each IP to 200 requests per window
+    windowMs: 10 * 60 * 1000, 
+    max: 200, 
     message: "Too many requests, please try again later",
     headers: true
 });
 
-app.use(globalLimiter); // Apply rate limiting to all routes
+app.use(globalLimiter); 
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -34,6 +34,8 @@ import contractRouter from './routes/contract.routes.js';
 import disputeRouter from './routes/dispute.routes.js';
 import feedbackRouter from './routes/feedback.routes.js';
 import paymentRouter from './routes/payment.routes.js';
+// [NEW] Import Transaction Routes (Make sure filename matches exactly!)
+import contractTransactionRouter from './routes/contractTranscation.routes.js'; 
 
 // Routes declaration
 app.use("/api/v1/users", userRouter);
@@ -44,4 +46,7 @@ app.use("/api/v1/contracts", contractRouter);
 app.use("/api/v1/disputes", disputeRouter);
 app.use("/api/v1/feedbacks", feedbackRouter);
 app.use("/api/v1/payments", paymentRouter);
+// [NEW] Mount Transaction Routes
+app.use("/api/v1/contract-transactions", contractTransactionRouter);
+
 export { app };

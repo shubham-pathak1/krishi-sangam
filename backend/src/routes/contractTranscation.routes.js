@@ -9,11 +9,13 @@ import {
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-router.use(verifyJWT)
-router.route("/").post(createContract);
-router.route("/").get(getAllContracts);
-router.route("/:id").get(getContractById);
-router.route("/:id").put(updateContract);
-router.route("/:id").delete(deleteContract);
+router.use(verifyJWT);
+
+// FIX: Use the correct function names
+router.route("/").post(createContractTransaction);
+router.route("/").get(getContractTransactions);
+router.route("/:id").get(getContractTransactionById);
+router.route("/:id").put(updateContractTransaction);
+router.route("/:id").delete(deleteContractTransaction);
 
 export default router;
