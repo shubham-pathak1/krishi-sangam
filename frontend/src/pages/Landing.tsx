@@ -149,7 +149,6 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3 group relative z-50">
             <div className="relative">
-              <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
               <img
                 src="/src/assets/images/l.png"
                 alt="Krishi Sangam"

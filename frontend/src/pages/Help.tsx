@@ -131,14 +131,13 @@ const Help = () => {
             {/* Floating Navbar */}
             <header
                 className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${scrolled
-                        ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
-                        : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
+                    ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
+                    : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-3 group relative z-50">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
                             <img
                                 src="/src/assets/images/l.png"
                                 alt="Krishi Sangam"
