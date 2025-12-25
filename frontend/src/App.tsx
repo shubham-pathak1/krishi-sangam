@@ -15,6 +15,7 @@ import ContractManagement from './pages/admin/ContractManagement';
 import Transactions from './pages/admin/Transactions';
 import FarmerDashboard from './pages/farmer/FarmerDashboard';
 import ExploreContracts from './pages/farmer/ExploreContracts';
+import FarmerContracts from './pages/farmer/FarmerContracts';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           {/* Farmer Routes */}
           <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
           <Route path="/farmer/explore-contracts" element={<ExploreContracts />} />
+          <Route path="/farmer/contracts" element={<FarmerContracts />} />
           {/* <Route path="/company/dashboard" element={<CompanyDashboard />} /> */}
         </Routes>
       </Router>
