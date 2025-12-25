@@ -1,17 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { Menu, X, Search, LogOut, ChevronDown, Leaf, FileText, CreditCard, LayoutDashboard } from 'lucide-react';
+import { Search, MapPin, Package, Calendar, ArrowRight, Activity, SlidersHorizontal, ArrowUpRight } from 'lucide-react';
 import { getAllContracts } from '../../services/contract.service';
+import FarmerLayout from '../../components/layout/FarmerLayout';
+import StatsCard from '../../components/ui/StatsCard';
+import StatusBadge from '../../components/ui/StatusBadge';
+import { useState, useEffect } from 'react';
 
 const ExploreContracts = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
-    const [language, setLanguage] = useState<'en' | 'gu'>('en');
+    const [language] = useState<'en' | 'gu'>('en');
 
-    // State for Contracts, Filters, Pagination
     const [allContracts, setAllContracts] = useState<any[]>([]);
     const [filteredContracts, setFilteredContracts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -97,87 +93,36 @@ const ExploreContracts = () => {
     const totalPages = Math.ceil(filteredContracts.length > 0 ? filteredContracts.length / itemsPerPage : 1);
     const paginatedContracts = filteredContracts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/login');
-        } catch (error) {
-            navigate('/login');
-        }
-    };
-
     const t = {
         en: {
-            dashboard: 'Dashboard',
-            explore: 'Explore Contracts',
-            myContracts: 'My Contracts',
-            myCrops: 'My Crops',
-            transactions: 'Transactions',
-            exploreTitle: 'Explore Contracts',
-            exploreDesc: 'Browse available contracts from various companies.',
-            totalContracts: 'Total Contracts',
-            topProducts: 'Top Products',
-            city: 'City',
-            allCities: 'All Cities',
-            product: 'Product',
-            allProducts: 'All Products',
-            sortBy: 'Sort By',
-            priceHighLow: 'Price: High to Low',
-            priceLowHigh: 'Price: Low to High',
-            qtyHighLow: 'Quantity: High to Low',
-            qtyLowHigh: 'Quantity: Low to High',
-            durHighLow: 'Duration: High to Low',
-            durLowHigh: 'Duration: Low to High',
-            noContracts: 'No contracts found.',
-            prev: 'Previous',
-            next: 'Next',
-            page: 'Page',
-            of: 'of',
-            logout: 'Logout',
-            contract: 'Contract',
-            companyName: 'Company Name',
-            quantity: 'Quantity',
-            duration: 'Duration',
-            price: 'Price',
-            paymentType: 'Payment Type',
-            kg: 'kg',
-            months: 'Months'
+            title: 'Marketplace',
+            desc: 'Protocol-verified agricultural partnerships.',
+            searchPlaceholder: 'Search crops or locations...',
+            city: 'Location',
+            allCities: 'All Locations',
+            product: 'Commodity',
+            allProducts: 'All Categories',
+            sortBy: 'Sort Axis',
+            results: `${filteredContracts.length} Records`,
+            stats: {
+                total: 'Live Inventory',
+                demandSpike: 'Demand Spike'
+            }
         },
         gu: {
-            dashboard: 'ડેશબોર્ડ',
-            explore: 'કરાર શોધો',
-            myContracts: 'મારા કરાર',
-            myCrops: 'મારા પાક',
-            transactions: 'વ્યવહારો',
-            exploreTitle: 'કરાર શોધો',
-            exploreDesc: 'વિવિધ કંપનીઓમાંથી ઉપલબ્ધ કરાર બ્રાઉઝ કરો.',
-            totalContracts: 'કુલ કરાર',
-            topProducts: 'ટોચના ઉત્પાદનો',
-            city: 'શહેર',
-            allCities: 'બધા શહેરો',
-            product: 'ઉત્પાદન',
-            allProducts: 'બધા ઉત્પાદનો',
-            sortBy: 'દ્વારા સૉર્ટ કરો',
-            priceHighLow: 'ભાવ: ઉચ્ચથી નીચું',
-            priceLowHigh: 'ભાવ: નીચુંથી ઉચ્ચ',
-            qtyHighLow: 'જથ્થો: ઉચ્ચથી નીચું',
-            qtyLowHigh: 'જથ્થો: નીચુંથી ઉચ્ચ',
-            durHighLow: 'અવધિ: ઉચ્ચથી નીચું',
-            durLowHigh: 'અવધિ: નીચુંથી ઉચ્ચ',
-            noContracts: 'કોઈ કરાર મળ્યા નથી.',
-            prev: 'પાછળ',
-            next: 'આગળ',
-            page: 'પૃષ્ઠ',
-            of: 'નું',
-            logout: 'લૉગઆઉટ',
-            contract: 'કરાર',
-            companyName: 'કંપનીનું નામ',
-            quantity: 'જથ્થો',
-            duration: 'અવધિ',
-            price: 'ભાવ',
-            paymentType: 'ચુકવણી પ્રકાર',
-            kg: 'કિલો',
-            months: 'મહિના'
+            title: 'બજાર',
+            desc: 'પ્રોટોકોલ-ચકાસાયેલ કૃષિ ભાગીદારી.',
+            searchPlaceholder: 'શોધો...',
+            city: 'સ્થાન',
+            allCities: 'બધા સ્થાનો',
+            product: 'પાક',
+            allProducts: 'બધી શ્રેણીઓ',
+            sortBy: 'સૉર્ટ કરો',
+            results: `${filteredContracts.length} રેકોર્ડ્સ`,
+            stats: {
+                total: 'લાઇવ ઇન્વેન્ટરી',
+                demandSpike: 'માંગમાં વધારો'
+            }
         }
     };
 
@@ -186,224 +131,201 @@ const ExploreContracts = () => {
     const uniqueProducts = [...new Set(allContracts.map(c => c.product).filter(Boolean))];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex font-sans">
-            {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:block`}>
-                <div className="flex items-center justify-between p-6 h-20 border-b">
-                    <Link to="/" className="flex items-center gap-3">
-                        <img src="/src/assets/images/l.png" alt="Logo" className="h-8 w-auto" />
-                        <span className="text-xl font-bold text-gray-900">Krishi Sangam</span>
-                    </Link>
-                    <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-                        <X className="w-5 h-5" />
-                    </button>
+        <FarmerLayout title={text.title} subtitle={text.desc}>
+            <div className="space-y-10">
+                {/* Search & Intelligence Section */}
+                <div className="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row gap-10 items-center justify-between">
+                    <div className="relative w-full lg:max-w-2xl group">
+                        <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                            <Search className="h-5 w-5 text-gray-400 group-focus-within:text-black transition-colors" />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder={text.searchPlaceholder}
+                            value={filters.search}
+                            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                            className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 focus:bg-white transition-all font-medium"
+                        />
+                    </div>
+
+                    <div className="flex gap-12 border-l border-gray-100 pl-12 hidden lg:flex">
+                        <div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 mb-2">LIVE INVENTORY</p>
+                            <p className="text-3xl font-black text-gray-900 leading-none tracking-tighter">{stats.total}</p>
+                        </div>
+                        {stats.topProducts !== 'None' && (
+                            <div>
+                                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 mb-2">DEMAND SPIKE</p>
+                                <div className="flex items-center gap-2">
+                                    <Activity className="w-4 h-4 text-emerald-500" />
+                                    <p className="text-sm font-black text-gray-900 truncate max-w-[200px] tracking-tight">{stats.topProducts}</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <nav className="p-4 space-y-1">
-                    <Link to="/farmer/dashboard" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <LayoutDashboard className="w-5 h-5" />
-                        {text.dashboard}
-                    </Link>
-                    <Link to="/farmer/explore-contracts" className="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-medium">
-                        <Search className="w-5 h-5" />
-                        {text.explore}
-                    </Link>
-                    <Link to="/farmer/contracts" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <FileText className="w-5 h-5" />
-                        {text.myContracts}
-                    </Link>
-                    <Link to="/farmer/crops" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <Leaf className="w-5 h-5" />
-                        {text.myCrops}
-                    </Link>
-                    <Link to="/farmer/transactions" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <CreditCard className="w-5 h-5" />
-                        {text.transactions}
-                    </Link>
-                </nav>
-            </aside>
 
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-                {/* Header */}
-                <header className="sticky top-0 z-40 bg-white border-b shadow-sm">
-                    <div className="flex items-center justify-between px-6 py-4 h-20">
-                        <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100 mr-4">
-                            <Menu className="w-6 h-6" />
-                        </button>
-                        <div className="flex-1 max-w-xl hidden md:block">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                <input
-                                    type="text"
-                                    placeholder={language === 'en' ? "Search..." : "શોધો..."}
-                                    className="w-full pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
-                                />
-                            </div>
-                        </div>
+                {/* Intelligence Metrics */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <StatsCard
+                        label={text.stats.total}
+                        value={stats.total}
+                        icon={Package}
+                        trend={{ label: 'Live Inventory', icon: Activity }}
+                    />
+                    <StatsCard
+                        label={language === 'en' ? 'Demand Spike' : 'માંગમાં વધારો'}
+                        value={stats.topProducts.split(',')[0] || 'N/A'}
+                        icon={Activity}
+                        color="text-emerald-500"
+                        trend={{ label: '+22%', icon: ArrowUpRight }}
+                    />
+                </div>
 
-                        <div className="flex items-center gap-4 ml-auto">
-                            <button
-                                onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
-                                className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+                {/* Filters Row */}
+                <div className="flex flex-wrap items-center gap-6">
+                    <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
+                        <MapPin className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                        <select
+                            value={filters.city}
+                            onChange={(e) => setFilters({ ...filters, city: e.target.value })}
+                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[140px]"
+                        >
+                            <option value="all">{text.allCities}</option>
+                            {uniqueCities.map(city => <option key={city} value={city}>{city}</option>)}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
+                        <Package className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                        <select
+                            value={filters.product}
+                            onChange={(e) => setFilters({ ...filters, product: e.target.value })}
+                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[140px]"
+                        >
+                            <option value="all">{text.allProducts}</option>
+                            {uniqueProducts.map(prod => <option key={prod} value={prod}>{prod}</option>)}
+                        </select>
+                    </div>
+
+                    <div className="lg:ml-auto flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
+                        <SlidersHorizontal className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                        <select
+                            value={filters.sort}
+                            onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer"
+                        >
+                            <option value="price-desc">Value: High-Low</option>
+                            <option value="price-asc">Value: Low-High</option>
+                            <option value="quantity-desc">Volume: High-Low</option>
+                            <option value="quantity-asc">Volume: Low-High</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Contracts Grid */}
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-32 min-h-[400px]">
+                        <div className="w-12 h-12 rounded-full border-t-2 border-black animate-spin mb-6"></div>
+                        <p className="text-sm font-black text-gray-300 uppercase tracking-widest">Compiling Market Data</p>
+                    </div>
+                ) : filteredContracts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {paginatedContracts.map((contract, index) => (
+                            <div
+                                key={contract._id || index}
+                                className="group bg-white rounded-[2.5rem] p-9 border border-gray-100 hover:border-black transition-all duration-500 flex flex-col shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)]"
                             >
-                                {language === 'en' ? 'GU' : 'EN'}
-                            </button>
-                            <div className="relative">
-                                <button
-                                    onClick={() => setProfileOpen(!profileOpen)}
-                                    className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-                                >
-                                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold">
-                                        {user?.Name?.charAt(0) || 'F'}
+                                <div className="flex items-start justify-between mb-8">
+                                    <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-900 font-black text-xl border border-gray-100 group-hover:bg-black group-hover:text-white transition-all duration-300">
+                                        {contract.company?.company_name?.charAt(0) || 'C'}
                                     </div>
-                                    <ChevronDown className="w-4 h-4 text-gray-500" />
-                                </button>
-                                {profileOpen && (
-                                    <div className="absolute right-0 top-12 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 anime-fade-in-up z-50">
-                                        <div className="px-4 py-2 border-b border-gray-50">
-                                            <p className="text-sm font-semibold text-gray-900 truncate">{user?.Name}</p>
-                                        </div>
-                                        <button onClick={handleLogout} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left">
-                                            <LogOut className="w-4 h-4" /> {text.logout}
-                                        </button>
+                                    <StatusBadge
+                                        status={contract.payment_type || 'Digital'}
+                                        className="shadow-sm"
+                                    />
+                                </div>
+
+                                <div className="mb-8">
+                                    <h3 className="text-2xl font-black text-gray-900 mb-1 tracking-tight group-hover:translate-x-1 transition-transform">{contract.product}</h3>
+                                    <p className="text-sm text-gray-400 font-bold uppercase tracking-tight">
+                                        {contract.company?.company_name || 'AgroCorp Global'}
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4 mb-10 flex-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                                            <Calendar className="w-3.5 h-3.5" /> Duration
+                                        </span>
+                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.duration} Months</span>
                                     </div>
-                                )}
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                                            <Package className="w-3.5 h-3.5" /> Quantity
+                                        </span>
+                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.quantity} MT</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                                            <MapPin className="w-3.5 h-3.5" /> Center
+                                        </span>
+                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.place}</span>
+                                    </div>
+                                </div>
+
+                                <div className="pt-8 border-t border-gray-50 flex items-center justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-1">UNIT LOCK-IN</p>
+                                        <p className="text-2xl font-black text-gray-900 tracking-tighter">₹{(contract.price || 0).toLocaleString('en-IN')}</p>
+                                    </div>
+                                    <button className="h-14 w-14 bg-black text-white rounded-[1.25rem] flex items-center justify-center hover:scale-105 transition-all shadow-xl shadow-gray-200">
+                                        <ArrowRight className="w-6 h-6" />
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
-                </header>
-
-                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-gray-50">
-                    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-                        {/* Title & Desc */}
-                        <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-                            <h2 className="text-2xl font-bold text-emerald-600 mb-2">{text.exploreTitle}</h2>
-                            <p className="text-gray-500 mb-8">{text.exploreDesc}</p>
-
-                            {/* Stats */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center hover:shadow-md transition-shadow">
-                                    <h3 className="text-sm font-medium text-gray-500 mb-2">{text.totalContracts}</h3>
-                                    <p className="text-2xl font-bold text-emerald-600">{stats.total}</p>
-                                </div>
-                                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center hover:shadow-md transition-shadow">
-                                    <h3 className="text-sm font-medium text-gray-500 mb-2">{text.topProducts}</h3>
-                                    <p className="text-lg font-bold text-emerald-600">{stats.topProducts}</p>
-                                </div>
-                            </div>
-
-                            {/* Filters */}
-                            <div className="flex flex-wrap gap-4 mb-8 items-end">
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-sm font-medium text-gray-700">{text.city}</label>
-                                    <select
-                                        value={filters.city}
-                                        onChange={(e) => setFilters({ ...filters, city: e.target.value })}
-                                        className="px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm min-w-[150px]"
-                                    >
-                                        <option value="all">{text.allCities}</option>
-                                        {uniqueCities.map(city => <option key={city} value={city}>{city}</option>)}
-                                    </select>
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-sm font-medium text-gray-700">{text.product}</label>
-                                    <select
-                                        value={filters.product}
-                                        onChange={(e) => setFilters({ ...filters, product: e.target.value })}
-                                        className="px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm min-w-[150px]"
-                                    >
-                                        <option value="all">{text.allProducts}</option>
-                                        {uniqueProducts.map(prod => <option key={prod} value={prod}>{prod}</option>)}
-                                    </select>
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-sm font-medium text-gray-700">{text.sortBy}</label>
-                                    <select
-                                        value={filters.sort}
-                                        onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
-                                        className="px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm min-w-[180px]"
-                                    >
-                                        <option value="price-desc">{text.priceHighLow}</option>
-                                        <option value="price-asc">{text.priceLowHigh}</option>
-                                        <option value="quantity-desc">{text.qtyHighLow}</option>
-                                        <option value="quantity-asc">{text.qtyLowHigh}</option>
-                                        <option value="duration-desc">{text.durHighLow}</option>
-                                        <option value="duration-asc">{text.durLowHigh}</option>
-                                    </select>
-                                </div>
-                                <div className="flex-grow min-w-[250px]">
-                                    <label className="text-sm font-medium text-gray-700 block mb-1">Search</label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            placeholder={language === 'en' ? "Search contracts..." : "કરા કરાર શોધો..."}
-                                            value={filters.search}
-                                            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                                            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm"
-                                        />
-                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Contracts List */}
-                            {loading ? (
-                                <div className="flex justify-center py-12">
-                                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-600"></div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                                        {paginatedContracts.map((contract, index) => (
-                                            <div key={contract._id || index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer group">
-                                                <h4 className="text-lg font-bold text-emerald-600 mb-3 group-hover:text-emerald-700 transition-colors">
-                                                    {text.contract} #{index + 1 + (currentPage - 1) * itemsPerPage}
-                                                </h4>
-                                                <div className="space-y-2 text-sm text-gray-600">
-                                                    <p><span className="font-semibold text-gray-900">{text.companyName}:</span> {contract.company?.company_name || 'N/A'}</p>
-                                                    <p><span className="font-semibold text-gray-900">{text.product}:</span> {contract.product}</p>
-                                                    <p><span className="font-semibold text-gray-900">{text.quantity}:</span> {contract.quantity} {text.kg}</p>
-                                                    <p><span className="font-semibold text-gray-900">{text.duration}:</span> {contract.duration} {text.months}</p>
-                                                    <p><span className="font-semibold text-gray-900">{text.city}:</span> {contract.place}</p>
-                                                    <p><span className="font-semibold text-gray-900">{text.price}:</span> ₹{(contract.price || 0).toLocaleString('en-IN')}</p>
-                                                    <div className="pt-2 mt-2 border-t border-gray-50 flex items-center justify-between">
-                                                        <span className="text-xs font-medium px-2 py-1 bg-gray-100 rounded text-gray-600">{contract.payment_type}</span>
-                                                        <button className="text-xs font-bold text-emerald-600 hover:text-emerald-700">View Details</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    {paginatedContracts.length === 0 && (
-                                        <p className="text-center text-gray-500 py-12 bg-white rounded-2xl border border-gray-100 border-dashed">{text.noContracts}</p>
-                                    )}
-
-                                    {/* Pagination */}
-                                    <div className="flex justify-center items-center gap-4">
-                                        <button
-                                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                            disabled={currentPage === 1}
-                                            className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 hover:border-emerald-200 transition-colors text-sm font-medium"
-                                        >
-                                            {text.prev}
-                                        </button>
-                                        <span className="text-sm font-medium text-gray-600">{text.page} {currentPage} {text.of} {totalPages}</span>
-                                        <button
-                                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                            disabled={currentPage === totalPages || totalPages === 0}
-                                            className="px-4 py-2 bg-emerald-500 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-600 shadow-sm hover:shadow transition-colors text-sm font-medium"
-                                        >
-                                            {text.next}
-                                        </button>
-                                    </div>
-                                </>
-                            )}
+                ) : (
+                    <div className="text-center py-32 bg-white rounded-[3rem] border border-dashed border-gray-200">
+                        <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Search className="w-8 h-8 text-gray-300" />
                         </div>
+                        <h3 className="text-xl font-black text-gray-900 mb-2">Zero Records Found</h3>
+                        <p className="text-sm text-gray-400 font-medium max-w-sm mx-auto">No contracts matched the selected search parameters.</p>
+                        <button
+                            onClick={() => setFilters({ search: '', city: 'all', product: 'all', sort: 'price-desc' })}
+                            className="mt-8 text-xs font-black text-black underline underline-offset-4 hover:opacity-70 transition-opacity uppercase tracking-widest"
+                        >
+                            Reset System Filters
+                        </button>
                     </div>
-                </main>
+                )}
+
+                {/* Pagination */}
+                {!loading && filteredContracts.length > 0 && (
+                    <div className="flex justify-center items-center gap-4 pt-10">
+                        <button
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                            className="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed hover:border-black transition-all font-black"
+                        >
+                            ←
+                        </button>
+                        <div className="px-6 py-3 bg-black text-white rounded-2xl text-[11px] font-black uppercase tracking-widest">
+                            Page {currentPage} / {totalPages}
+                        </div>
+                        <button
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                            className="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed hover:border-black transition-all font-black"
+                        >
+                            →
+                        </button>
+                    </div>
+                )}
             </div>
-        </div>
+        </FarmerLayout>
     );
 };
 

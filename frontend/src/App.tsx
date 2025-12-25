@@ -18,6 +18,7 @@ import ExploreContracts from './pages/farmer/ExploreContracts';
 import FarmerContracts from './pages/farmer/FarmerContracts';
 import FarmerCrops from './pages/farmer/FarmerCrops';
 import FarmerTransactions from './pages/farmer/FarmerTransactions';
+import CompanyDashboard from './pages/company/CompanyDashboard';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
 
           {/* Company Routes */}
           <Route path="/company/registration-details" element={<CompanyRegistrationDetails />} />
+          <Route path="/company/dashboard" element={<CompanyDashboard />} />
 
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -46,13 +48,12 @@ function App() {
           <Route path="/admin/contracts" element={<ContractManagement />} />
           <Route path="/admin/transactions" element={<Transactions />} />
 
-          {/* Farmer Routes */}
+          {/* Farmer Dashboard Routes */}
           <Route path="/farmer/dashboard" element={<FarmerDashboard />} />
           <Route path="/farmer/explore-contracts" element={<ExploreContracts />} />
           <Route path="/farmer/contracts" element={<FarmerContracts />} />
           <Route path="/farmer/crops" element={<FarmerCrops />} />
           <Route path="/farmer/transactions" element={<FarmerTransactions />} />
-          {/* <Route path="/company/dashboard" element={<CompanyDashboard />} /> */}
         </Routes>
       </Router>
     </AuthProvider>

@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { Menu, X, Search, LogOut, ChevronDown, Leaf, FileText, CreditCard, LayoutDashboard, Eye, Edit } from 'lucide-react';
+import { Eye, Edit, Calendar, DollarSign, Package, ArrowRight, CheckCircle2, AlertCircle, Activity } from 'lucide-react';
 import transactionService from '../../services/transaction.service';
-
+import FarmerLayout from '../../components/layout/FarmerLayout';
+import StatsCard from '../../components/ui/StatsCard';
+import StatusBadge from '../../components/ui/StatusBadge';
+import Modal from '../../components/ui/Modal';
 
 const FarmerContracts = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
-    const [language, setLanguage] = useState<'en' | 'gu'>('en');
+    const [language] = useState<'en' | 'gu'>('en');
 
     const [contracts, setContracts] = useState<any[]>([]);
     const [filteredContracts, setFilteredContracts] = useState<any[]>([]);
@@ -48,19 +45,11 @@ const FarmerContracts = () => {
         try {
             setLoading(true);
             const transactions: any[] = await transactionService.getAllTransactions();
-            // const allContracts = await getAllContracts(); // Might need this for cross-reference if transaction doesn't have full details
-
-            // Filter transactions for current user if backend doesn't (assuming it does, but safe to map)
-            // The API likely returns enriched transactions. 
-            // Based on dashboard, transactions have 'contract' object populated?
-            // If not, we map manually. Let's assume enrichment for now as per Dashboard experience.
-
             setContracts(transactions);
 
-            // Calculate Stats
             const total = transactions.length;
             const value = transactions.reduce((acc, curr) => acc + (curr.amount || 0), 0);
-            const active = transactions.filter(t => t.status === 'Active' || t.status === true || t.status === 'active').length;
+            const active = transactions.filter(t => String(t.status).toLowerCase() === 'active' || t.status === true).length;
 
             setStats({
                 total,
@@ -78,7 +67,6 @@ const FarmerContracts = () => {
     const filterAndSortContracts = () => {
         let result = [...contracts];
 
-        // Filter by Status
         if (filters.status !== 'all') {
             result = result.filter(c => {
                 const status = String(c.status).toLowerCase();
@@ -86,7 +74,6 @@ const FarmerContracts = () => {
             });
         }
 
-        // Sort
         result.sort((a, b) => {
             const dateA = new Date(a.createdAt || 0).getTime();
             const dateB = new Date(b.createdAt || 0).getTime();
@@ -105,15 +92,6 @@ const FarmerContracts = () => {
         setFilteredContracts(result);
     };
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/login');
-        } catch (error) {
-            navigate('/login');
-        }
-    };
-
     const openRequestModal = (contract: any) => {
         setSelectedContract(contract);
         setRequestForm({
@@ -126,382 +104,233 @@ const FarmerContracts = () => {
 
     const handleRequestSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Here we would call an API availability to submit a change request
-        alert(`Request submitted for Contract ${selectedContract?._id}`);
+        console.log("Request Submitted:", { contractId: selectedContract?._id, ...requestForm });
         setIsModalOpen(false);
+        alert("Modification request sent successfully to the company.");
     };
 
     const t = {
         en: {
-            dashboard: 'Dashboard',
-            explore: 'Explore Contracts',
-            myContracts: 'My Contracts',
-            myCrops: 'My Crops',
-            transactions: 'Transactions',
-            title: 'My Contracts',
-            subtitle: 'View and manage your active contracts below.',
-            totalContracts: 'Total Contracts',
-            totalValue: 'Total Value',
-            activeContracts: 'Active Contracts',
-            allStatuses: 'All Statuses',
-            active: 'Active',
-            pending: 'Pending',
-            completed: 'Completed',
-            sortBy: 'Sort By',
-            newest: 'Start Date (Newest)',
-            oldest: 'Start Date (Oldest)',
-            highLow: 'Amount (High to Low)',
-            lowHigh: 'Amount (Low to High)',
-            contractId: 'Contract ID',
-            company: 'Company Name',
-            crop: 'Crop',
-            qty: 'Quantity',
-            amount: 'Amount',
-            start: 'Start Date',
-            end: 'End Date',
-            status: 'Status',
-            actions: 'Actions',
-            view: 'View Details',
-            request: 'Request Change',
-            logout: 'Logout',
-            modalTitle: 'Request Contract Change',
-            propQty: 'Proposed Quantity (kg)',
-            propAmt: 'Proposed Amount (₹)',
-            reason: 'Reason for Change',
-            submit: 'Submit Request',
-            cancel: 'Cancel',
-            noContracts: 'No contracts found.'
+            title: 'Active Agreements',
+            subtitle: 'Legally binding agricultural protocols and settlements.',
+            stats: {
+                total: 'Total Vault',
+                active: 'Live Protocol',
+                value: 'Total Settlement'
+            },
+            status: {
+                active: 'Active',
+                completed: 'Settled',
+                pending: 'Queued',
+                all: 'All Status'
+            }
         },
         gu: {
-            dashboard: 'ડેશબોર્ડ',
-            explore: 'કરાર શોધો',
-            myContracts: 'મારા કરાર',
-            myCrops: 'મારા પાક',
-            transactions: 'વ્યવહારો',
-            title: 'મારા કરાર',
-            subtitle: 'નીચે તમારા સક્રિય કરાર જુઓ અને સંચાલન કરો.',
-            totalContracts: 'કુલ કરાર',
-            totalValue: 'કુલ મૂલ્ય',
-            activeContracts: 'સક્રિય કરાર',
-            allStatuses: 'બધી સ્થિતિઓ',
-            active: 'સક્રિય',
-            pending: 'બાકી',
-            completed: 'પૂર્ણ',
-            sortBy: 'દ્વારા સૉર્ટ કરો',
-            newest: 'પ્રારંભ તારીખ (નવું)',
-            oldest: 'પ્રારંભ તારીખ (જૂનું)',
-            highLow: 'રકમ (ઉચ્ચથી નીચું)',
-            lowHigh: 'રકમ (નીચુંથી ઉચ્ચ)',
-            contractId: 'કરાર આઈડી',
-            company: 'કંપનીનું નામ',
-            crop: 'પાક',
-            qty: 'જથ્થો',
-            amount: 'રકમ',
-            start: 'પ્રારંભ તારીખ',
-            end: 'અંત તારીખ',
-            status: 'સ્થિતિ',
-            actions: 'ક્રિયાઓ',
-            view: 'વિગતો જુઓ',
-            request: 'ફેરફારની વિનંતી',
-            logout: 'લૉગઆઉટ',
-            modalTitle: 'કરાર ફેરફારની વિનંતી',
-            propQty: 'પ્રસ્તાવિત જથ્થો (કિલો)',
-            propAmt: 'પ્રસ્તાવિત રકમ (₹)',
-            reason: 'ફેરફારનું કારણ',
-            submit: 'વિનંતી સબમિટ કરો',
-            cancel: 'રદ કરો',
-            noContracts: 'કોઈ કરાર મળ્યા નથી.'
+            title: 'સક્રિય કરારો',
+            subtitle: 'કાયદેસર રીતે બંધનકર્તા કૃષિ પ્રોટોકોલ અને વસાહતો.',
+            stats: {
+                total: 'કુલ તિજોરી',
+                active: 'લાઈવ પ્રોટોકોલ',
+                value: 'કુલ પતાવટ'
+            },
+            status: {
+                active: 'સક્રિય',
+                completed: 'પતાવટ',
+                pending: 'કતારબદ્ધ',
+                all: 'બધી સ્થિતિ'
+            }
         }
     };
 
-    const text = t[language];
-
-    const getStatusClass = (status: any) => {
-        const s = String(status).toLowerCase();
-        if (s === 'active' || s === 'true') return 'bg-emerald-100 text-emerald-700';
-        if (s === 'pending') return 'bg-amber-100 text-amber-700';
-        if (s === 'completed') return 'bg-gray-100 text-gray-700';
-        return 'bg-gray-100 text-gray-700';
-    };
-
-    const getStatusText = (status: any) => {
-        const s = String(status).toLowerCase();
-        if (s === 'active' || s === 'true') return text.active;
-        if (s === 'pending') return text.pending;
-        if (s === 'completed') return text.completed;
-        return status;
-    };
+    const text = (t as any)[language];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex font-sans">
-            {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:block`}>
-                <div className="flex items-center justify-between p-6 h-20 border-b">
-                    <Link to="/" className="flex items-center gap-3">
-                        <img src="/src/assets/images/l.png" alt="Logo" className="h-8 w-auto" />
-                        <span className="text-xl font-bold text-gray-900">Krishi Sangam</span>
-                    </Link>
-                    <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-                        <X className="w-5 h-5" />
-                    </button>
+        <FarmerLayout title={text.title} subtitle={text.subtitle}>
+            <div className="space-y-10">
+                {/* Protocol Insight Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <StatsCard
+                        label={text.stats.total}
+                        value={stats.total}
+                        icon={Package}
+                        trend={{ label: 'Total Vault', value: 0, isNeutral: true }}
+                    />
+                    <StatsCard
+                        label={text.stats.active}
+                        value={stats.active}
+                        icon={CheckCircle2}
+                        color="text-emerald-500"
+                        trend={{ label: 'Live Protocol', value: 0, icon: Activity }}
+                    />
+                    <StatsCard
+                        label={text.stats.value}
+                        value={`₹${stats.totalValue.toLocaleString('en-IN')}`}
+                        icon={DollarSign}
+                        color="text-indigo-500"
+                        trend={{ label: 'Total Settlement', value: 0, icon: ArrowRight }}
+                    />
                 </div>
-                <nav className="p-4 space-y-1">
-                    <Link to="/farmer/dashboard" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <LayoutDashboard className="w-5 h-5" />
-                        {text.dashboard}
-                    </Link>
-                    <Link to="/farmer/explore-contracts" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <Search className="w-5 h-5" />
-                        {text.explore}
-                    </Link>
-                    <Link to="/farmer/contracts" className="flex items-center gap-3 px-4 py-3 bg-emerald-50 text-emerald-600 rounded-xl font-medium">
-                        <FileText className="w-5 h-5" />
-                        {text.myContracts}
-                    </Link>
-                    <Link to="/farmer/crops" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <Leaf className="w-5 h-5" />
-                        {text.myCrops}
-                    </Link>
-                    <Link to="/farmer/transactions" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-                        <CreditCard className="w-5 h-5" />
-                        {text.transactions}
-                    </Link>
-                </nav>
-            </aside>
 
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-                {/* Header */}
-                <header className="sticky top-0 z-40 bg-white border-b shadow-sm">
-                    <div className="flex items-center justify-between px-6 py-4 h-20">
-                        <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-gray-100 mr-4">
-                            <Menu className="w-6 h-6" />
-                        </button>
-                        <div className="flex-1 max-w-xl hidden md:block">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                <input
-                                    type="text"
-                                    placeholder={language === 'en' ? "Search..." : "શોધો..."}
-                                    className="w-full pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-4 ml-auto">
+                {/* Filter Matrix */}
+                <div className="flex flex-wrap items-center gap-6">
+                    <div className="flex gap-2 bg-gray-100/50 p-1.5 rounded-2xl border border-gray-200/40">
+                        {['all', 'active', 'completed'].map((status) => (
                             <button
-                                onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
-                                className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+                                key={status}
+                                onClick={() => setFilters({ ...filters, status })}
+                                className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${filters.status === status
+                                    ? 'bg-black text-white shadow-lg'
+                                    : 'text-gray-400 hover:text-black'
+                                    }`}
                             >
-                                {language === 'en' ? 'GU' : 'EN'}
+                                {text.status[status as keyof typeof text.status]}
                             </button>
-                            <div className="relative">
-                                <button
-                                    onClick={() => setProfileOpen(!profileOpen)}
-                                    className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-                                >
-                                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold">
-                                        {user?.Name?.charAt(0) || 'F'}
-                                    </div>
-                                    <ChevronDown className="w-4 h-4 text-gray-500" />
-                                </button>
-                                {profileOpen && (
-                                    <div className="absolute right-0 top-12 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 anime-fade-in-up z-50">
-                                        <div className="px-4 py-2 border-b border-gray-50">
-                                            <p className="text-sm font-semibold text-gray-900 truncate">{user?.Name}</p>
-                                        </div>
-                                        <button onClick={handleLogout} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left">
-                                            <LogOut className="w-4 h-4" /> {text.logout}
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                </header>
 
-                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-gray-50">
-                    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-                        {/* Title & Desc */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-emerald-600 mb-2">{text.title}</h2>
-                            <p className="text-gray-500">{text.subtitle}</p>
+                    <div className="lg:ml-auto flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
+                        <select
+                            value={filters.sort}
+                            onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[160px]"
+                        >
+                            <option value="start-date-desc">Newest First</option>
+                            <option value="start-date-asc">Oldest First</option>
+                            <option value="amount-desc">Value: High-Low</option>
+                            <option value="amount-asc">Value: Low-High</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Agreement Terminal */}
+                <div className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)]">
+                    {loading ? (
+                        <div className="py-32 flex flex-col items-center justify-center">
+                            <div className="w-10 h-10 border-t-2 border-black rounded-full animate-spin mb-6"></div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">Syncing Ledger</p>
                         </div>
-
-                        {/* Stats Overview */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center hover:shadow-md transition-shadow">
-                                <h3 className="text-sm font-medium text-gray-500 mb-2">{text.totalContracts}</h3>
-                                <p className="text-2xl font-bold text-emerald-600">{stats.total}</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center hover:shadow-md transition-shadow">
-                                <h3 className="text-sm font-medium text-gray-500 mb-2">{text.totalValue}</h3>
-                                <p className="text-2xl font-bold text-emerald-600">₹{stats.totalValue.toLocaleString('en-IN')}</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center hover:shadow-md transition-shadow">
-                                <h3 className="text-sm font-medium text-gray-500 mb-2">{text.activeContracts}</h3>
-                                <p className="text-2xl font-bold text-emerald-600">{stats.active}</p>
-                            </div>
+                    ) : filteredContracts.length === 0 ? (
+                        <div className="py-32 flex flex-col items-center justify-center text-center">
+                            <AlertCircle className="w-12 h-12 text-gray-100 mb-6" />
+                            <p className="text-xl font-black text-gray-900 mb-2">Null Set</p>
+                            <p className="text-sm text-gray-400 font-medium">No agreement records match your current filter matrix.</p>
                         </div>
-
-                        {/* Filters & Table */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                            <div className="p-6 border-b border-gray-50 flex flex-col sm:flex-row gap-4 justify-between items-center">
-                                <div className="flex gap-4 w-full sm:w-auto">
-                                    <select
-                                        value={filters.status}
-                                        onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                                        className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm w-full sm:w-auto"
-                                    >
-                                        <option value="all">{text.allStatuses}</option>
-                                        <option value="active">{text.active}</option>
-                                        <option value="pending">{text.pending}</option>
-                                        <option value="completed">{text.completed}</option>
-                                    </select>
-                                    <select
-                                        value={filters.sort}
-                                        onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
-                                        className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm w-full sm:w-auto"
-                                    >
-                                        <option value="start-date-desc">{text.newest}</option>
-                                        <option value="start-date-asc">{text.oldest}</option>
-                                        <option value="amount-desc">{text.highLow}</option>
-                                        <option value="amount-asc">{text.lowHigh}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse">
-                                    <thead className="bg-gray-50">
-                                        <tr>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.contractId}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.company}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.crop}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.qty}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.amount}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.start}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.end}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.status}</th>
-                                            <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">{text.actions}</th>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead>
+                                    <tr className="bg-gray-50/50">
+                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Contract Entity</th>
+                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Terminal Date</th>
+                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Volume</th>
+                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Settlement</th>
+                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Protocol Status</th>
+                                        <th className="px-10 py-6 text-right text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Management</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-50">
+                                    {filteredContracts.map((contract) => (
+                                        <tr key={contract._id} className="group hover:bg-gray-50/50 transition-colors">
+                                            <td className="px-10 py-7">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-900 font-black text-sm border border-gray-100 group-hover:bg-black group-hover:text-white transition-all duration-300">
+                                                        {contract.company?.company_name?.charAt(0) || 'L'}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-black text-gray-900 tracking-tight">{contract.product || 'Agri Commodity'}</p>
+                                                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-tight">{contract.company?.company_name || 'AgroCorp'}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-10 py-7">
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar className="w-3.5 h-3.5 text-gray-300" />
+                                                    <span className="text-sm font-bold text-gray-900">{new Date(contract.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-10 py-7 text-sm font-bold text-gray-600">{contract.quantity || '0'} MT</td>
+                                            <td className="px-10 py-7 text-sm font-black text-gray-900">₹{(contract.amount || 0).toLocaleString('en-IN')}</td>
+                                            <td className="px-10 py-7">
+                                                <StatusBadge status={contract.status} />
+                                            </td>
+                                            <td className="px-10 py-7 text-right">
+                                                <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <button className="p-2.5 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-black hover:border-black transition-all">
+                                                        <Eye className="w-4 h-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => openRequestModal(contract)}
+                                                        className="p-2.5 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-black hover:border-black transition-all"
+                                                    >
+                                                        <Edit className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-50">
-                                        {loading ? (
-                                            <tr><td colSpan={9} className="py-8 text-center text-gray-500">Loading...</td></tr>
-                                        ) : filteredContracts.length === 0 ? (
-                                            <tr><td colSpan={9} className="py-8 text-center text-gray-500">{text.noContracts}</td></tr>
-                                        ) : (
-                                            filteredContracts.map((contract) => (
-                                                <tr key={contract._id} className="hover:bg-gray-50 transition-colors">
-                                                    <td className="py-4 px-6 text-sm font-medium text-gray-900">#{contract._id.substring(0, 6)}</td>
-                                                    <td className="py-4 px-6 text-sm text-gray-600">{contract.contract?.company?.company_name || contract.company_id || 'N/A'}</td>
-                                                    <td className="py-4 px-6 text-sm text-gray-600">{contract.contract?.product || 'Unknown'}</td>
-                                                    <td className="py-4 px-6 text-sm text-gray-600">{contract.quantity || contract.contract?.quantity} kg</td>
-                                                    <td className="py-4 px-6 text-sm font-medium text-gray-900">₹{(contract.amount || 0).toLocaleString('en-IN')}</td>
-                                                    <td className="py-4 px-6 text-sm text-gray-600">{new Date(contract.createdAt).toLocaleDateString()}</td>
-                                                    <td className="py-4 px-6 text-sm text-gray-600">{contract.contract?.duration ? new Date(new Date(contract.createdAt).setMonth(new Date(contract.createdAt).getMonth() + parseInt(contract.contract.duration))).toLocaleDateString() : 'N/A'}</td>
-                                                    <td className="py-4 px-6">
-                                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(contract.status)}`}>
-                                                            {getStatusText(contract.status)}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-4 px-6">
-                                                        <div className="flex gap-2">
-                                                            <button className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title={text.view}>
-                                                                <Eye className="w-4 h-4" />
-                                                            </button>
-                                                            <button
-                                                                onClick={() => openRequestModal(contract)}
-                                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                                                title={text.request}
-                                                                disabled={String(contract.status).toLowerCase() === 'completed'}
-                                                            >
-                                                                <Edit className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                </main>
+                    )}
+                </div>
             </div>
 
-            {/* Request Change Modal */}
-            {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fade-in">
-                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 m-4 animate-scale-in">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-xl font-bold text-gray-900">{text.modalTitle}</h3>
-                            <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600">
-                                <X className="w-6 h-6" />
-                            </button>
-                        </div>
-                        <form onSubmit={handleRequestSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{text.contractId}</label>
-                                <input
-                                    type="text"
-                                    value={selectedContract?._id}
-                                    readOnly
-                                    className="w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-xl text-gray-500 focus:outline-none"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{text.propQty}</label>
-                                <input
-                                    type="number"
-                                    required
-                                    value={requestForm.quantity}
-                                    onChange={(e) => setRequestForm({ ...requestForm, quantity: e.target.value })}
-                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{text.propAmt}</label>
-                                <input
-                                    type="number"
-                                    required
-                                    value={requestForm.amount}
-                                    onChange={(e) => setRequestForm({ ...requestForm, amount: e.target.value })}
-                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{text.reason}</label>
-                                <textarea
-                                    required
-                                    rows={4}
-                                    value={requestForm.reason}
-                                    onChange={(e) => setRequestForm({ ...requestForm, reason: e.target.value })}
-                                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none resize-none"
-                                ></textarea>
-                            </div>
-                            <div className="flex gap-4 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="flex-1 px-4 py-2 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors"
-                                >
-                                    {text.cancel}
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-medium transition-colors"
-                                >
-                                    {text.submit}
-                                </button>
-                            </div>
-                        </form>
+            {/* Contract Modification Modal */}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Protocol Adjustment"
+                subtitle="Submit a formal request for contract modification."
+            >
+                <form
+                    onSubmit={handleRequestSubmit}
+                    className="space-y-8"
+                >
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">TARGET QUANTITY (MT)</label>
+                        <input
+                            type="number"
+                            required
+                            value={requestForm.quantity}
+                            onChange={(e) => setRequestForm({ ...requestForm, quantity: e.target.value })}
+                            className="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all"
+                            placeholder="Enter new volume..."
+                        />
                     </div>
-                </div>
-            )}
-        </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">PROPOSED RATE (PER MT)</label>
+                        <div className="relative">
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 font-black text-gray-400">₹</span>
+                            <input
+                                type="number"
+                                required
+                                value={requestForm.amount}
+                                onChange={(e) => setRequestForm({ ...requestForm, amount: e.target.value })}
+                                className="w-full bg-gray-50 border-none rounded-2xl pl-10 pr-5 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all"
+                                placeholder="0.00"
+                            />
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">JUSTIFICATION</label>
+                        <textarea
+                            rows={4}
+                            required
+                            value={requestForm.reason}
+                            onChange={(e) => setRequestForm({ ...requestForm, reason: e.target.value })}
+                            className="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all resize-none"
+                            placeholder="Provide formal reasoning for this protocol change..."
+                        ></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-black text-white py-5 rounded-[1.5rem] text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-gray-200 hover:scale-[1.02] active:scale-95 transition-all"
+                    >
+                        INITIATE REQUEST
+                    </button>
+                </form>
+            </Modal>
+        </FarmerLayout>
     );
 };
 

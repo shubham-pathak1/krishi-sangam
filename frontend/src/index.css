@@ -1,33 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-gray-200;
+  :root {
+    --brand-emerald: 16 185 129;
+    --brand-zinc: 24 24 27;
   }
-  
+
+  * {
+    @apply border-gray-100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply bg-gray-50 text-gray-900 font-sans;
+    @apply bg-[#FAFAFA] text-zinc-900 font-sans selection:bg-emerald-100 selection:text-emerald-900;
+    letter-spacing: -0.01em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight;
   }
 }
 
 @layer components {
-  .btn-primary {
-    @apply bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium;
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0, 0, 0, 0.03)];
   }
-  
-  .btn-secondary {
-    @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors font-medium;
+
+  .premium-card {
+    @apply bg-white rounded-2xl border border-zinc-100 shadow-premium transition-all duration-300 hover:shadow-premium-hover hover:border-zinc-200;
   }
-  
-  .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all;
+
+  .btn-premium {
+    @apply h-11 px-6 bg-zinc-950 text-white rounded-xl text-sm font-bold tracking-tight transition-all duration-300 hover:bg-zinc-800 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2;
   }
-  
-  .card {
-    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+
+  .input-premium {
+    @apply w-full h-12 px-4 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium transition-all focus:bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none placeholder:text-zinc-400;
   }
+}
+
+/* Custom Utilities */
+.tracking-institutional {
+  letter-spacing: -0.02em;
+}
+
+.tracking-display {
+  letter-spacing: -0.04em;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-zinc-200 rounded-full hover:bg-zinc-300 transition-colors;
 }
