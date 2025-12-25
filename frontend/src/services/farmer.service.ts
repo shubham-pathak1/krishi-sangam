@@ -53,3 +53,15 @@ export const getAllFarmers = async (): Promise<FarmerDetails[]> => {
         throw new Error(handleApiError(error));
     }
 };
+
+// Delete Farmer (Admin only)
+export const deleteFarmer = async (id: string): Promise<void> => {
+    try {
+        const response = await api.delete<ApiResponse<null>>(`/farmers/${id}`);
+        if (!response.data.success) {
+            throw new Error(response.data.message || 'Failed to delete farmer');
+        }
+    } catch (error) {
+        throw new Error(handleApiError(error));
+    }
+};

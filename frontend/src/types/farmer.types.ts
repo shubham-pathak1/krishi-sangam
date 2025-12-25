@@ -6,7 +6,7 @@ export interface FarmerDetails {
   email: string;
   address: string;
   land_size: number;
-  phone_no: number;
+  phone_no: number | string;
   id_proof: string;
   survey_no: string;
   crop_one: string;
@@ -20,7 +20,7 @@ export interface CreateFarmerRequest {
   email: string;
   address: string;
   land_size: number;
-  phone_no: number;
+  phone_no: number | string;
   id_proof: string;
   survey_no: string;
   crop_one: string;
@@ -31,7 +31,8 @@ export interface UpdateFarmerRequest {
   name?: string;
   address?: string;
   land_size?: number;
-  phone_no?: number;
+  phone_no?: number | string;
   id_proof?: string;
   survey_no?: string;
 }
+

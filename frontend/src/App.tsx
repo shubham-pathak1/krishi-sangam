@@ -8,6 +8,8 @@ import About from './pages/About';
 import Help from './pages/Help';
 import FarmerRegistrationDetails from './pages/farmer/FarmerRegistrationDetails';
 import CompanyRegistrationDetails from './pages/company/CompanyRegistrationDetails';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import FarmerManagement from './pages/admin/FarmerManagement';
 
 function App() {
   return (
@@ -28,10 +30,13 @@ function App() {
           {/* Company Routes */}
           <Route path="/company/registration-details" element={<CompanyRegistrationDetails />} />
 
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/farmers" element={<FarmerManagement />} />
+
           {/* Placeholder routes - to be implemented */}
           {/* <Route path="/farmer/dashboard" element={<FarmerDashboard />} /> */}
           {/* <Route path="/company/dashboard" element={<CompanyDashboard />} /> */}
-          {/* <Route path="/admin/dashboard" element={<AdminDashboard />} /> */}
         </Routes>
       </Router>
     </AuthProvider>
