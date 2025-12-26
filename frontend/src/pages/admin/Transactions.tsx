@@ -121,7 +121,7 @@ const Transactions = () => {
                         label="COMPLETED SETTLEMENTS"
                         value={stats.completed}
                         icon={CheckCircle2}
-                        color="text-emerald-500"
+                        color="text-primary-500"
                     />
                     <StatsCard
                         label="PENDING PAYMENTS"

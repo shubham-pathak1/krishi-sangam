@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -17,8 +17,7 @@
   }
 
   body {
-    @apply bg-[#FAFAFA] text-zinc-900 font-sans selection:bg-emerald-100 selection:text-emerald-900;
-    letter-spacing: -0.01em;
+    @apply bg-[#FCFAF8] text-zinc-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 tracking-tight;
   }
 
   h1,
@@ -45,7 +44,7 @@
   }
 
   .input-premium {
-    @apply w-full h-12 px-4 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium transition-all focus:bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none placeholder:text-zinc-400;
+    @apply w-full h-12 px-4 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium transition-all focus:bg-white focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 outline-none placeholder:text-zinc-400;
   }
 }
 

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Error: Unauthorized request<br> &nbsp; &nbsp;at file:///D:/krishi%20sangam/backend/src/middlewares/auth.middleware.js:22:15<br> &nbsp; &nbsp;at file:///D:/krishi%20sangam/backend/src/utils/asyncHandler.js:3:25<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (D:\krishi sangam\backend\node_modules\express\lib\router\layer.js:95:5)<br> &nbsp; &nbsp;at trim_prefix (D:\krishi sangam\backend\node_modules\express\lib\router\index.js:328:13)<br> &nbsp; &nbsp;at D:\krishi sangam\backend\node_modules\express\lib\router\index.js:286:9<br> &nbsp; &nbsp;at Function.process_params (D:\krishi sangam\backend\node_modules\express\lib\router\index.js:346:12)<br> &nbsp; &nbsp;at next (D:\krishi sangam\backend\node_modules\express\lib\router\index.js:280:10)<br> &nbsp; &nbsp;at Function.handle (D:\krishi sangam\backend\node_modules\express\lib\router\index.js:175:3)<br> &nbsp; &nbsp;at router (D:\krishi sangam\backend\node_modules\express\lib\router\index.js:47:12)<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (D:\krishi sangam\backend\node_modules\express\lib\router\layer.js:95:5)</pre>
+</body>
+</html>

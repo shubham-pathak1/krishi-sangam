@@ -110,33 +110,34 @@ const FarmerTransactions = () => {
                         label={text.stats.total}
                         value={stats.total}
                         icon={Activity}
+                        imageSrc="/src/assets/images/fmanage.png"
                     />
                     <StatsCard
                         label={text.stats.revenue}
                         value={`₹${stats.totalAmount.toLocaleString('en-IN')}`}
                         icon={ArrowUpRight}
-                        color="text-emerald-500"
-                        trend={{ label: 'Realized', value: 0, isNeutral: true }}
+                        imageSrc="/src/assets/images/transactions.png"
+                        trend={{ label: 'Realized Protocol', icon: Activity }}
                     />
                     <StatsCard
                         label={text.stats.pending}
                         value={`₹${stats.pending.toLocaleString('en-IN')}`}
                         icon={AlertCircle}
-                        color="text-amber-500"
-                        trend={{ label: 'Awaiting', value: 0, isNeutral: true }}
+                        imageSrc="/src/assets/images/ccontract.png"
+                        trend={{ label: 'Awaiting Settlement', isNeutral: true }}
                     />
                 </div>
 
-                <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)] overflow-hidden">
-                    <div className="p-10 border-b border-gray-50 flex flex-col lg:flex-row gap-10 items-center justify-between bg-gray-50/20">
-                        <div className="flex gap-2 bg-white p-1.5 rounded-[1.5rem] border border-gray-200/40 shadow-sm">
+                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/60 shadow-premium overflow-hidden transition-all duration-500">
+                    <div className="p-10 border-b border-white/40 flex flex-col lg:flex-row gap-10 items-center justify-between">
+                        <div className="flex gap-2 bg-white/40 backdrop-blur-md p-1.5 rounded-[1.5rem] border border-white">
                             {(['stock', 'payments'] as const).map((id) => (
                                 <button
                                     key={id}
                                     onClick={() => setTab(id)}
-                                    className={`px-8 py-3 rounded-[1.25rem] text-[11px] font-black uppercase tracking-widest transition-all ${tab === id
-                                        ? 'bg-black text-white shadow-lg'
-                                        : 'text-gray-400 hover:text-black'
+                                    className={`px-8 py-3 rounded-[1.25rem] text-[10px] font-black uppercase tracking-[0.2em] transition-all ${tab === id
+                                        ? 'bg-zinc-950 text-white shadow-xl'
+                                        : 'text-zinc-400 hover:text-zinc-950'
                                         }`}
                                 >
                                     {text.tabs[id]}
@@ -146,31 +147,31 @@ const FarmerTransactions = () => {
 
                         <div className="relative w-full lg:max-w-md group">
                             <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                                <Search className="h-4 w-4 text-gray-400 group-focus-within:text-black transition-colors" />
+                                <Search className="h-5 w-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
                             </div>
                             <input
                                 type="text"
                                 placeholder="Audit logs..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="w-full pl-14 pr-6 py-4 bg-white border border-gray-100 rounded-2xl text-[13px] font-medium placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 transition-all shadow-sm"
+                                className="w-full pl-14 pr-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-[13px] font-black placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all shadow-sm"
                             />
                         </div>
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left">
+                        <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-gray-50/50">
-                                    <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Identifier</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Counterparty</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">{tab === 'stock' ? 'Volume' : 'Method'}</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Timestamp</th>
-                                    <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Status</th>
-                                    <th className="px-10 py-6 text-right text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Settlement</th>
+                                <tr className="bg-white/20 border-b border-white/40">
+                                    <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Identifier</th>
+                                    <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Counterparty</th>
+                                    <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">{tab === 'stock' ? 'Volume' : 'Method'}</th>
+                                    <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Timestamp</th>
+                                    <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Status</th>
+                                    <th className="px-12 py-8 text-right text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Settlement</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-50">
+                            <tbody className="divide-y divide-white/20">
                                 {loading ? (
                                     <tr>
                                         <td colSpan={6} className="py-20 text-center">
@@ -187,34 +188,34 @@ const FarmerTransactions = () => {
                                     </tr>
                                 ) : (
                                     filteredTransactions.map((item) => (
-                                        <tr key={item._id} className="group hover:bg-gray-50/50 transition-colors">
-                                            <td className="px-10 py-7">
-                                                <div className="flex items-center gap-3">
-                                                    <div className={`p-2.5 rounded-xl ${tab === 'stock' ? 'bg-indigo-50 text-indigo-500' : 'bg-emerald-50 text-emerald-500'}`}>
-                                                        {tab === 'stock' ? <Package className="w-4 h-4" /> : <CreditCard className="w-4 h-4" />}
+                                        <tr key={item._id} className="group hover:bg-white/60 transition-all duration-300">
+                                            <td className="px-12 py-8">
+                                                <div className="flex items-center gap-4">
+                                                    <div className={`p-3 rounded-2xl ${tab === 'stock' ? 'bg-zinc-100 text-zinc-950' : 'bg-zinc-950 text-white shadow-lg'} transition-all duration-500 group-hover:scale-110`}>
+                                                        {tab === 'stock' ? <Package className="w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
                                                     </div>
-                                                    <span className="font-mono text-[11px] font-bold text-gray-400">ID-{item._id.substring(item._id.length - 8).toUpperCase()}</span>
+                                                    <span className="font-mono text-[10px] font-black text-zinc-400">ID-{item._id.substring(item._id.length - 8).toUpperCase()}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-10 py-7">
+                                            <td className="px-12 py-8">
                                                 <div>
-                                                    <p className="text-[13px] font-black text-gray-900 tracking-tight">{item.contract?.company?.company_name || 'Protocol Partner'}</p>
-                                                    <p className="text-[11px] font-bold text-gray-400 uppercase">{item.contract?.product || 'Commodity'}</p>
+                                                    <p className="text-[14px] font-black text-zinc-950 tracking-tight">{item.contract?.company?.company_name || 'Protocol Partner'}</p>
+                                                    <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.1em] mt-0.5">{item.contract?.product || 'Commodity'}</p>
                                                 </div>
                                             </td>
-                                            <td className="px-10 py-7">
-                                                <span className="text-[13px] font-bold text-gray-600">
+                                            <td className="px-12 py-8">
+                                                <span className="text-[14px] font-semibold text-zinc-600 tracking-tight">
                                                     {tab === 'stock' ? `${item.quantity || '0'} MT` : (item.payment_type || 'Electronic')}
                                                 </span>
                                             </td>
-                                            <td className="px-10 py-7 text-[13px] font-bold text-gray-400">
+                                            <td className="px-12 py-8 text-[14px] font-semibold text-zinc-400 tracking-tight">
                                                 {new Date(item.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                                             </td>
-                                            <td className="px-10 py-7">
+                                            <td className="px-12 py-8">
                                                 <StatusBadge status={String(item.status)} />
                                             </td>
-                                            <td className="px-10 py-7 text-right">
-                                                <span className={`text-[15px] font-black ${tab === 'payments' ? 'text-emerald-600' : 'text-gray-900'} tracking-tighter`}>
+                                            <td className="px-12 py-8 text-right">
+                                                <span className={`text-[17px] font-black text-zinc-950 tracking-tightest`}>
                                                     ₹{(item.amount || 0).toLocaleString('en-IN')}
                                                 </span>
                                             </td>

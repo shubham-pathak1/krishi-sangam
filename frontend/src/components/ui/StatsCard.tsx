@@ -4,6 +4,7 @@ interface StatsCardProps {
     label: string;
     value: string | number;
     icon: LucideIcon;
+    imageSrc?: string;
     trend?: {
         label: string;
         icon?: LucideIcon;
@@ -13,19 +14,23 @@ interface StatsCardProps {
     description?: string;
 }
 
-const StatsCard = ({ label, value, icon: Icon, trend, color = "text-zinc-900", description }: StatsCardProps) => {
+const StatsCard = ({ label, value, icon: Icon, imageSrc, trend, color = "text-zinc-900", description }: StatsCardProps) => {
     return (
-        <div className="premium-card p-8 group overflow-hidden relative">
-            {/* Background Accent */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-50 rounded-full -mr-16 -mt-16 group-hover:bg-emerald-50/50 transition-colors duration-500" />
+        <div className="bg-white/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 p-8 group overflow-hidden relative transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:bg-white/60 cursor-pointer">
+            {/* Background Accent - Frosted Neutral Glow */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-900/5 rounded-full -mr-16 -mt-16 group-hover:bg-zinc-900/10 transition-all duration-700 blur-3xl" />
 
             <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 bg-zinc-50 rounded-xl group-hover:bg-zinc-900 group-hover:text-white transition-all duration-300">
-                        <Icon className="w-5 h-5" />
+                    <div className="w-14 h-14 bg-white/80 rounded-2xl border border-white flex items-center justify-center transition-all duration-500 shadow-sm group-hover:bg-white group-hover:shadow-md">
+                        {imageSrc ? (
+                            <img src={imageSrc} alt={label} className="w-8 h-8 object-contain" />
+                        ) : (
+                            <Icon className="w-6 h-6 text-zinc-900 transition-transform duration-500 group-hover:scale-110" />
+                        )}
                     </div>
                     {trend && (
-                        <div className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold ${trend.isNeutral ? 'bg-zinc-100 text-zinc-500' : 'bg-emerald-50 text-emerald-600'}`}>
+                        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black tracking-tight shadow-sm border ${trend.isNeutral ? 'bg-zinc-100/50 text-zinc-500 border-zinc-100/50' : 'bg-zinc-950 text-white border-zinc-950'}`}>
                             {trend.icon && <trend.icon className="w-3 h-3" />}
                             {trend.label}
                         </div>
@@ -33,10 +38,10 @@ const StatsCard = ({ label, value, icon: Icon, trend, color = "text-zinc-900", d
                 </div>
 
                 <div className="space-y-1">
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{label}</p>
-                    <h3 className={`text-3xl font-bold tracking-display font-display ${color}`}>{value}</h3>
+                    <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">{label}</p>
+                    <h3 className={`text-3xl font-black tracking-tightest font-display ${color}`}>{value}</h3>
                     {description && (
-                        <p className="text-xs text-zinc-400 font-medium leading-relaxed mt-2">{description}</p>
+                        <p className="text-[13px] text-zinc-500 font-medium leading-relaxed mt-2 tracking-tight">{description}</p>
                     )}
                 </div>
             </div>

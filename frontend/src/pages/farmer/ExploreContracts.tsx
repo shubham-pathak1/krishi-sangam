@@ -132,33 +132,33 @@ const ExploreContracts = () => {
 
     return (
         <FarmerLayout title={text.title} subtitle={text.desc}>
-            <div className="space-y-10">
+            <div className="space-y-12 pb-20">
                 {/* Search & Intelligence Section */}
-                <div className="bg-white rounded-[2.5rem] p-10 border border-gray-100 shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)] flex flex-col lg:flex-row gap-10 items-center justify-between">
+                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 shadow-premium flex flex-col lg:flex-row gap-10 items-center justify-between transition-all duration-500">
                     <div className="relative w-full lg:max-w-2xl group">
                         <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                            <Search className="h-5 w-5 text-gray-400 group-focus-within:text-black transition-colors" />
+                            <Search className="h-5 w-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
                         </div>
                         <input
                             type="text"
                             placeholder={text.searchPlaceholder}
                             value={filters.search}
                             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                            className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black/5 focus:bg-white transition-all font-medium"
+                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
                         />
                     </div>
 
-                    <div className="flex gap-12 border-l border-gray-100 pl-12 hidden lg:flex">
+                    <div className="flex gap-12 border-l border-white/40 pl-12 hidden lg:flex">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 mb-2">LIVE INVENTORY</p>
-                            <p className="text-3xl font-black text-gray-900 leading-none tracking-tighter">{stats.total}</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400 mb-2">LIVE INVENTORY</p>
+                            <p className="text-4xl font-black text-zinc-950 leading-none tracking-tightest">{stats.total}</p>
                         </div>
                         {stats.topProducts !== 'None' && (
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-400 mb-2">DEMAND SPIKE</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400 mb-2">DEMAND SPIKE</p>
                                 <div className="flex items-center gap-2">
-                                    <Activity className="w-4 h-4 text-emerald-500" />
-                                    <p className="text-sm font-black text-gray-900 truncate max-w-[200px] tracking-tight">{stats.topProducts}</p>
+                                    <Activity className="w-5 h-5 text-zinc-950 animate-pulse" />
+                                    <p className="text-[15px] font-black text-zinc-950 truncate max-w-[200px] tracking-tight">{stats.topProducts}</p>
                                 </div>
                             </div>
                         )}
@@ -166,54 +166,55 @@ const ExploreContracts = () => {
                 </div>
 
                 {/* Intelligence Metrics */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     <StatsCard
                         label={text.stats.total}
                         value={stats.total}
                         icon={Package}
+                        imageSrc="/src/assets/images/ccontract.png"
                         trend={{ label: 'Live Inventory', icon: Activity }}
                     />
                     <StatsCard
                         label={language === 'en' ? 'Demand Spike' : 'માંગમાં વધારો'}
                         value={stats.topProducts.split(',')[0] || 'N/A'}
                         icon={Activity}
-                        color="text-emerald-500"
-                        trend={{ label: '+22%', icon: ArrowUpRight }}
+                        imageSrc="/src/assets/images/crops.png"
+                        trend={{ label: 'High Velocity', icon: ArrowUpRight }}
                     />
                 </div>
 
                 {/* Filters Row */}
                 <div className="flex flex-wrap items-center gap-6">
-                    <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
-                        <MapPin className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                    <div className="flex items-center gap-3 bg-white/60 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white shadow-sm transition-all focus-within:ring-4 focus-within:ring-zinc-950/5 group">
+                        <MapPin className="w-4.5 h-4.5 text-zinc-400 group-focus-within:text-zinc-950" />
                         <select
                             value={filters.city}
                             onChange={(e) => setFilters({ ...filters, city: e.target.value })}
-                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[140px]"
+                            className="bg-transparent border-none outline-none text-[13px] font-black text-zinc-950 cursor-pointer min-w-[160px] tracking-tight"
                         >
                             <option value="all">{text.allCities}</option>
                             {uniqueCities.map(city => <option key={city} value={city}>{city}</option>)}
                         </select>
                     </div>
 
-                    <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
-                        <Package className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                    <div className="flex items-center gap-3 bg-white/60 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white shadow-sm transition-all focus-within:ring-4 focus-within:ring-zinc-950/5 group">
+                        <Package className="w-4.5 h-4.5 text-zinc-400 group-focus-within:text-zinc-950" />
                         <select
                             value={filters.product}
                             onChange={(e) => setFilters({ ...filters, product: e.target.value })}
-                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[140px]"
+                            className="bg-transparent border-none outline-none text-[13px] font-black text-zinc-950 cursor-pointer min-w-[160px] tracking-tight"
                         >
                             <option value="all">{text.allProducts}</option>
                             {uniqueProducts.map(prod => <option key={prod} value={prod}>{prod}</option>)}
                         </select>
                     </div>
 
-                    <div className="lg:ml-auto flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
-                        <SlidersHorizontal className="w-4 h-4 text-gray-400 group-focus-within:text-black" />
+                    <div className="lg:ml-auto flex items-center gap-3 bg-white/60 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white shadow-sm transition-all focus-within:ring-4 focus-within:ring-zinc-950/5 group">
+                        <SlidersHorizontal className="w-4.5 h-4.5 text-zinc-400 group-focus-within:text-zinc-950" />
                         <select
                             value={filters.sort}
                             onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
-                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer"
+                            className="bg-transparent border-none outline-none text-[13px] font-black text-zinc-950 cursor-pointer tracking-tight"
                         >
                             <option value="price-desc">Value: High-Low</option>
                             <option value="price-asc">Value: Low-High</option>
@@ -225,19 +226,19 @@ const ExploreContracts = () => {
 
                 {/* Contracts Grid */}
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center py-32 min-h-[400px]">
-                        <div className="w-12 h-12 rounded-full border-t-2 border-black animate-spin mb-6"></div>
-                        <p className="text-sm font-black text-gray-300 uppercase tracking-widest">Compiling Market Data</p>
+                    <div className="flex flex-col items-center justify-center py-40 min-h-[400px]">
+                        <div className="w-12 h-12 rounded-full border-t-2 border-zinc-950 animate-spin mb-8"></div>
+                        <p className="text-[11px] font-black text-zinc-400 uppercase tracking-[0.25em]">Compiling Market Data...</p>
                     </div>
                 ) : filteredContracts.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {paginatedContracts.map((contract, index) => (
                             <div
                                 key={contract._id || index}
-                                className="group bg-white rounded-[2.5rem] p-9 border border-gray-100 hover:border-black transition-all duration-500 flex flex-col shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)]"
+                                className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 transition-all duration-500 flex flex-col shadow-premium hover:-translate-y-2 hover:shadow-2xl hover:bg-white/60 cursor-pointer"
                             >
                                 <div className="flex items-start justify-between mb-8">
-                                    <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-900 font-black text-xl border border-gray-100 group-hover:bg-black group-hover:text-white transition-all duration-300">
+                                    <div className="w-14 h-14 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-xl border border-white shadow-sm transition-all duration-500 group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg group-hover:-rotate-3">
                                         {contract.company?.company_name?.charAt(0) || 'C'}
                                     </div>
                                     <StatusBadge
@@ -246,56 +247,56 @@ const ExploreContracts = () => {
                                     />
                                 </div>
 
-                                <div className="mb-8">
-                                    <h3 className="text-2xl font-black text-gray-900 mb-1 tracking-tight group-hover:translate-x-1 transition-transform">{contract.product}</h3>
-                                    <p className="text-sm text-gray-400 font-bold uppercase tracking-tight">
+                                <div className="mb-10">
+                                    <h3 className="text-3xl font-black text-zinc-950 mb-1.5 tracking-tightest leading-tight">{contract.product}</h3>
+                                    <p className="text-[13px] text-zinc-400 font-bold uppercase tracking-[0.1em]">
                                         {contract.company?.company_name || 'AgroCorp Global'}
                                     </p>
                                 </div>
 
-                                <div className="space-y-4 mb-10 flex-1">
+                                <div className="space-y-5 mb-12 flex-1">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
-                                            <Calendar className="w-3.5 h-3.5" /> Duration
+                                        <span className="text-[11px] font-black text-zinc-300 uppercase tracking-[0.2em] flex items-center gap-3">
+                                            <Calendar className="w-4 h-4" /> Duration
                                         </span>
-                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.duration} Months</span>
+                                        <span className="text-[15px] font-black text-zinc-950 tracking-tight">{contract.duration} Months</span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
-                                            <Package className="w-3.5 h-3.5" /> Quantity
+                                        <span className="text-[11px] font-black text-zinc-300 uppercase tracking-[0.2em] flex items-center gap-3">
+                                            <Package className="w-4 h-4" /> Quantity
                                         </span>
-                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.quantity} MT</span>
+                                        <span className="text-[15px] font-black text-zinc-950 tracking-tight">{contract.quantity} MT</span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
-                                            <MapPin className="w-3.5 h-3.5" /> Center
+                                        <span className="text-[11px] font-black text-zinc-300 uppercase tracking-[0.2em] flex items-center gap-3">
+                                            <MapPin className="w-4 h-4" /> Center
                                         </span>
-                                        <span className="text-sm font-black text-gray-900 tracking-tight">{contract.place}</span>
+                                        <span className="text-[15px] font-black text-zinc-950 tracking-tight">{contract.place}</span>
                                     </div>
                                 </div>
 
-                                <div className="pt-8 border-t border-gray-50 flex items-center justify-between">
+                                <div className="pt-10 border-t border-white/40 flex items-center justify-between mt-auto">
                                     <div>
-                                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-1">UNIT LOCK-IN</p>
-                                        <p className="text-2xl font-black text-gray-900 tracking-tighter">₹{(contract.price || 0).toLocaleString('en-IN')}</p>
+                                        <p className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.25em] mb-1.5">UNIT LOCK-IN</p>
+                                        <p className="text-3xl font-black text-zinc-950 tracking-tightest leading-none">₹{(contract.price || 0).toLocaleString('en-IN')}</p>
                                     </div>
-                                    <button className="h-14 w-14 bg-black text-white rounded-[1.25rem] flex items-center justify-center hover:scale-105 transition-all shadow-xl shadow-gray-200">
-                                        <ArrowRight className="w-6 h-6" />
+                                    <button className="h-14 w-14 bg-zinc-950 text-white rounded-[1.5rem] flex items-center justify-center hover:scale-110 transition-all shadow-xl hover:shadow-2xl active:scale-95 group/btn">
+                                        <ArrowRight className="w-6 h-6 transition-transform group-hover/btn:translate-x-1" />
                                     </button>
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-32 bg-white rounded-[3rem] border border-dashed border-gray-200">
-                        <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <Search className="w-8 h-8 text-gray-300" />
+                    <div className="text-center py-40 bg-white/30 backdrop-blur-xl rounded-[4rem] border border-dashed border-zinc-200">
+                        <div className="w-24 h-24 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                            <Search className="w-8 h-8 text-zinc-300" />
                         </div>
-                        <h3 className="text-xl font-black text-gray-900 mb-2">Zero Records Found</h3>
-                        <p className="text-sm text-gray-400 font-medium max-w-sm mx-auto">No contracts matched the selected search parameters.</p>
+                        <h3 className="text-2xl font-black text-zinc-950 mb-3 tracking-tightest">Zero Records Found</h3>
+                        <p className="text-[15px] text-zinc-400 font-medium max-w-sm mx-auto tracking-tight">No contracts matched the selected search parameters in the registry.</p>
                         <button
                             onClick={() => setFilters({ search: '', city: 'all', product: 'all', sort: 'price-desc' })}
-                            className="mt-8 text-xs font-black text-black underline underline-offset-4 hover:opacity-70 transition-opacity uppercase tracking-widest"
+                            className="mt-10 px-8 py-3.5 bg-zinc-950 text-white rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:shadow-xl transition-all hover:scale-105 active:scale-95"
                         >
                             Reset System Filters
                         </button>
@@ -304,21 +305,21 @@ const ExploreContracts = () => {
 
                 {/* Pagination */}
                 {!loading && filteredContracts.length > 0 && (
-                    <div className="flex justify-center items-center gap-4 pt-10">
+                    <div className="flex justify-center items-center gap-6 pt-12">
                         <button
                             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                             disabled={currentPage === 1}
-                            className="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed hover:border-black transition-all font-black"
+                            className="w-14 h-14 flex items-center justify-center bg-white/60 backdrop-blur-md border border-white rounded-[1.5rem] disabled:opacity-20 disabled:cursor-not-allowed hover:bg-white hover:shadow-md transition-all font-black text-xl active:scale-90"
                         >
                             ←
                         </button>
-                        <div className="px-6 py-3 bg-black text-white rounded-2xl text-[11px] font-black uppercase tracking-widest">
-                            Page {currentPage} / {totalPages}
+                        <div className="px-8 py-4 bg-zinc-950 text-white rounded-[1.5rem] text-[11px] font-black uppercase tracking-[0.25em] shadow-lg">
+                            PROTOCOL PAGE {currentPage} / {totalPages}
                         </div>
                         <button
                             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                             disabled={currentPage === totalPages}
-                            className="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl disabled:opacity-30 disabled:cursor-not-allowed hover:border-black transition-all font-black"
+                            className="w-14 h-14 flex items-center justify-center bg-white/60 backdrop-blur-md border border-white rounded-[1.5rem] disabled:opacity-20 disabled:cursor-not-allowed hover:bg-white hover:shadow-md transition-all font-black text-xl active:scale-90"
                         >
                             →
                         </button>

@@ -180,23 +180,25 @@ const FarmerCrops = () => {
                         label={text.stats.total}
                         value={stats.total}
                         icon={Leaf}
+                        imageSrc="/src/assets/images/crops.png"
                         trend={{ label: 'Active Assets', icon: Activity }}
                     />
                     <StatsCard
                         label={text.stats.volume}
                         value={`${stats.totalQty.toLocaleString('en-IN')} MT`}
                         icon={Package}
+                        imageSrc="/src/assets/images/ccontract.png"
                     />
                     <StatsCard
                         label={text.stats.status}
                         value={stats.available}
                         icon={CheckCircle}
-                        color="text-emerald-500"
+                        imageSrc="/src/assets/images/fmanage.png"
                         trend={{ label: 'Live Stock', icon: Activity }}
                     />
                 </div>
 
-                <div className="bg-white rounded-3xl p-10 border border-zinc-100 shadow-premium flex flex-col lg:flex-row gap-10 items-center justify-between">
+                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 shadow-premium flex flex-col lg:flex-row gap-10 items-center justify-between">
                     <div className="relative w-full lg:max-w-xl group">
                         <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
                             <Search className="h-5 w-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
@@ -206,19 +208,19 @@ const FarmerCrops = () => {
                             placeholder="Locate commodity protocols..."
                             value={filters.search}
                             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                            className="input-premium pl-14"
+                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
                         />
                     </div>
 
                     <div className="flex items-center gap-6 w-full lg:w-auto">
-                        <div className="flex gap-2 bg-zinc-50 p-1.5 rounded-2xl border border-zinc-100">
+                        <div className="flex gap-2 bg-white/40 backdrop-blur-md p-1.5 rounded-2xl border border-white">
                             {['all', 'available', 'sold-out'].map((s) => (
                                 <button
                                     key={s}
                                     onClick={() => setFilters({ ...filters, status: s })}
-                                    className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${filters.status === s
-                                        ? 'bg-zinc-950 text-white shadow-xl'
-                                        : 'text-zinc-400 hover:text-zinc-900'
+                                    className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${filters.status === s
+                                        ? 'bg-zinc-950 text-white shadow-lg'
+                                        : 'text-zinc-400 hover:text-zinc-950'
                                         }`}
                                 >
                                     {s === 'all' ? 'All' : text.status[s as keyof typeof text.status]}
@@ -227,7 +229,7 @@ const FarmerCrops = () => {
                         </div>
                         <button
                             onClick={handleAddCrop}
-                            className="btn-premium h-14 px-8"
+                            className="h-16 px-8 bg-zinc-950 text-white rounded-2xl flex items-center justify-center gap-3 font-black text-[11px] tracking-[0.2em] shadow-lg hover:scale-105 active:scale-95 transition-all"
                         >
                             <Plus className="w-5 h-5" /> REPLENISH
                         </button>
@@ -246,43 +248,43 @@ const FarmerCrops = () => {
                         <p className="text-sm text-gray-400 font-medium">No recorded assets found in the selected matrix.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {filteredCrops.map((crop) => (
                             <div
                                 key={crop.id}
-                                className="group bg-white rounded-3xl p-9 border border-zinc-100 hover:border-zinc-950 transition-all duration-500 flex flex-col shadow-premium"
+                                className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 transition-all duration-500 flex flex-col shadow-premium hover:-translate-y-2 hover:shadow-2xl hover:bg-white/60 cursor-pointer"
                             >
                                 <div className="flex items-start justify-between mb-8">
-                                    <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-900 font-black text-xl border border-zinc-100 group-hover:bg-zinc-950 group-hover:text-white transition-all duration-300">
+                                    <div className="w-14 h-14 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-xl border border-white shadow-sm transition-all duration-500 group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg group-hover:-rotate-3">
                                         <Leaf className="w-6 h-6" />
                                     </div>
                                     <StatusBadge status={crop.status === 'available' ? 'active' : 'inactive'} />
                                 </div>
 
                                 <div className="mb-8">
-                                    <h3 className="text-2xl font-black text-zinc-900 font-display mb-2 tracking-tight">{crop.name}</h3>
-                                    <p className="text-sm text-zinc-400 font-bold tracking-institutional line-clamp-2 leading-relaxed">
+                                    <h3 className="text-3xl font-black text-zinc-950 font-display mb-2 tracking-tightest leading-tight">{crop.name}</h3>
+                                    <p className="text-[14px] text-zinc-400 font-medium tracking-tight line-clamp-2 leading-relaxed">
                                         {crop.details || 'No additional specification provided for this commodity record.'}
                                     </p>
                                 </div>
 
-                                <div className="pt-8 border-t border-zinc-50 flex items-center justify-between mt-auto">
+                                <div className="pt-10 border-t border-white/40 flex items-center justify-between mt-auto">
                                     <div>
-                                        <p className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.2em] mb-1">Current Volume</p>
-                                        <p className="text-2xl font-black text-zinc-900 tracking-tighter">{crop.quantity.toLocaleString('en-IN')} MT</p>
+                                        <p className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.25em] mb-1.5">Current Volume</p>
+                                        <p className="text-3xl font-black text-zinc-950 tracking-tightest leading-none">{crop.quantity.toLocaleString('en-IN')} MT</p>
                                     </div>
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-4">
                                         <button
                                             onClick={() => handleEditCrop(crop)}
-                                            className="h-11 w-11 flex items-center justify-center rounded-xl bg-zinc-50 text-zinc-400 hover:text-zinc-950 hover:bg-zinc-100 transition-all border border-zinc-100"
+                                            className="h-12 w-12 flex items-center justify-center rounded-2xl bg-white/60 text-zinc-400 hover:text-zinc-950 hover:bg-white hover:shadow-md transition-all border border-white active:scale-90"
                                         >
-                                            <Edit className="w-4.5 h-4.5" />
+                                            <Edit className="w-5 h-5" />
                                         </button>
                                         <button
                                             onClick={() => handleDeleteCrop(crop.id)}
-                                            className="h-11 w-11 flex items-center justify-center rounded-xl bg-red-50 text-red-400 hover:text-red-600 hover:bg-red-100 transition-all border border-red-50"
+                                            className="h-12 w-12 flex items-center justify-center rounded-2xl bg-red-50 text-red-400 hover:text-red-600 hover:bg-red-100 transition-all border border-red-100 active:scale-90"
                                         >
-                                            <Trash2 className="w-4.5 h-4.5" />
+                                            <Trash2 className="w-5 h-5" />
                                         </button>
                                     </div>
                                 </div>

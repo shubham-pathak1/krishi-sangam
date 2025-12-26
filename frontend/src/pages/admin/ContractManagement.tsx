@@ -132,7 +132,7 @@ const ContractManagement = () => {
                         label="ACTIVE BINDINGS"
                         value={stats.active}
                         icon={Activity}
-                        color="text-emerald-500"
+                        color="text-primary-500"
                     />
                     <StatsCard
                         label="PENDING REVIEW"
@@ -194,7 +194,7 @@ const ContractManagement = () => {
                                             </td>
                                             <td className="px-10 py-7">
                                                 <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                                    <button onClick={() => openAcceptModal(c._id, c.company_id)} className="h-10 w-10 flex items-center justify-center rounded-xl bg-emerald-50 text-emerald-500 hover:text-emerald-700 hover:bg-emerald-100 border border-emerald-50 transition-all" title="Bind Farmer">
+                                                    <button onClick={() => openAcceptModal(c._id, c.company_id)} className="h-10 w-10 flex items-center justify-center rounded-xl bg-emerald-50 text-primary-500 hover:text-emerald-700 hover:bg-emerald-100 border border-emerald-50 transition-all" title="Bind Farmer">
                                                         <FileCheck className="w-4 h-4" />
                                                     </button>
                                                     <button onClick={() => openEditModal(c)} className="h-10 w-10 flex items-center justify-center rounded-xl bg-zinc-50 text-zinc-400 hover:text-zinc-950 hover:bg-zinc-100 transition-all border border-zinc-100">

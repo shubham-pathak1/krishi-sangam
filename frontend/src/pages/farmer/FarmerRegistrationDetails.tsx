@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { createFarmer } from '../../services/farmer.service';
 import {
     User, Mail, Phone, MapPin, Ruler, CreditCard,
-    FileText, Leaf, LogOut, ArrowRight, Loader2, Menu, X
+    FileText, Leaf, LogOut, AlertCircle, ArrowRight, Loader2, Menu, X
 } from 'lucide-react';
 
 const FarmerRegistrationDetails = () => {
@@ -30,8 +30,8 @@ const FarmerRegistrationDetails = () => {
 
     useEffect(() => {
         document.title = language === 'gu'
-            ? 'ખેડૂત વિગતો - કૃષિ સંગમ'
-            : 'Farmer Details - Krishi Sangam';
+            ? 'ખેડૂત વિગતો — કૃષિ સંગમ'
+            : 'Farmer Details — Krishi Sangam';
     }, [language]);
 
     useEffect(() => {
@@ -188,61 +188,72 @@ const FarmerRegistrationDetails = () => {
 
     if (authLoading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+            <div className="min-h-screen bg-zinc-50 flex items-center justify-center font-['Plus_Jakarta_Sans']">
+                <div className="flex flex-col items-center gap-6">
+                    <Loader2 className="w-10 h-10 animate-spin text-zinc-950" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-400">Authenticating Pulse...</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-white font-['Inter']">
+        <div className="min-h-screen bg-zinc-50 font-['Plus_Jakarta_Sans'] selection:bg-zinc-950 selection:text-white">
+            {/* Background Depth */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden select-none z-0">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-zinc-400/5 blur-[120px] rounded-full animate-pulse"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-zinc-900/5 blur-[120px] rounded-full animate-pulse delay-700"></div>
+                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-zinc-800/5 blur-[100px] rounded-full animate-pulse delay-1000"></div>
+            </div>
+
             {/* Floating Navbar */}
             <header
-                className={`fixed top-0 w-full z-[1000] transition-all duration-500 border-b ${scrolled
-                        ? 'bg-white/80 backdrop-blur-xl border-gray-200/50 py-3 shadow-sm'
-                        : 'bg-white/50 backdrop-blur-md border-gray-200/30 py-4'
+                className={`fixed top-8 left-1/2 -translate-x-1/2 w-[90%] md:w-[85%] max-w-7xl z-[1000] transition-all duration-700 ${scrolled
+                        ? 'bg-white/40 backdrop-blur-3xl border border-white shadow-premium py-4 rounded-[2.5rem]'
+                        : 'bg-white/60 backdrop-blur-2xl border border-white shadow-lg py-5 rounded-[3rem]'
                     }`}
             >
-                <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-                    <Link to="/" className="flex items-center gap-3 group">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-0 group-hover:opacity-30 transition-opacity rounded-full"></div>
-                            <img src="/src/assets/images/l.png" alt="Krishi Sangam" className="h-10 w-auto relative z-10" />
-                        </div>
-                        <span className="text-xl font-bold tracking-tight text-gray-900">Krishi Sangam</span>
+                <div className="px-8 md:px-12 flex justify-between items-center">
+                    <Link to="/" className="flex items-center gap-4 group">
+                        <img src="/src/assets/images/l.png" alt="Logo" className="w-10 h-10 object-contain transition-transform duration-500 group-hover:scale-110" />
+                        <span className="text-xl font-bold font-display tracking-tightest text-zinc-900 whitespace-nowrap">
+                            Krishi Sangam
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden lg:flex items-center gap-8 bg-gray-100/80 backdrop-blur-md px-8 py-2.5 rounded-full border border-gray-200/50 shadow-sm">
-                        <Link to="/" className="text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors">
-                            {text.home}
-                        </Link>
-                        <Link to="/help" className="text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors">
-                            {text.help}
-                        </Link>
+                    <nav className="hidden lg:flex items-center gap-10">
+                        <div className="flex items-center gap-8 bg-zinc-50/50 backdrop-blur-md px-8 py-3 rounded-2xl border border-zinc-100 shadow-inner">
+                            <Link to="/" className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-950 transition-colors">
+                                {text.home}
+                            </Link>
+                            <Link to="/help" className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-950 transition-colors">
+                                {text.help}
+                            </Link>
+                        </div>
 
-                        <div className="w-px h-4 bg-gray-300"></div>
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
+                                className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white border border-zinc-100 text-[11px] font-black text-zinc-950 hover:bg-zinc-950 hover:text-white hover:shadow-xl transition-all active:scale-95"
+                            >
+                                {language === 'en' ? 'GU' : 'EN'}
+                            </button>
 
-                        <button
-                            onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
-                            className="text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-emerald-600 transition-colors"
-                        >
-                            {language === 'en' ? 'GU' : 'EN'}
-                        </button>
-
-                        <button
-                            onClick={handleLogout}
-                            className="text-sm font-semibold px-5 py-2 rounded-full text-red-600 hover:bg-red-50 transition-all duration-300 flex items-center gap-2"
-                        >
-                            <LogOut size={16} />
-                            {text.logout}
-                        </button>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-zinc-50 border border-zinc-100 text-[11px] font-black uppercase tracking-[0.2em] text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-xl transition-all active:scale-95"
+                            >
+                                <LogOut size={16} />
+                                {text.logout}
+                            </button>
+                        </div>
                     </nav>
 
                     {/* Mobile Toggle */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="lg:hidden p-2 text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+                        className="lg:hidden w-12 h-12 flex items-center justify-center bg-zinc-50 rounded-2xl border border-zinc-100 text-zinc-950 shadow-sm"
                     >
                         {menuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
@@ -250,226 +261,233 @@ const FarmerRegistrationDetails = () => {
             </header>
 
             {/* Mobile Menu */}
-            <div className={`fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-[990] transition-all duration-500 lg:hidden flex items-center justify-center ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
-                <div className="flex flex-col items-center gap-8 text-center">
-                    <Link to="/" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.home}</Link>
-                    <Link to="/help" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.help}</Link>
-                    <button onClick={() => { setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false); }} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-4">
-                        {language === 'en' ? 'ગુજરાતી' : 'English'}
-                    </button>
-                    <button onClick={handleLogout} className="text-2xl font-light text-red-400 hover:text-red-300 transition-colors mt-4">
-                        {text.logout}
-                    </button>
+            <div className={`fixed inset-0 bg-zinc-950/98 backdrop-blur-3xl z-[990] transition-all duration-700 lg:hidden flex items-center justify-center ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
+                <div className="flex flex-col items-center gap-12 text-center p-12">
+                    <img src="/src/assets/images/l.png" alt="Logo" className="w-20 h-20 brightness-0 invert mb-4" />
+                    <Link to="/" onClick={() => setMenuOpen(false)} className="text-5xl font-black text-white hover:text-zinc-400 transition-colors tracking-tightest uppercase">{text.home}</Link>
+                    <Link to="/help" onClick={() => setMenuOpen(false)} className="text-5xl font-black text-white hover:text-zinc-400 transition-colors tracking-tightest uppercase">{text.help}</Link>
+                    <div className="flex flex-col gap-6 mt-12 w-full">
+                        <button onClick={() => { setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false); }} className="w-full py-5 rounded-3xl bg-white/10 text-xl font-black text-white uppercase tracking-[0.25em] border border-white/10 active:scale-95 transition-all">
+                            {language === 'en' ? 'ગુજરાતી' : 'English Interface'}
+                        </button>
+                        <button onClick={handleLogout} className="w-full py-5 rounded-3xl bg-red-500 text-xl font-black text-white uppercase tracking-[0.25em] shadow-2xl active:scale-95 transition-all">
+                            {text.logout}
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {/* Main Content */}
-            <main className="pt-28 pb-16 px-4">
-                <div className="max-w-2xl mx-auto">
+            <main className="pt-48 pb-32 px-6 relative z-10">
+                <div className="max-w-3xl mx-auto">
                     {/* Header */}
-                    <div className="text-center mb-10">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl mb-6">
-                            <Leaf className="w-8 h-8 text-emerald-600" />
+                    <div className="text-center mb-16">
+                        <div className="inline-flex items-center justify-center w-24 h-24 bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white shadow-premium mb-8 animate-bounce-slow">
+                            <img src="/src/assets/images/crops.png" alt="Icon" className="w-12 h-12 grayscale brightness-50" />
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{text.title}</h1>
-                        <p className="text-gray-500 text-lg">{text.subtitle}</p>
+                        <h1 className="text-5xl md:text-7xl font-black text-zinc-950 mb-6 tracking-tightest leading-[0.9]">{text.title}</h1>
+                        <p className="text-zinc-400 text-lg font-medium tracking-tight max-w-md mx-auto">{text.subtitle}</p>
                     </div>
 
-                    {/* Error */}
-                    {error && (
-                        <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl text-sm">
-                            {error}
-                        </div>
-                    )}
+                    {/* Form Container */}
+                    <div className="bg-white/40 backdrop-blur-3xl rounded-[3.5rem] p-12 md:p-16 border border-white/60 shadow-premium">
+                        {/* Error */}
+                        {error && (
+                            <div className="mb-10 p-6 bg-red-50 border border-red-100 text-red-600 rounded-3xl text-sm font-black uppercase tracking-widest animate-pulse flex items-center gap-3">
+                                <AlertCircle size={20} />
+                                {error}
+                            </div>
+                        )}
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Name & Phone */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.name} <span className="text-red-500">*</span>
+                        <form onSubmit={handleSubmit} className="space-y-10">
+                            {/* Name & Phone */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.name}
+                                    </label>
+                                    <div className="relative group">
+                                        <User className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="text"
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            placeholder={text.namePlaceholder}
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.phone}
+                                    </label>
+                                    <div className="relative group">
+                                        <Phone className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="tel"
+                                            value={formData.phone_no}
+                                            onChange={(e) => setFormData({ ...formData, phone_no: e.target.value })}
+                                            placeholder={text.phonePlaceholder}
+                                            maxLength={10}
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Email */}
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                    {text.email} <span className="text-zinc-300 font-bold">{text.emailOptional}</span>
                                 </label>
-                                <div className="relative">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                <div className="relative group">
+                                    <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                    <input
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        placeholder={text.emailPlaceholder}
+                                        className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Address */}
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                    {text.address}
+                                </label>
+                                <div className="relative group">
+                                    <MapPin className="absolute left-6 top-6 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                    <textarea
+                                        value={formData.address}
+                                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                        placeholder={text.addressPlaceholder}
+                                        rows={3}
+                                        className="w-full pl-14 pr-6 py-6 bg-zinc-50 border border-zinc-100 rounded-[2rem] text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight resize-none"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Land Size & Survey */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.landSize}
+                                    </label>
+                                    <div className="relative group">
+                                        <Ruler className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="number"
+                                            value={formData.land_size}
+                                            onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
+                                            placeholder={text.landSizePlaceholder}
+                                            min="0"
+                                            step="0.1"
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.surveyNo}
+                                    </label>
+                                    <div className="relative group">
+                                        <FileText className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="text"
+                                            value={formData.survey_no}
+                                            onChange={(e) => setFormData({ ...formData, survey_no: e.target.value })}
+                                            placeholder={text.surveyNoPlaceholder}
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Aadhar */}
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                    {text.idProof}
+                                </label>
+                                <div className="relative group">
+                                    <CreditCard className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
                                     <input
                                         type="text"
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        placeholder={text.namePlaceholder}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
+                                        value={formData.id_proof}
+                                        onChange={(e) => setFormData({ ...formData, id_proof: e.target.value })}
+                                        placeholder={text.idProofPlaceholder}
+                                        maxLength={12}
+                                        className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
                                         required
                                     />
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.phone} <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                    <input
-                                        type="tel"
-                                        value={formData.phone_no}
-                                        onChange={(e) => setFormData({ ...formData, phone_no: e.target.value })}
-                                        placeholder={text.phonePlaceholder}
-                                        maxLength={10}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                        required
-                                    />
+                            {/* Crops */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.crop1}
+                                    </label>
+                                    <div className="relative group">
+                                        <Leaf className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="text"
+                                            value={formData.crop_one}
+                                            onChange={(e) => setFormData({ ...formData, crop_one: e.target.value })}
+                                            placeholder={text.crop1Placeholder}
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        {/* Email */}
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                {text.email} <span className="text-gray-400 font-normal">{text.emailOptional}</span>
-                            </label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    placeholder={text.emailPlaceholder}
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Address */}
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                {text.address} <span className="text-red-500">*</span>
-                            </label>
-                            <div className="relative">
-                                <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                                <textarea
-                                    value={formData.address}
-                                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                                    placeholder={text.addressPlaceholder}
-                                    rows={2}
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none resize-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        {/* Land Size & Survey */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.landSize} <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Ruler className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                    <input
-                                        type="number"
-                                        value={formData.land_size}
-                                        onChange={(e) => setFormData({ ...formData, land_size: e.target.value })}
-                                        placeholder={text.landSizePlaceholder}
-                                        min="0"
-                                        step="0.1"
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                        required
-                                    />
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] ml-2">
+                                        {text.crop2}
+                                    </label>
+                                    <div className="relative group">
+                                        <Leaf className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-zinc-950 transition-colors" />
+                                        <input
+                                            type="text"
+                                            value={formData.crop_two}
+                                            onChange={(e) => setFormData({ ...formData, crop_two: e.target.value })}
+                                            placeholder={text.crop2Placeholder}
+                                            className="w-full pl-14 pr-6 py-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-zinc-950 placeholder-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-950/5 focus:bg-white transition-all font-semibold tracking-tight h-16"
+                                            required
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.surveyNo} <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative">
-                                    <FileText className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                    <input
-                                        type="text"
-                                        value={formData.survey_no}
-                                        onChange={(e) => setFormData({ ...formData, survey_no: e.target.value })}
-                                        placeholder={text.surveyNoPlaceholder}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Aadhar */}
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                {text.idProof} <span className="text-red-500">*</span>
-                            </label>
-                            <div className="relative">
-                                <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                <input
-                                    type="text"
-                                    value={formData.id_proof}
-                                    onChange={(e) => setFormData({ ...formData, id_proof: e.target.value })}
-                                    placeholder={text.idProofPlaceholder}
-                                    maxLength={12}
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        {/* Crops */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.crop1} <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Leaf className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                    <input
-                                        type="text"
-                                        value={formData.crop_one}
-                                        onChange={(e) => setFormData({ ...formData, crop_one: e.target.value })}
-                                        placeholder={text.crop1Placeholder}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    {text.crop2} <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative">
-                                    <Leaf className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                    <input
-                                        type="text"
-                                        value={formData.crop_two}
-                                        onChange={(e) => setFormData({ ...formData, crop_two: e.target.value })}
-                                        placeholder={text.crop2Placeholder}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Submit */}
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold text-lg hover:bg-emerald-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group shadow-lg shadow-gray-900/10 hover:shadow-emerald-600/25 mt-8"
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                    {text.submitting}
-                                </>
-                            ) : (
-                                <>
-                                    {text.submit}
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </>
-                            )}
-                        </button>
-                    </form>
+                            {/* Submit */}
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full h-20 bg-zinc-950 text-white rounded-[2rem] font-black text-[13px] uppercase tracking-[0.3em] hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 group mt-12 shadow-xl shadow-zinc-950/20"
+                            >
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="w-6 h-6 animate-spin" />
+                                        {text.submitting}
+                                    </>
+                                ) : (
+                                    <>
+                                        {text.submit}
+                                        <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </main>
         </div>

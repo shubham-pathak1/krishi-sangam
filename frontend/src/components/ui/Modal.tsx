@@ -5,11 +5,12 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
+    subtitle?: string;
     children: React.ReactNode;
     maxWidth?: string;
 }
 
-const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-2xl" }: ModalProps) => {
+const Modal = ({ isOpen, onClose, title, subtitle, children, maxWidth = "max-w-2xl" }: ModalProps) => {
     if (!isOpen) return null;
 
     return (
@@ -23,7 +24,16 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = "max-w-2xl" }: Mod
             {/* Content */}
             <div className={`relative w-full ${maxWidth} bg-white rounded-3xl shadow-2xl border border-zinc-100 overflow-hidden animate-in zoom-in-95 duration-300`}>
                 <div className="px-8 py-6 border-b border-zinc-50 flex items-center justify-between">
-                    <h3 className="text-xl font-bold font-display tracking-tight text-zinc-900">{title}</h3>
+                    <div className="flex-1">
+                        <h3 className="text-3xl font-black text-zinc-950 tracking-tightest leading-tight">
+                            {title}
+                        </h3>
+                        {subtitle && (
+                            <p className="text-[13px] text-zinc-400 font-bold uppercase tracking-[0.1em] mt-1.5">
+                                {subtitle}
+                            </p>
+                        )}
+                    </div>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-zinc-50 rounded-xl transition-colors text-zinc-400 hover:text-zinc-900"

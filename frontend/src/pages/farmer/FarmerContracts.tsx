@@ -153,34 +153,35 @@ const FarmerContracts = () => {
                         label={text.stats.total}
                         value={stats.total}
                         icon={Package}
-                        trend={{ label: 'Total Vault', value: 0, isNeutral: true }}
+                        imageSrc="/src/assets/images/ccontract.png"
+                        trend={{ label: 'Total Vault', isNeutral: true }}
                     />
                     <StatsCard
                         label={text.stats.active}
                         value={stats.active}
                         icon={CheckCircle2}
-                        color="text-emerald-500"
-                        trend={{ label: 'Live Protocol', value: 0, icon: Activity }}
+                        imageSrc="/src/assets/images/fmanage.png"
+                        trend={{ label: 'Live Protocol', icon: Activity }}
                     />
                     <StatsCard
                         label={text.stats.value}
                         value={`₹${stats.totalValue.toLocaleString('en-IN')}`}
                         icon={DollarSign}
-                        color="text-indigo-500"
-                        trend={{ label: 'Total Settlement', value: 0, icon: ArrowRight }}
+                        imageSrc="/src/assets/images/transactions.png"
+                        trend={{ label: 'Total Settlement', icon: ArrowRight }}
                     />
                 </div>
 
                 {/* Filter Matrix */}
                 <div className="flex flex-wrap items-center gap-6">
-                    <div className="flex gap-2 bg-gray-100/50 p-1.5 rounded-2xl border border-gray-200/40">
+                    <div className="flex gap-2 bg-white/40 backdrop-blur-md p-1.5 rounded-[1.5rem] border border-white">
                         {['all', 'active', 'completed'].map((status) => (
                             <button
                                 key={status}
                                 onClick={() => setFilters({ ...filters, status })}
-                                className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${filters.status === status
-                                    ? 'bg-black text-white shadow-lg'
-                                    : 'text-gray-400 hover:text-black'
+                                className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${filters.status === status
+                                    ? 'bg-zinc-950 text-white shadow-xl translate-y-[-1px]'
+                                    : 'text-zinc-400 hover:text-zinc-950'
                                     }`}
                             >
                                 {text.status[status as keyof typeof text.status]}
@@ -188,11 +189,11 @@ const FarmerContracts = () => {
                         ))}
                     </div>
 
-                    <div className="lg:ml-auto flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:border-black group">
+                    <div className="lg:ml-auto flex items-center gap-3 bg-white/60 backdrop-blur-md px-6 py-3.5 rounded-2xl border border-white shadow-sm transition-all focus-within:ring-4 focus-within:ring-zinc-950/5 group">
                         <select
                             value={filters.sort}
                             onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
-                            className="bg-transparent border-none outline-none text-[13px] font-bold text-gray-900 cursor-pointer min-w-[160px]"
+                            className="bg-transparent border-none outline-none text-[13px] font-black text-zinc-950 cursor-pointer min-w-[180px] tracking-tight"
                         >
                             <option value="start-date-desc">Newest First</option>
                             <option value="start-date-asc">Oldest First</option>
@@ -203,66 +204,66 @@ const FarmerContracts = () => {
                 </div>
 
                 {/* Agreement Terminal */}
-                <div className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-[0_4px_20px_-1px_rgba(0,0,0,0.03)]">
+                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/60 overflow-hidden shadow-premium transition-all duration-500">
                     {loading ? (
-                        <div className="py-32 flex flex-col items-center justify-center">
-                            <div className="w-10 h-10 border-t-2 border-black rounded-full animate-spin mb-6"></div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">Syncing Ledger</p>
+                        <div className="py-40 flex flex-col items-center justify-center">
+                            <div className="w-12 h-12 border-t-2 border-zinc-950 rounded-full animate-spin mb-8"></div>
+                            <p className="text-[11px] font-black uppercase tracking-[0.25em] text-zinc-400">Syncing Institutional Ledger...</p>
                         </div>
                     ) : filteredContracts.length === 0 ? (
-                        <div className="py-32 flex flex-col items-center justify-center text-center">
-                            <AlertCircle className="w-12 h-12 text-gray-100 mb-6" />
-                            <p className="text-xl font-black text-gray-900 mb-2">Null Set</p>
-                            <p className="text-sm text-gray-400 font-medium">No agreement records match your current filter matrix.</p>
+                        <div className="py-40 flex flex-col items-center justify-center text-center">
+                            <AlertCircle className="w-16 h-16 text-zinc-200 mb-8" />
+                            <p className="text-2xl font-black text-zinc-950 mb-3 tracking-tightest">Null Registry Set</p>
+                            <p className="text-[15px] text-zinc-400 font-medium max-w-sm mx-auto tracking-tight">No agreement records match your current protocol filter matrix.</p>
                         </div>
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left">
+                            <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-gray-50/50">
-                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Contract Entity</th>
-                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Terminal Date</th>
-                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Volume</th>
-                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Settlement</th>
-                                        <th className="px-10 py-6 text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Protocol Status</th>
-                                        <th className="px-10 py-6 text-right text-[10px] font-black text-gray-400 uppercase tracking-[0.15em]">Management</th>
+                                    <tr className="bg-white/40 border-b border-white/60">
+                                        <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Contract Entity</th>
+                                        <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Terminal Date</th>
+                                        <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Volume</th>
+                                        <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Settlement</th>
+                                        <th className="px-12 py-8 text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Protocol Status</th>
+                                        <th className="px-12 py-8 text-right text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em]">Management</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-50">
+                                <tbody className="divide-y divide-white/20">
                                     {filteredContracts.map((contract) => (
-                                        <tr key={contract._id} className="group hover:bg-gray-50/50 transition-colors">
-                                            <td className="px-10 py-7">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-900 font-black text-sm border border-gray-100 group-hover:bg-black group-hover:text-white transition-all duration-300">
+                                        <tr key={contract._id} className="group hover:bg-white/60 transition-all duration-300">
+                                            <td className="px-12 py-8">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="w-12 h-12 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-sm border border-white group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg transition-all duration-500">
                                                         {contract.company?.company_name?.charAt(0) || 'L'}
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-black text-gray-900 tracking-tight">{contract.product || 'Agri Commodity'}</p>
-                                                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-tight">{contract.company?.company_name || 'AgroCorp'}</p>
+                                                        <p className="text-[15px] font-black text-zinc-950 tracking-tight">{contract.product || 'Agri Commodity'}</p>
+                                                        <p className="text-[11px] text-zinc-400 font-bold uppercase tracking-[0.1em] mt-0.5">{contract.company?.company_name || 'AgroCorp'}</p>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-10 py-7">
-                                                <div className="flex items-center gap-2">
-                                                    <Calendar className="w-3.5 h-3.5 text-gray-300" />
-                                                    <span className="text-sm font-bold text-gray-900">{new Date(contract.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                                            <td className="px-12 py-8">
+                                                <div className="flex items-center gap-3">
+                                                    <Calendar className="w-4 h-4 text-zinc-300" />
+                                                    <span className="text-[14px] font-semibold text-zinc-900 tracking-tight">{new Date(contract.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-10 py-7 text-sm font-bold text-gray-600">{contract.quantity || '0'} MT</td>
-                                            <td className="px-10 py-7 text-sm font-black text-gray-900">₹{(contract.amount || 0).toLocaleString('en-IN')}</td>
-                                            <td className="px-10 py-7">
+                                            <td className="px-12 py-8 text-[14px] font-semibold text-zinc-600 tracking-tight">{contract.quantity || '0'} MT</td>
+                                            <td className="px-12 py-8 text-[15px] font-black text-zinc-950 tracking-tightest">₹{(contract.amount || 0).toLocaleString('en-IN')}</td>
+                                            <td className="px-12 py-8">
                                                 <StatusBadge status={contract.status} />
                                             </td>
-                                            <td className="px-10 py-7 text-right">
-                                                <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button className="p-2.5 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-black hover:border-black transition-all">
-                                                        <Eye className="w-4 h-4" />
+                                            <td className="px-12 py-8 text-right">
+                                                <div className="flex justify-end gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                                                    <button className="p-3 bg-white/80 border border-white rounded-[1.2rem] text-zinc-400 hover:text-zinc-950 hover:bg-white hover:shadow-md transition-all active:scale-90">
+                                                        <Eye className="w-5 h-5" />
                                                     </button>
                                                     <button
                                                         onClick={() => openRequestModal(contract)}
-                                                        className="p-2.5 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-black hover:border-black transition-all"
+                                                        className="p-3 bg-white/80 border border-white rounded-[1.2rem] text-zinc-400 hover:text-zinc-950 hover:bg-white hover:shadow-md transition-all active:scale-90"
                                                     >
-                                                        <Edit className="w-4 h-4" />
+                                                        <Edit className="w-5 h-5" />
                                                     </button>
                                                 </div>
                                             </td>

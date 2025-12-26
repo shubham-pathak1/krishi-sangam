@@ -115,7 +115,7 @@ const FarmerManagement = () => {
                         label="VERIFIED PRODUCERS"
                         value={stats.active}
                         icon={ShieldCheck}
-                        color="text-emerald-500"
+                        color="text-primary-500"
                     />
                     <StatsCard
                         label="LARGE SCALE"
