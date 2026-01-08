@@ -548,9 +548,6 @@ const Landing = () => {
           opacity: 1 !important;
           transform: translateY(0) !important;
         }
-        html {
-          scroll-behavior: smooth;
-        }
 
         @keyframes marquee {
           0% {

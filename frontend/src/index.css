@@ -20,6 +20,27 @@
     @apply bg-[#FCFAF8] text-zinc-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 tracking-tight;
   }
 
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
   h1,
   h2,
   h3,
