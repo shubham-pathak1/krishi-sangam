@@ -325,7 +325,7 @@ const FarmerContracts = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-black text-white py-5 rounded-[1.5rem] text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-gray-200 hover:scale-[1.02] active:scale-95 transition-all"
+                        className="w-full bg-black text-white py-5 rounded-[1.5rem] text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-gray-200 active:scale-95 transition-all"
                     >
                         INITIATE REQUEST
                     </button>

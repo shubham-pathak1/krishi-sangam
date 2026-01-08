@@ -229,7 +229,7 @@ const FarmerCrops = () => {
                         </div>
                         <button
                             onClick={handleAddCrop}
-                            className="h-16 px-8 bg-zinc-950 text-white rounded-2xl flex items-center justify-center gap-3 font-black text-[11px] tracking-[0.2em] shadow-lg hover:scale-105 active:scale-95 transition-all"
+                            className="h-16 px-8 bg-zinc-950 text-white rounded-2xl flex items-center justify-center gap-3 font-black text-[11px] tracking-[0.2em] shadow-lg active:scale-95 transition-all"
                         >
                             <Plus className="w-5 h-5" /> REPLENISH
                         </button>
@@ -252,10 +252,10 @@ const FarmerCrops = () => {
                         {filteredCrops.map((crop) => (
                             <div
                                 key={crop.id}
-                                className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 transition-all duration-500 flex flex-col shadow-premium hover:-translate-y-2 hover:shadow-2xl hover:bg-white/60 cursor-pointer"
+                                className="group bg-white/40 backdrop-blur-2xl rounded-[3rem] p-10 border border-white/60 transition-[background-color] duration-500 flex flex-col shadow-premium hover:bg-white/60 cursor-pointer will-change-transform translate-z-0"
                             >
                                 <div className="flex items-start justify-between mb-8">
-                                    <div className="w-14 h-14 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-xl border border-white shadow-sm transition-all duration-500 group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg group-hover:-rotate-3">
+                                    <div className="w-14 h-14 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-xl border border-white shadow-sm transition-[background-color,color,transform,shadow] duration-500 group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg group-hover:-rotate-3">
                                         <Leaf className="w-6 h-6" />
                                     </div>
                                     <StatusBadge status={crop.status === 'available' ? 'active' : 'inactive'} />

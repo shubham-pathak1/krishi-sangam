@@ -16,13 +16,13 @@ interface StatsCardProps {
 
 const StatsCard = ({ label, value, icon: Icon, imageSrc, trend, color = "text-zinc-900", description }: StatsCardProps) => {
     return (
-        <div className="bg-white/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 p-8 group overflow-hidden relative transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:bg-white/60 cursor-pointer">
+        <div className="bg-white/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 p-8 group overflow-hidden relative transition-[background-color] duration-500 hover:bg-white/60 cursor-pointer will-change-transform translate-z-0">
             {/* Background Accent - Frosted Neutral Glow */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-900/5 rounded-full -mr-16 -mt-16 group-hover:bg-zinc-900/10 transition-all duration-700 blur-3xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-900/5 rounded-full -mr-16 -mt-16 group-hover:bg-zinc-900/10 transition-colors duration-700 blur-3xl pointer-events-none" />
 
             <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
-                    <div className="w-14 h-14 bg-white/80 rounded-2xl border border-white flex items-center justify-center transition-all duration-500 shadow-sm group-hover:bg-white group-hover:shadow-md">
+                    <div className="w-14 h-14 bg-white/80 rounded-2xl border border-white flex items-center justify-center transition-[background-color,shadow] duration-500 shadow-sm group-hover:bg-white group-hover:shadow-md">
                         {imageSrc ? (
                             <img src={imageSrc} alt={label} className="w-8 h-8 object-contain" />
                         ) : (

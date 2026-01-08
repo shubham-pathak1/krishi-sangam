@@ -46,7 +46,7 @@ const AdminLayout = ({ children, title, subtitle, onSearch }: AdminLayoutProps) 
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <div className="min-h-screen bg-[#FCFAF8] flex flex-col lg:flex-row overflow-x-hidden relative">
+        <div className="min-h-screen bg-[#FCFAF8] flex flex-col lg:flex-row relative">
             {/* Background Atmosphere - Deep Institutional Vibe */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
                 {/* Deep Forest/Blackish Green Atmosphere */}
@@ -186,7 +186,7 @@ const AdminLayout = ({ children, title, subtitle, onSearch }: AdminLayoutProps) 
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 p-6 lg:p-10 pb-32 lg:pb-10 scroll-smooth">
+                <main className="flex-1 p-6 lg:p-10 pb-32 lg:pb-10">
                     <div className="max-w-7xl mx-auto space-y-8 lg:space-y-12">
                         {(title || subtitle) && (
                             <div className="space-y-3">

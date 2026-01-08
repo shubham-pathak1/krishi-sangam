@@ -290,18 +290,6 @@ const FarmerDashboard = () => {
                     </div>
                 </div>
             </div>
-
-            <style>{`
-                .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background-color: rgba(0,0,0,0.05);
-                    border-radius: 20px;
-                }
-                .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-                    background-color: rgba(0,0,0,0.1);
-                }
-            `}</style>
         </FarmerLayout>
     );
 };

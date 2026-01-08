@@ -46,7 +46,7 @@ const FarmerLayout = ({ children, title, subtitle, onSearch }: FarmerLayoutProps
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <div className="min-h-screen bg-[#FCFAF8] flex flex-col lg:flex-row relative overflow-x-hidden">
+        <div className="min-h-screen bg-[#FCFAF8] flex flex-col lg:flex-row relative">
             {/* Background Atmosphere - Deep Institutional Vibe */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
                 {/* Deep Forest/Blackish Green Atmosphere */}
@@ -132,9 +132,9 @@ const FarmerLayout = ({ children, title, subtitle, onSearch }: FarmerLayoutProps
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 relative z-10">
+            <div className="flex-1 flex flex-col min-w-0 min-h-screen relative z-10">
                 {/* Desktop Search & Actions Header */}
-                <header className="hidden lg:flex h-32 px-12 items-center justify-between">
+                <header className="hidden lg:flex h-32 bg-transparent px-12 items-center justify-between sticky top-0 z-40">
                     <div className="flex items-center bg-white/40 backdrop-blur-md rounded-[1.5rem] px-6 py-4 w-full max-w-xl border border-white/60 focus-within:bg-white/80 focus-within:border-zinc-950 transition-all duration-500 group shadow-sm focus-within:shadow-xl">
                         <Search className="w-4.5 h-4.5 text-zinc-400 mr-3 group-focus-within:text-zinc-950 transition-colors" />
                         <input
@@ -181,7 +181,7 @@ const FarmerLayout = ({ children, title, subtitle, onSearch }: FarmerLayoutProps
                     </div>
                 </header>
 
-                <main className="p-6 lg:p-12 overflow-y-auto h-[calc(100vh-128px)] custom-scrollbar pb-32">
+                <main className="flex-1 p-6 lg:p-12 pb-32">
                     {(title || subtitle) && (
                         <div className="mb-12 max-w-4xl">
                             {title && <h1 className="text-5xl font-black text-zinc-900 font-display tracking-tightest mb-2 leading-tight">{title}</h1>}

@@ -86,7 +86,7 @@ const CompanyLayout = ({ children, title, subtitle }: CompanyLayoutProps) => {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden h-screen bg-[#F8FAFC]">
+            <div className="flex-1 flex flex-col min-w-0 bg-[#F8FAFC]">
                 {/* Header */}
                 <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 px-8 py-5 flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -136,7 +136,7 @@ const CompanyLayout = ({ children, title, subtitle }: CompanyLayoutProps) => {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
+                <main className="flex-1 p-4 md:p-8">
                     <div className="max-w-7xl mx-auto animate-fade-in-up">
                         {children}
                     </div>

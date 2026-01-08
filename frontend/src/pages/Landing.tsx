@@ -4,11 +4,17 @@ import {
   Menu, X, CheckCircle, TrendingUp, Users, Shield,
   Handshake, Truck, IndianRupee, ArrowRight
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Landing = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'gu'>('en');
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'gu' : 'en';
+    i18n.changeLanguage(newLang);
+  };
 
   useEffect(() => {
     document.title = 'Krishi Sangam - Home';
@@ -42,96 +48,13 @@ const Landing = () => {
     return () => observer.disconnect();
   }, []);
 
-  const t = {
-    en: {
-      contactUs: 'Contact Us',
-      aboutUs: 'About Us',
-      help: 'Help',
-      login: 'Login',
-      signUp: 'Get Started',
-      heroTitle: 'Empowering Farmers, Connecting Markets',
-      aboutTag: 'Who We Are',
-      aboutTitle: 'Empowering Growth Through Contract Farming',
-      aboutDesc1: 'At Krishi Sangam, we connect farmers with businesses to create mutually beneficial partnerships. Farmers gain a reliable market for their produce, while businesses access consistent, high-quality crops.',
-      aboutDesc2: 'Join us in building sustainable food systems and contributing to rural development. Whether you\'re a farmer seeking stability or a business looking for trusted suppliers, we are here to help you succeed.',
-      offerTitle: 'Tailored Solutions for Growth',
-      forFarmers: 'For Farmers',
-      farmerBenefit1: 'Market Access',
-      farmerBenefit1Desc: 'Fair prices and security for your harvests',
-      farmerBenefit2: 'Financial Support',
-      farmerBenefit2Desc: 'Assistance with financing, seeds, and equipment',
-      farmerBenefit3: 'Training Programs',
-      farmerBenefit3Desc: 'Sustainable and modern farming practices',
-      forCompanies: 'For Companies',
-      companyBenefit1: 'Consistent Supply',
-      companyBenefit1Desc: 'Verified farmers delivering quality produce',
-      companyBenefit2: 'Risk Mitigation',
-      companyBenefit2Desc: 'Handle market fluctuations with ease',
-      companyBenefit3: 'Scalable Partnerships',
-      companyBenefit3Desc: 'Flexible contracts tailored to your needs',
-      howItWorksTitle: 'How It Works',
-      step1: 'Register',
-      step1Desc: 'Create your profile in minutes',
-      step2: 'Contract',
-      step2Desc: 'Customized contracts ensure fair terms',
-      step3: 'Support',
-      step3Desc: 'We provide advice and monitor progress',
-      step4: 'Payment',
-      step4Desc: 'Secure payments, on time',
-      partnersTitle: 'Our Partners',
-      testimonialsTitle: 'What Our Users Say',
-      footer: '© 2024 Krishi Sangam. All rights reserved.',
-    },
-    gu: {
-      contactUs: 'અમારો સંપર્ક કરો',
-      aboutUs: 'અમારા વિશે',
-      help: 'મદદ',
-      login: 'લૉગિન',
-      signUp: 'જોડાવો',
-      heroTitle: 'ખેડૂતોને સશક્ત કરવું, બજારોને જોડવું',
-      aboutTag: 'અમે કોણ છીએ',
-      aboutTitle: 'કોન્ટ્રાક્ટ ફાર્મિંગ દ્વારા વિકાસને સશક્ત કરવો',
-      aboutDesc1: 'કૃષિ સંગમ પર, અમે ખેડૂતોને વ્યવસાયો સાથે જોડીએ છીએ જેથી પરસ્પર લાભદાયી ભાગીદારી બને.',
-      aboutDesc2: 'ટકાઉ ખાદ્ય પ્રણાલીઓ બનાવવામાં અમારી સાથે જોડાઓ.',
-      offerTitle: 'વિકાસ માટે અનુકૂળ ઉકેલો',
-      forFarmers: 'ખેડૂતો માટે',
-      farmerBenefit1: 'બજાર પહોંચ',
-      farmerBenefit1Desc: 'યોગ્ય ભાવ અને સુરક્ષા',
-      farmerBenefit2: 'નાણાકીય સહાય',
-      farmerBenefit2Desc: 'બીજ, સાધનો અને ધિરાણમાં મદદ',
-      farmerBenefit3: 'તાલીમ કાર્યક્રમો',
-      farmerBenefit3Desc: 'ટકાઉ અને આધુનિક ખેતી પદ્ધતિઓ',
-      forCompanies: 'કંપનીઓ માટે',
-      companyBenefit1: 'સતત પુરવઠો',
-      companyBenefit1Desc: 'ચકાસાયેલ ખેડૂતો દ્વારા ઉચ્ચ-ગુણવત્તા',
-      companyBenefit2: 'જોખમ ઘટાડો',
-      companyBenefit2Desc: 'બજાર ઉતાર-ચઢાવને હેન્ડલ કરો',
-      companyBenefit3: 'માપનીય ભાગીદારી',
-      companyBenefit3Desc: 'લવચીક કરાર તમારી જરૂરિયાત મુજબ',
-      howItWorksTitle: 'તે કેવી રીતે કામ કરે છે',
-      step1: 'નોંધણી',
-      step1Desc: 'તમારી પ્રોફાઇલ બનાવો',
-      step2: 'કરાર',
-      step2Desc: 'પારદર્શક શરતો',
-      step3: 'સપોર્ટ',
-      step3Desc: 'સલાહ અને નિરીક્ષણ',
-      step4: 'ચુકવણી',
-      step4Desc: 'સુરક્ષિત ચુકવણી',
-      partnersTitle: 'અમારા ભાગીદારો',
-      testimonialsTitle: 'વપરાશકર્તાઓના અભિપ્રાય',
-      footer: '© 2024 કૃષિ સંગમ. સર્વ હક સંચિત.',
-    }
-  };
-
-  const text = t[language];
-
   const partners = ['high-altitude-organics', 'agrifresh-relief', 'terrasavant', 'agri-corp', 'farm-solutions', 'green-harvest'];
   const doubledPartners = [...partners, ...partners];
 
   const testimonials = [
-    { img: 'ramesh.jpg', name: 'Ramesh Patel', role: 'Farmer', quote: 'Krishi Sangam has transformed my farming business. I now have a guaranteed buyer and better prices for my crops!' },
-    { img: 'agrib.png', name: 'Priya Sharma', role: 'Agri-Business Owner', quote: 'The platform made it easy to source high-quality produce directly from farmers. It\'s a game-changer for our supply chain.' },
-    { img: 'vikram.jpg', name: 'Vikram Singh', role: 'Farmer', quote: 'With Krishi Sangam, I\'ve been able to scale my farming operations and connect with reliable buyers.' }
+    { img: 'ramesh.jpg', name: t('testimonial1Name'), role: t('testimonial1Role'), quote: t('testimonial1Quote') },
+    { img: 'agrib.png', name: t('testimonial2Name'), role: t('testimonial2Role'), quote: t('testimonial2Quote') },
+    { img: 'vikram.jpg', name: t('testimonial3Name'), role: t('testimonial3Role'), quote: t('testimonial3Quote') }
   ];
 
 
@@ -162,9 +85,9 @@ const Landing = () => {
           {/* Pill-Shaped Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8 bg-white/10 backdrop-blur-md px-8 py-2.5 rounded-full border border-white/20 shadow-sm transition-all duration-300 hover:bg-white/20">
             {[
-              { to: '/about', label: text.aboutUs },
-              { to: '/contact', label: text.contactUs },
-              { to: '/help', label: text.help },
+              { to: '/about', label: t('aboutUs') },
+              { to: '/contact', label: t('contactUs') },
+              { to: '/help', label: t('help') },
             ].map((link) => (
               <Link
                 key={link.to}
@@ -178,10 +101,10 @@ const Landing = () => {
             <div className="w-px h-4 bg-white/20"></div>
 
             <button
-              onClick={() => setLanguage(l => l === 'en' ? 'gu' : 'en')}
+              onClick={changeLanguage}
               className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded transition-colors ${scrolled ? 'text-gray-500 hover:text-emerald-600' : 'text-gray-300 hover:text-white'}`}
             >
-              {language === 'en' ? 'GU' : 'EN'}
+              {i18n.language === 'en' ? 'GU' : 'EN'}
             </button>
 
             <Link
@@ -191,7 +114,7 @@ const Landing = () => {
                 : 'bg-white text-gray-900 hover:bg-emerald-50'
                 }`}
             >
-              {text.login}
+              {t('login')}
             </Link>
           </nav>
 
@@ -208,12 +131,12 @@ const Landing = () => {
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 bg-gray-900/95 backdrop-blur-xl z-[990] transition-all duration-500 lg:hidden flex items-center justify-center ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
         <div className="flex flex-col items-center gap-8 text-center">
-          <Link to="/about" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.aboutUs}</Link>
-          <Link to="/contact" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.contactUs}</Link>
-          <Link to="/help" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.help}</Link>
-          <Link to="/login" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{text.login}</Link>
-          <button onClick={() => { setLanguage(language === 'en' ? 'gu' : 'en'); setMenuOpen(false); }} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-8">
-            Switch to {language === 'en' ? 'Gujarati' : 'English'}
+          <Link to="/about" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{t('aboutUs')}</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{t('contactUs')}</Link>
+          <Link to="/help" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{t('help')}</Link>
+          <Link to="/login" onClick={() => setMenuOpen(false)} className="text-3xl font-light text-white hover:text-emerald-400 transition-colors">{t('login')}</Link>
+          <button onClick={() => { changeLanguage(); setMenuOpen(false); }} className="text-xl font-bold text-gray-500 uppercase tracking-widest mt-8">
+            Switch to {i18n.language === 'en' ? 'Gujarati' : 'English'}
           </button>
         </div>
       </div>
@@ -230,9 +153,9 @@ const Landing = () => {
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 text-center pt-20">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.9] mb-8 drop-shadow-2xl">
-              Empowering Growth
-              <br />
-              Connecting Roots
+              {t('heroTitle').split(',').map((part, i) => (
+                <span key={i} className="block">{part}</span>
+              ))}
             </h1>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
@@ -240,7 +163,7 @@ const Landing = () => {
                 to="/register"
                 className="group px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white font-bold text-lg rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
               >
-                {text.signUp}
+                {t('signUp')}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -254,14 +177,14 @@ const Landing = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full mb-6">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                  <span className="text-emerald-700 font-semibold text-sm uppercase tracking-wider">{text.aboutTag}</span>
+                  <span className="text-emerald-700 font-semibold text-sm uppercase tracking-wider">{t('aboutTag')}</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-8 leading-[1.1]">{text.aboutTitle}</h2>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-8 leading-[1.1]">{t('aboutTitle')}</h2>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  {text.aboutDesc1}
+                  {t('aboutDesc1')}
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  {text.aboutDesc2}
+                  {t('aboutDesc2')}
                 </p>
 
                 {/* Stats - Plain white bg, black font */}
@@ -296,8 +219,8 @@ const Landing = () => {
         <section className="py-32 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
           <div className="max-w-7xl mx-auto px-6">
             <div className="mb-16 text-center">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{text.offerTitle}</h2>
-              <p className="text-lg text-gray-500 max-w-2xl mx-auto">Two sides of the same coin, working together for a better future.</p>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{t('offerTitle')}</h2>
+              <p className="text-lg text-gray-500 max-w-2xl mx-auto">{t('offerSubtitle')}</p>
             </div>
 
             {/* Bento Grid */}
@@ -309,14 +232,14 @@ const Landing = () => {
                   <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center">
                     <Users size={24} className="text-white" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-black">{text.forFarmers}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black">{t('forFarmers')}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {[
-                    { title: text.farmerBenefit1, desc: text.farmerBenefit1Desc, icon: CheckCircle },
-                    { title: text.farmerBenefit2, desc: text.farmerBenefit2Desc, icon: IndianRupee },
-                    { title: text.farmerBenefit3, desc: text.farmerBenefit3Desc, icon: TrendingUp },
+                    { title: t('farmerBenefit1'), desc: t('farmerBenefit1Desc'), icon: CheckCircle },
+                    { title: t('farmerBenefit2'), desc: t('farmerBenefit2Desc'), icon: IndianRupee },
+                    { title: t('farmerBenefit3'), desc: t('farmerBenefit3Desc'), icon: TrendingUp },
                   ].map((item, i) => (
                     <div key={i} className="bg-gray-50 rounded-2xl p-5 group-hover:bg-gray-100/50 transition-colors">
                       <item.icon className="w-6 h-6 text-black mb-3" />
@@ -330,24 +253,24 @@ const Landing = () => {
               {/* Farmer CTA Card */}
               <div className="bg-gray-50 rounded-3xl p-8 flex flex-col justify-between border border-gray-100 hover:border-black transition-all duration-300">
                 <div>
-                  <p className="text-gray-400 font-semibold text-sm uppercase tracking-wider mb-3">For Farmers</p>
-                  <h4 className="text-2xl font-bold text-black mb-4">Start selling your crops directly</h4>
-                  <p className="text-gray-500">Get fair prices and guaranteed buyers for your produce.</p>
+                  <p className="text-gray-400 font-semibold text-sm uppercase tracking-wider mb-3">{t('forFarmers')}</p>
+                  <h4 className="text-2xl font-bold text-black mb-4">{t('farmerCTA')}</h4>
+                  <p className="text-gray-500">{t('farmerCTADesc')}</p>
                 </div>
                 <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-black font-semibold hover:gap-3 transition-all group/link">
-                  Register Now <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                  {t('registerNow')} <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
               {/* Company CTA Card */}
               <div className="bg-black rounded-3xl p-8 flex flex-col justify-between">
                 <div>
-                  <p className="text-gray-500 font-semibold text-sm uppercase tracking-wider mb-3">For Companies</p>
-                  <h4 className="text-2xl font-bold text-white mb-4">Source quality produce</h4>
-                  <p className="text-gray-400">Connect with verified farmers for consistent supply.</p>
+                  <p className="text-gray-500 font-semibold text-sm uppercase tracking-wider mb-3">{t('forCompanies')}</p>
+                  <h4 className="text-2xl font-bold text-white mb-4">{t('companyCTA')}</h4>
+                  <p className="text-gray-400">{t('companyCTADesc')}</p>
                 </div>
                 <Link to="/register" className="mt-6 inline-flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all group/link">
-                  Get Started <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
+                  {t('getStarted')} <ArrowRight size={18} className="group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
@@ -357,14 +280,14 @@ const Landing = () => {
                   <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center">
                     <Handshake size={24} className="text-black" />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white">{text.forCompanies}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">{t('forCompanies')}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   {[
-                    { title: text.companyBenefit1, desc: text.companyBenefit1Desc, icon: Truck },
-                    { title: text.companyBenefit2, desc: text.companyBenefit2Desc, icon: Shield },
-                    { title: text.companyBenefit3, desc: text.companyBenefit3Desc, icon: Handshake },
+                    { title: t('companyBenefit1'), desc: t('companyBenefit1Desc'), icon: Truck },
+                    { title: t('companyBenefit2'), desc: t('companyBenefit2Desc'), icon: Shield },
+                    { title: t('companyBenefit3'), desc: t('companyBenefit3Desc'), icon: Handshake },
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 rounded-2xl p-5 border border-white/10 hover:bg-white/10 transition-colors">
                       <item.icon className="w-6 h-6 text-white mb-3" />
@@ -383,31 +306,31 @@ const Landing = () => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-black mb-6 tracking-tight uppercase leading-none">
-                {text.howItWorksTitle}
+                {t('howItWorksTitle')}
               </h2>
-              <p className="text-lg text-gray-500 max-w-2xl mx-auto">Connecting the roots of agriculture with the speed of digital commerce.</p>
+              <p className="text-lg text-gray-500 max-w-2xl mx-auto">{t('howItWorksSubtitle')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  title: text.step1,
-                  desc: 'Join our institutional network in seconds. A simple KYC process verified by our decentralized registry ensures trust for all participants.',
+                  title: t('step1'),
+                  desc: t('step1Desc'),
                   num: '01'
                 },
                 {
-                  title: text.step2,
-                  desc: 'Establish transparent, high-fidelity agreements. Our automated contract templates protect interests and guarantee fixed-term pricing.',
+                  title: t('step2'),
+                  desc: t('step2Desc'),
                   num: '02'
                 },
                 {
-                  title: text.step3,
-                  desc: 'Benefit from expert monitoring and data-driven insights. We use satellite telemetry and ground sensors to ensure optimal crop health.',
+                  title: t('step3'),
+                  desc: t('step3Desc'),
                   num: '03'
                 },
                 {
-                  title: text.step4,
-                  desc: 'Experience lightning-fast settlements. Payments are processed instantly upon commodity verification, securing your financial future.',
+                  title: t('step4'),
+                  desc: t('step4Desc'),
                   num: '04'
                 }
               ].map((step, index) => (
@@ -426,7 +349,7 @@ const Landing = () => {
         {/* Partners Section - Original Simple Marquee */}
         <section className="py-20 border-y border-gray-100 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
           <div className="max-w-7xl mx-auto px-6 text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black">{text.partnersTitle}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-black">{t('partnersTitle')}</h2>
           </div>
 
           <div className="relative w-full overflow-hidden whitespace-nowrap [mask-image:_linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
@@ -447,8 +370,8 @@ const Landing = () => {
         <section className="py-32 reveal-on-scroll opacity-0 translate-y-10 transition-all duration-1000">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{text.testimonialsTitle}</h2>
-              <p className="text-lg text-gray-500">Real stories from real farmers and businesses</p>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-4">{t('testimonialsTitle')}</h2>
+              <p className="text-lg text-gray-500">{t('testimonialsSubtitle')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -481,14 +404,14 @@ const Landing = () => {
             <div className="mt-20 text-center">
               <div className="inline-flex flex-col sm:flex-row items-center gap-6 px-10 py-8 bg-black rounded-3xl">
                 <div className="text-white text-center sm:text-left">
-                  <h3 className="text-2xl font-bold mb-1">Ready to get started?</h3>
-                  <p className="text-gray-400">Join thousands of farmers and companies today</p>
+                  <h3 className="text-2xl font-bold mb-1">{t('readyToStart')}</h3>
+                  <p className="text-gray-400">{t('joinThousands')}</p>
                 </div>
                 <Link
                   to="/register"
                   className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-100 transition-colors flex items-center gap-2 group shrink-0"
                 >
-                  Get Started
+                  {t('step1')}
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -507,32 +430,32 @@ const Landing = () => {
                 <span className="text-xl font-bold">Krishi Sangam</span>
               </Link>
               <p className="text-zinc-400 max-w-xs leading-relaxed">
-                Building the digital infrastructure for the future of Indian agriculture.
+                {t('footerLogoText')}
               </p>
             </div>
 
             <div className="flex gap-16 flex-wrap">
               <div>
-                <h4 className="font-bold mb-6 text-white">Platform</h4>
+                <h4 className="font-bold mb-6 text-white">{t('footerPlatform')}</h4>
                 <ul className="space-y-4 text-zinc-400 text-sm">
-                  <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
-                  <li><Link to="/register" className="hover:text-white transition-colors">For Farmers</Link></li>
-                  <li><Link to="/register" className="hover:text-white transition-colors">For Companies</Link></li>
+                  <li><Link to="/about" className="hover:text-white transition-colors">{t('aboutUs')}</Link></li>
+                  <li><Link to="/register" className="hover:text-white transition-colors">{t('forFarmers')}</Link></li>
+                  <li><Link to="/register" className="hover:text-white transition-colors">{t('forCompanies')}</Link></li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold mb-6 text-white">Support</h4>
+                <h4 className="font-bold mb-6 text-white">{t('footerSupport')}</h4>
                 <ul className="space-y-4 text-zinc-400 text-sm">
-                  <li><Link to="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-                  <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
-                  <li><Link to="/legal" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                  <li><Link to="/help" className="hover:text-white transition-colors">{t('help')}</Link></li>
+                  <li><Link to="/contact" className="hover:text-white transition-colors">{t('contactUs')}</Link></li>
+                  <li><Link to="/legal" className="hover:text-white transition-colors">{t('footerPrivacy')}</Link></li>
                 </ul>
               </div>
             </div>
           </div>
 
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 text-sm">
-            <p>{text.footer}</p>
+            <p>{t('footerCopyright')}</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white transition-colors">Twitter</a>
               <a href="#" className="hover:text-white transition-colors">LinkedIn</a>

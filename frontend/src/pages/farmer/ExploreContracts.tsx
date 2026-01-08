@@ -235,7 +235,7 @@ const ExploreContracts = () => {
                         {paginatedContracts.map((contract, index) => (
                             <div
                                 key={contract._id || index}
-                                className="group bg-white/40 backdrop-blur-3xl rounded-[3rem] p-10 border border-white/60 transition-all duration-500 flex flex-col shadow-premium hover:-translate-y-2 hover:shadow-2xl hover:bg-white/60 cursor-pointer"
+                                className="group bg-white/40 backdrop-blur-2xl rounded-[3rem] p-10 border border-white/60 transition-[background-color] duration-500 flex flex-col shadow-premium hover:bg-white/60 cursor-pointer will-change-transform translate-z-0"
                             >
                                 <div className="flex items-start justify-between mb-8">
                                     <div className="w-14 h-14 rounded-2xl bg-white/80 flex items-center justify-center text-zinc-950 font-black text-xl border border-white shadow-sm transition-all duration-500 group-hover:bg-zinc-950 group-hover:text-white group-hover:shadow-lg group-hover:-rotate-3">
@@ -280,7 +280,7 @@ const ExploreContracts = () => {
                                         <p className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.25em] mb-1.5">UNIT LOCK-IN</p>
                                         <p className="text-3xl font-black text-zinc-950 tracking-tightest leading-none">₹{(contract.price || 0).toLocaleString('en-IN')}</p>
                                     </div>
-                                    <button className="h-14 w-14 bg-zinc-950 text-white rounded-[1.5rem] flex items-center justify-center hover:scale-110 transition-all shadow-xl hover:shadow-2xl active:scale-95 group/btn">
+                                    <button className="h-14 w-14 bg-zinc-950 text-white rounded-[1.5rem] flex items-center justify-center transition-all shadow-xl hover:shadow-2xl active:scale-95 group/btn">
                                         <ArrowRight className="w-6 h-6 transition-transform group-hover/btn:translate-x-1" />
                                     </button>
                                 </div>
@@ -296,7 +296,7 @@ const ExploreContracts = () => {
                         <p className="text-[15px] text-zinc-400 font-medium max-w-sm mx-auto tracking-tight">No contracts matched the selected search parameters in the registry.</p>
                         <button
                             onClick={() => setFilters({ search: '', city: 'all', product: 'all', sort: 'price-desc' })}
-                            className="mt-10 px-8 py-3.5 bg-zinc-950 text-white rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:shadow-xl transition-all hover:scale-105 active:scale-95"
+                            className="mt-10 px-8 py-3.5 bg-zinc-950 text-white rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:shadow-xl transition-all active:scale-95"
                         >
                             Reset System Filters
                         </button>

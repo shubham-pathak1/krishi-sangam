@@ -128,7 +128,7 @@ const FarmerTransactions = () => {
                     />
                 </div>
 
-                <div className="bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/60 shadow-premium overflow-hidden transition-all duration-500">
+                <div className="bg-white/40 backdrop-blur-2xl rounded-[3rem] border border-white/60 shadow-premium overflow-hidden transition-[background-color] duration-500">
                     <div className="p-10 border-b border-white/40 flex flex-col lg:flex-row gap-10 items-center justify-between">
                         <div className="flex gap-2 bg-white/40 backdrop-blur-md p-1.5 rounded-[1.5rem] border border-white">
                             {(['stock', 'payments'] as const).map((id) => (
@@ -191,7 +191,7 @@ const FarmerTransactions = () => {
                                         <tr key={item._id} className="group hover:bg-white/60 transition-all duration-300">
                                             <td className="px-12 py-8">
                                                 <div className="flex items-center gap-4">
-                                                    <div className={`p-3 rounded-2xl ${tab === 'stock' ? 'bg-zinc-100 text-zinc-950' : 'bg-zinc-950 text-white shadow-lg'} transition-all duration-500 group-hover:scale-110`}>
+                                                    <div className={`p-3 rounded-2xl ${tab === 'stock' ? 'bg-zinc-100 text-zinc-950' : 'bg-zinc-950 text-white shadow-lg'} transition-all duration-500`}>
                                                         {tab === 'stock' ? <Package className="w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
                                                     </div>
                                                     <span className="font-mono text-[10px] font-black text-zinc-400">ID-{item._id.substring(item._id.length - 8).toUpperCase()}</span>

@@ -209,13 +209,13 @@ const FarmerRegistrationDetails = () => {
             {/* Floating Navbar */}
             <header
                 className={`fixed top-8 left-1/2 -translate-x-1/2 w-[90%] md:w-[85%] max-w-7xl z-[1000] transition-all duration-700 ${scrolled
-                        ? 'bg-white/40 backdrop-blur-3xl border border-white shadow-premium py-4 rounded-[2.5rem]'
-                        : 'bg-white/60 backdrop-blur-2xl border border-white shadow-lg py-5 rounded-[3rem]'
+                    ? 'bg-white/40 backdrop-blur-3xl border border-white shadow-premium py-4 rounded-[2.5rem]'
+                    : 'bg-white/60 backdrop-blur-2xl border border-white shadow-lg py-5 rounded-[3rem]'
                     }`}
             >
                 <div className="px-8 md:px-12 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-4 group">
-                        <img src="/src/assets/images/l.png" alt="Logo" className="w-10 h-10 object-contain transition-transform duration-500 group-hover:scale-110" />
+                        <img src="/src/assets/images/l.png" alt="Logo" className="w-10 h-10 object-contain transition-transform duration-500" />
                         <span className="text-xl font-bold font-display tracking-tightest text-zinc-900 whitespace-nowrap">
                             Krishi Sangam
                         </span>
@@ -472,7 +472,7 @@ const FarmerRegistrationDetails = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full h-20 bg-zinc-950 text-white rounded-[2rem] font-black text-[13px] uppercase tracking-[0.3em] hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 group mt-12 shadow-xl shadow-zinc-950/20"
+                                className="w-full h-20 bg-zinc-950 text-white rounded-[2rem] font-black text-[13px] uppercase tracking-[0.3em] hover:bg-zinc-900 active:scale-95 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-4 group mt-12 shadow-xl shadow-zinc-950/20"
                             >
                                 {loading ? (
                                     <>
