@@ -388,48 +388,35 @@ const Landing = () => {
               <p className="text-lg text-gray-500 max-w-2xl mx-auto">Connecting the roots of agriculture with the speed of digital commerce.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  image: '/C:/Users/shubh/.gemini/antigravity/brain/091131a9-5c6f-46a6-a308-2b3f1f2fcab2/how_it_works_register_1766729377955.png',
                   title: text.step1,
                   desc: 'Join our institutional network in seconds. A simple KYC process verified by our decentralized registry ensures trust for all participants.',
                   num: '01'
                 },
                 {
-                  image: '/C:/Users/shubh/.gemini/antigravity/brain/091131a9-5c6f-46a6-a308-2b3f1f2fcab2/how_it_works_contract_1766729400269.png',
                   title: text.step2,
                   desc: 'Establish transparent, high-fidelity agreements. Our automated contract templates protect interests and guarantee fixed-term pricing.',
                   num: '02'
                 },
                 {
-                  image: '/C:/Users/shubh/.gemini/antigravity/brain/091131a9-5c6f-46a6-a308-2b3f1f2fcab2/how_it_works_support_1766729417200.png',
                   title: text.step3,
                   desc: 'Benefit from expert monitoring and data-driven insights. We use satellite telemetry and ground sensors to ensure optimal crop health.',
                   num: '03'
                 },
                 {
-                  image: '/C:/Users/shubh/.gemini/antigravity/brain/091131a9-5c6f-46a6-a308-2b3f1f2fcab2/how_it_works_payment_1766729432040.png',
                   title: text.step4,
                   desc: 'Experience lightning-fast settlements. Payments are processed instantly upon commodity verification, securing your financial future.',
                   num: '04'
                 }
               ].map((step, index) => (
-                <div key={index} className="group bg-white rounded-[2rem] border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-700 flex flex-col md:flex-row shadow-sm">
-                  <div className="w-full md:w-2/5 relative bg-gray-50 overflow-hidden min-h-[200px]">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4 w-9 h-9 rounded-full bg-black text-white flex items-center justify-center font-black text-[10px] z-10 shadow-lg">
-                      {step.num}
-                    </div>
+                <div key={index} className="group bg-white rounded-[2rem] p-8 border border-gray-100 hover:border-black hover:shadow-xl transition-all duration-300 relative overflow-hidden flex flex-col items-start">
+                  <div className="mb-6 w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center font-black text-sm text-black group-hover:bg-black group-hover:text-white transition-colors">
+                    {step.num}
                   </div>
-                  <div className="w-full md:w-3/5 p-8 flex flex-col justify-center">
-                    <h3 className="text-xl font-black text-black mb-3 tracking-tight uppercase leading-none">{step.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed font-medium">{step.desc}</p>
-                  </div>
+                  <h3 className="text-xl font-black text-black mb-3 tracking-tight uppercase leading-none">{step.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed font-medium">{step.desc}</p>
                 </div>
               ))}
             </div>
